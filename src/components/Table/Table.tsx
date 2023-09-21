@@ -3,9 +3,7 @@ import './Table.scss';
 function Table() {
     return (
         <div className="card w-96 bg-base-100 shadow-xl">
-            <div className="card-body">
-                <h2 className="card-title">Table n</h2>
-            </div>
+            <h3 className="card-title">Table n</h3>
         </div>
     )
 }

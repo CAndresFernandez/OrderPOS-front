@@ -6,4 +6,4 @@ function NavCategories() {
         <button className="join-item btn">4</button>
     </div>)
 }
-export default NavCategories; 
+export default NavCategories;   

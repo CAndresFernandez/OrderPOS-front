@@ -1,11 +1,11 @@
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
-    <div className="btm-nav">
-      <button>
-
-        <span className="btm-nav-label">Menu</span>
-      </button>
+    <nav className="btm-nav">
+      <NavLink className="btm-nav-label" to="/">
+        Menu
+      </NavLink>
       <button className="active">
 
         <span className="btm-nav-label">Current</span>
@@ -14,7 +14,7 @@ function Navbar() {
 
         <span className="btm-nav-label">Order</span>
       </button>
-    </div>
+    </nav >
   )
 }
 
