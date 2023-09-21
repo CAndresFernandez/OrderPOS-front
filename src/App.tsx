@@ -8,12 +8,12 @@ function App() {
 
 
   return (
-    <>
+    <><div className="body">
       <Routes>
         <Route path="/" element={<Tables />} />
         <Route path="/current-order" element={<CurrentOrder />} />
-
       </Routes>
+    </div>
       <Navbar />
     </>
   )
