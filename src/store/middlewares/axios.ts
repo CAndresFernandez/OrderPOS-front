@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const myAxiosInstance = axios.create({
-  baseURL: "https://orecipes-api.onrender.com/api",
+  baseURL:
+    "http://johann-gourmelon.vpnuser.lan/apotheose/projet-8-o-commande-back/public/api",
   timeout: 1000,
 });
 

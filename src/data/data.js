@@ -1,0 +1,29 @@
+[{
+    "id": 1,
+    "number": 12,
+    "covers": 2,
+    "active": false,
+    "createdAt": "2023-09-22T09:48:01+02:00",
+    "updatedAt": null
+}, {
+    "id": 2,
+    "number": 15,
+    "covers": 2,
+    "active": false,
+    "createdAt": "2023-09-22T09:48:10+02:00",
+    "updatedAt": null
+}, {
+    "id": 3,
+    "number": 21,
+    "covers": 4,
+    "active": false,
+    "createdAt": "2023-09-22T09:48:22+02:00",
+    "updatedAt": null
+}, {
+    "id": 4,
+    "number": 22,
+    "covers": 4,
+    "active": false,
+    "createdAt": "2023-09-22T09:48:31+02:00",
+    "updatedAt": null
+}]

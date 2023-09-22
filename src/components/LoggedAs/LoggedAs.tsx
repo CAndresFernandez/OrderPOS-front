@@ -1,3 +1,5 @@
+import "./LoggedAs.scss";
+
 function LoggedAs() {
   return (
     <div className="logged-as">

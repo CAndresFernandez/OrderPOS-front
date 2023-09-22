@@ -55,54 +55,6 @@ function Tables() {
         <li>
           <Table />
         </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
-        <li>
-          <Table />
-        </li>
       </ul>
     </>
   );
