@@ -1,3 +1,5 @@
+@use '../../styles/variables' as v;
+
 .btm-nav{
     display: flex;
     justify-content: space-around;
@@ -6,5 +8,5 @@
 .active{
     color: #000;
     font-weight: bold;
-    border-bottom: 1px solid #a486ff;
+    border-bottom: 1px solid v.$mainColor;
 }
