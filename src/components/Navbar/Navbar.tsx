@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
-import './Navbar.scss';
+import "./Navbar.scss";
+
 function Navbar() {
   return (
     <nav className="btm-nav">
@@ -12,9 +13,8 @@ function Navbar() {
       <NavLink className="btm-nav-label" to="/orders">
         Order
       </NavLink>
-    </nav >
-  )
+    </nav>
+  );
 }
-
 
 export default Navbar;
