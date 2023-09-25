@@ -7,7 +7,7 @@ import { useAppSelector } from "../../hooks/redux";
 
 function CurrentOrder() {
   const items: IItem[] = useAppSelector((state) => state.items.list);
-  console.log(items);
+  // console.log(items);
 
   return (
     <>
@@ -19,7 +19,7 @@ function CurrentOrder() {
       <ul>
         {items.map((item) => (
           <li key={item.id}>
-            <Dish name={item.name} />
+            <Dish dish={item} />
           </li>
         ))}
       </ul>
