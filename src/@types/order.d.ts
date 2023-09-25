@@ -1,4 +1,4 @@
-export interface Table {
+export interface ITable {
   id: int;
   number: int;
   covers: int;

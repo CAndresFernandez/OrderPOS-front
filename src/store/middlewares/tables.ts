@@ -15,6 +15,6 @@ export const fetchTablesThunk = createAsyncThunk(
     console.log(result);
 
     // ---- 10/ return dans le thunk de la réponse de l'API : elle sera dispo dans le payload de l'action fullfilled
-    return result;
+    return result.data;
   }
 );
