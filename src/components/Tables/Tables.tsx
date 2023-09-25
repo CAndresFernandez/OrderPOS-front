@@ -1,11 +1,12 @@
 import { useAppSelector } from "../../hooks/redux";
 import LoggedAs from "../LoggedAs/LoggedAs";
 import Table from "../Table/Table";
+import { ITable } from "../../@types/order";
 import "./Tables.scss";
 
 function Tables() {
-  const tables = useAppSelector((state) => state.tables.list);
-  //console.log(tables);
+  const tables: ITable[] = useAppSelector((state) => state.tables.list);
+  console.log(tables);
 
   return (
     <>
@@ -14,8 +15,8 @@ function Tables() {
         <h2>Tables</h2>
       </header>
       <ul>
-        {tables.map((table) => (
-          <li key={table.id}>
+        {tables.map((table, number) => (
+          <li key={number}>
             <Table table={table} />
           </li>
         ))}

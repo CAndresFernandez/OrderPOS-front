@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import tablesReducer from "./reducers/tablesReducer";
+import itemsReducer from "./reducers/itemsReducer";
 
 const store = configureStore({
   reducer: {
     tables: tablesReducer,
+    items: itemsReducer,
   },
 });
 
