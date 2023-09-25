@@ -4,8 +4,8 @@ import Table from "../Table/Table";
 import "./Tables.scss";
 
 function Tables() {
-  const tables = useAppSelector((state) => state.tables);
-  console.log(tables);
+  const tables = useAppSelector((state) => state.tables.list);
+  //console.log(tables);
 
   return (
     <>
