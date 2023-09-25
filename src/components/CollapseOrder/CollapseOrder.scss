@@ -1,0 +1,29 @@
+.collpase {
+    position: fixed;
+}
+
+.collapse-details {
+    display: flex;
+}
+
+.settings {
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    display: flex;
+    // de base on cache le bloc settings sur le coté droit
+    transform: translateY(85%);
+    transition: 0.5s;
+
+
+
+    &--open {
+        // si y'a la classe --open on remet le bloc visible
+        transform: translateY(0);
+
+        .settings-button {
+            // on fait tourner le bouton plus de 45 degres pour qu'il soit une croix
+            transform: rotate(45deg);
+        }
+    }
+}

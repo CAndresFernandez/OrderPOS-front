@@ -1,5 +1,4 @@
-
-@use 'variables' as v;
+@use 'variables'as v;
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -31,12 +30,11 @@ li {
   list-style: none;
 }
 
-body {
+.body {
   margin: 0;
-  display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 80vh;
 }
 
 h1 {

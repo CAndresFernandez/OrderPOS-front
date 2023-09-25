@@ -1,9 +1,21 @@
+import "./NavCategories.scss";
+
 function NavCategories() {
-    return (<div className="join">
-        <button className="join-item btn">1</button>
-        <button className="join-item btn btn-active">2</button>
-        <button className="join-item btn">3</button>
-        <button className="join-item btn">4</button>
-    </div>)
+  return (
+    <div className="NavCat">
+      <button type="button" className="NavBtn">
+        STARTERS
+      </button>
+      <button type="button" className="NavBtn">
+        MAIN COURSE
+      </button>
+      <button type="button" className="NavBtn">
+        DRINKS
+      </button>
+      <button type="button" className="NavBtn">
+        SOUPS
+      </button>
+    </div>
+  );
 }
-export default NavCategories;   
+export default NavCategories;

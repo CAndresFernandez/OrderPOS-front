@@ -1,49 +1,28 @@
-import LoggedAs from '../LoggedAs/LoggedAs';
-import Table from '../Table/Table';
-import './Tables.scss';
+import { useAppSelector } from "../../hooks/redux";
+import LoggedAs from "../LoggedAs/LoggedAs";
+import Table from "../Table/Table";
+import { ITable } from "../../@types/order";
+import "./Tables.scss";
 
 function Tables() {
-    return (
-        <>
-            <header>
-                <LoggedAs />
-                <h2>Tables</h2>
-            </header>
-            <ul>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-                <li><Table /></li>
-            </ul>
-        </>
-    )
+  const tables: ITable[] = useAppSelector((state) => state.tables.list);
+  console.log(tables);
+
+  return (
+    <>
+      <header>
+        <LoggedAs />
+        <h2>Tables</h2>
+      </header>
+      <ul>
+        {tables.map((table, number) => (
+          <li key={number}>
+            <Table table={table} />
+          </li>
+        ))}
+      </ul>
+    </>
+  );
 }
 
 export default Tables;
