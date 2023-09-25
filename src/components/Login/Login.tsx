@@ -3,6 +3,7 @@ import { useState } from "react";
 import "./Login.scss";
 
 function Login() {
+  const isLogged = false;
   const [credentials, setCredentials] = useState({
     login: "",
     password: "",
@@ -21,34 +22,55 @@ function Login() {
     // Ici, vous pouvez gérer la soumission du formulaire, par exemple, en appelant une API d'authentification.
     console.log("Credentials:", credentials);
   };
+  const handleLogout = () => {
+    console.log("Logout");
+    // Ici, vous pouvez gérer la déconnexion de l'utilisateur.
+  };
+
+  const loggedMessage = "Vous êtes connecté!";
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="login" />
-        <input
-          placeholder="login"
-          type="text"
-          id="login"
-          name="login"
-          value={credentials.login}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="password" />
-        <input
-          placeholder="password"
-          type="password"
-          id="password"
-          name="password"
-          value={credentials.password}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <button type="submit">Se connecter</button>
-    </form>
+    <div className="login-form">
+      {isLogged ? (
+        <div className="login-form-logged">
+          <p className="login-form-message">{loggedMessage}</p>
+          <button
+            type="button"
+            className="login-form-button"
+            onClick={handleLogout}
+          >
+            Déconnexion
+          </button>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <input
+              placeholder="login"
+              type="text"
+              id="login"
+              name="login"
+              value={credentials.login}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <input
+              placeholder="password"
+              type="password"
+              id="password"
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit" className="login-form-button">
+            Se connecter
+          </button>
+        </form>
+      )}
+    </div>
   );
 }
 export default Login;
