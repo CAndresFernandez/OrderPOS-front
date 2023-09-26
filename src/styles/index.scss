@@ -15,7 +15,9 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-
+header {
+  height: 15vh;
+}
 a {
   font-weight: 500;
   color: v.$mainColor;

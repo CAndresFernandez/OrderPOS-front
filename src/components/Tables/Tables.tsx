@@ -14,7 +14,7 @@ function Tables() {
         <LoggedAs />
         <h2>Tables</h2>
       </header>
-      <ul>
+      <ul className="tables-list">
         {tables.map((table, number) => (
           <li key={number}>
             <Table table={table} />

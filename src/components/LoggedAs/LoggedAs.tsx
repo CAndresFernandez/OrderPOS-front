@@ -1,12 +1,13 @@
+import { Link } from "react-router-dom";
 import "./LoggedAs.scss";
 
 function LoggedAs() {
   return (
-    <div className="logged-as">
+    <Link to="/login" className="logged-as">
       <p>
         Logged as: <span>John Doe</span>
       </p>
-    </div>
+    </Link>
   );
 }
 export default LoggedAs;
