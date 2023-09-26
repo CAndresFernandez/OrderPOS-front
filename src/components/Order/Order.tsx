@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { IOrder } from "../../@types/order";
 import "./Order.scss";
 
-function Order({ order }: IOrder[]) {
+function Order({ order }: IOrder) {
   return (
     <Link to="/current-order">
       <div className="card w-96 bg-base-100 shadow-xl">

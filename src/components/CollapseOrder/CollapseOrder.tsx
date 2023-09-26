@@ -15,16 +15,21 @@ function CollapseOrder() {
         className="toggle-button"
         onClick={toggleVisibility}
       >
-        {isVisible ? "▼" : "▲"}
+        {isVisible ? "\u25BC" : "\u25B2"}
       </button>
       <div className={`collapse ${isVisible ? "visible" : ""}`}>
         <div>STARTERS</div>
         <div>MAIN COURSE</div>
+        <div>DRINK</div>
         <div>DESSERTS</div>
         <div>STARTERS</div>
         <div>MAIN COURSE</div>
+        <div>DRINK</div>
         <div>DESSERTS</div>
         <div>STARTERS</div>
+        <div>MAIN COURSE</div>
+        <div>DRINK</div>
+        <div>DESSERTS</div>
       </div>
     </div>
   );

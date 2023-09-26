@@ -15,9 +15,11 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
 header {
   height: 15vh;
 }
+
 a {
   font-weight: 500;
   color: v.$mainColor;
@@ -68,7 +70,7 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: v.$lighterNewColor;
   }
 
   a:hover {

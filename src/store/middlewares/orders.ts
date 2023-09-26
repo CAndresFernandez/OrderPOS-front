@@ -18,3 +18,17 @@ export const fetchOrdersThunk = createAsyncThunk(
     return result.data;
   }
 );
+export const addOrderThunk = createAsyncThunk(
+  // nom de l'action :
+  "orders/CREATE_ORDER",
+  // fonction asynchrone : c'est ici qu'on va faire l'appel AJAX
+  async (newOrderData) => {
+    // J'envoie à l'API le label de la nouvelle order
+    const result = await myAxiosInstance.post("/orders", {
+      newOrderData,
+    });
+    // l'API nous renvoie la nouvelle liste d'orders
+    // on maintient à jour le state avec cette valeur de retour
+    return result.data;
+  }
+);
