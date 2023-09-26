@@ -9,15 +9,16 @@ function Table({ table }: { table: ITable }) {
 
   const handleTableClick = () => {
     const newOrderData = {
-      relatedTableId: table.id,
-      userId: 1,
+      relatedTable_id: table.id,
+      user_id: 12,
       // ...
     };
     dispatch(addOrderThunk(newOrderData));
+    console.log(newOrderData);
   };
 
   return (
-    <Link to="/current-order" onClick={handleTableClick}>
+    <Link to={`/tables/${table.id}/orders`} onClick={handleTableClick}>
       <div className="card w-96 bg-base-100 shadow-xl">
         <h3 className="card-title">Table {table.id}</h3>
       </div>
