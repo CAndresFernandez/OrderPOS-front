@@ -27,7 +27,7 @@ function Login() {
     // Ici, vous pouvez gérer la déconnexion de l'utilisateur.
   };
 
-  const loggedMessage = "Vous êtes connecté!";
+  const loggedMessage = "You are login!";
   return (
     <div className="login-form">
       {isLogged ? (
@@ -38,7 +38,7 @@ function Login() {
             className="login-form-button"
             onClick={handleLogout}
           >
-            Déconnexion
+            Logout
           </button>
         </div>
       ) : (
@@ -66,7 +66,7 @@ function Login() {
             />
           </div>
           <button type="submit" className="login-form-button">
-            Se connecter
+            Login
           </button>
         </form>
       )}

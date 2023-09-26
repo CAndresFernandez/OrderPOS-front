@@ -1,11 +1,14 @@
 @use '../../styles/variables'as v;
 
+
+
 .btm-nav {
     display: flex;
     justify-content: space-evenly;
     font-weight: bold;
     // width: 100%;
     // max-width: 50em;
+
 }
 
 .active {
@@ -16,4 +19,5 @@
         -0.5px 0 0 v.$altColor,
         0 -0.5px 0 v.$altColor;
     border-bottom: 1px solid v.$mainColor;
+
 }

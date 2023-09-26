@@ -23,8 +23,8 @@ function CurrentOrder() {
             <Dish dish={item} />
           </li>
         ))}
+        <CollapseOrder />
       </ul>
-      <CollapseOrder />
     </>
   );
 }
