@@ -15,8 +15,8 @@ function Tables() {
         <h2>Tables</h2>
       </header>
       <ul className="tables-list">
-        {tables.map((table, number) => (
-          <li key={number}>
+        {tables.map((table) => (
+          <li key={table.id}>
             <Table table={table} />
           </li>
         ))}

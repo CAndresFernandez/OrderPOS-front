@@ -1,6 +1,5 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 import checkLogin from "../middlewares/login";
-import checkLocalStorage from "../localStorage/localStorage";
 
 interface UserState {
   logged: boolean;

@@ -2,13 +2,13 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 import checkLogin from "../middlewares/login";
 
-interface ISettingsState {
+interface ILoginState {
   login: string;
   password: string;
   isConnected: boolean;
 }
 
-const initialState: ISettingsState = {
+const initialState: ILoginState = {
   // login et password sont les valeurs des inputs du bloc settings
   // ces 2 données permettent de controller les input
   login: "",

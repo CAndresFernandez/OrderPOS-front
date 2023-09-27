@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { RootState } from "..";
 import myAxiosInstance from "./axios";
 import { saveJWTToLocalStorage } from "../../localStorage/localStorage";
+import myAxiosLogInstance from "./myAxiosLogInstance";
 
 const checkLogin = createAsyncThunk("user/CHECK_LOGIN", async (_, thunkAPI) => {
   // il nous faut les données tapées par l'utilisateur dans les inputs
@@ -12,7 +13,7 @@ const checkLogin = createAsyncThunk("user/CHECK_LOGIN", async (_, thunkAPI) => {
   const result = await myAxiosInstance.post(
     "/login_check",
     {
-      login: state.login,
+      login: state.login.login,
       password: state.login.password,
     },
     {
@@ -29,7 +30,7 @@ const checkLogin = createAsyncThunk("user/CHECK_LOGIN", async (_, thunkAPI) => {
   // on va enregistrer le token dans le state
 
   // on va enregistrer les entetes header autorisation dans l'instance d'axios
-  myAxiosInstance.defaults.headers.common.Authorization = `Bearer ${result.data.token}`;
+  myAxiosLogInstance.defaults.headers.common.Authorization = `Bearer ${result.data.token}`;
 
   // on va aussi enregistrer le token dans le localStorage
   saveJWTToLocalStorage(result.data.token);

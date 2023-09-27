@@ -1,17 +1,19 @@
 import { NavLink } from "react-router-dom";
 import "./Navbar.scss";
 
-function Navbar() {
+function Navbar({ userId }: { userId: string }) {
+  console.log(userId);
+
   return (
     <section className="section">
       <nav className="btm-nav">
         <NavLink className="btm-nav-label" to="/">
           Menu
         </NavLink>
-        <NavLink className="btm-nav-label" to="/tables/36/order">
+        <NavLink className="btm-nav-label" to="/tables/30/order">
           Current
         </NavLink>
-        <NavLink className="btm-nav-label" to="/users/29/orders">
+        <NavLink className="btm-nav-label" to={`/users/${userId}/orders`}>
           Orders
         </NavLink>
       </nav>
