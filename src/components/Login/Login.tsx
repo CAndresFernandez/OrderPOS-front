@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import ControlledInput from "./ControlledInput";
 import checkLogin from "../../store/middlewares/login";
 import { getActionDisconnect } from "../../store/reducers/loginReducer";
+import { Link } from "react-router-dom";
 
 function Login() {
   const dispatch = useAppDispatch();
@@ -42,6 +43,11 @@ function Login() {
           </button>
         </form>
       )}
+      <Link to="/">
+        <button type="button" className="login-form-button">
+          Back
+        </button>
+      </Link>
     </div>
   );
 }

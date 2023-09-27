@@ -8,7 +8,7 @@ function Navbar() {
         <NavLink className="btm-nav-label" to="/">
           Menu
         </NavLink>
-        <NavLink className="btm-nav-label" to="/current-order">
+        <NavLink className="btm-nav-label" to="/tables/19/order">
           Current
         </NavLink>
         <NavLink className="btm-nav-label" to="/users/17/orders">

@@ -31,16 +31,16 @@ export const addOrderThunk = createAsyncThunk(
     console.log(result);
   }
 );
-// export const editOrderThunk = createAsyncThunk(
-//   // nom de l'action :
-//   "orders/EDIT_ORDER",
-//   // fonction asynchrone : c'est ici qu'on va faire l'appel AJAX
-//   async (newOrderData) => {
-//     // J'envoie à l'API le label de la nouvelle order
-//     const result = await myAxiosInstance.put("/orders/{id}", newOrderData);
-//     // l'API nous renvoie la nouvelle liste d'orders
-//     // on maintient à jour le state avec cette valeur de retour
-//     return result.data;
-//     console.log(result);
-//   }
-// );
+export const editOrderThunk = createAsyncThunk(
+  // nom de l'action :
+  "orders/EDIT_ORDER",
+  // fonction asynchrone : c'est ici qu'on va faire l'appel AJAX
+  async (newOrderData) => {
+    // J'envoie à l'API le label de la nouvelle order
+    const result = await myAxiosInstance.put("/orders/{id}", newOrderData);
+    // l'API nous renvoie la nouvelle liste d'orders
+    // on maintient à jour le state avec cette valeur de retour
+    return result.data;
+    console.log(result);
+  }
+);

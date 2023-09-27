@@ -13,7 +13,7 @@ import { fetchOrdersThunk } from "./store/middlewares/orders";
 
 function App() {
   const dispatch = useAppDispatch();
-  const logged = false;
+  const logged = true;
   useEffect(() => {
     // APRES le premier chargement de l'app on veut aller chercher les tables
     // App va dispatcher une action vers le thunk middleware qui s'occupe de l'appel API
@@ -23,24 +23,16 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {logged ? (
-        <>
-          <div className="body">
-            <Routes>
-              <Route path="/" element={<Tables />} />
-              <Route path="/current-order" element={<CurrentOrder />} />
-              <Route path="/users/17/orders" element={<Orders />} />
-            </Routes>
-          </div>
-          <Navbar />
-        </>
-      ) : (
-        <div className="body">
-          <Login />
-        </div>
-      )}
+      <div className="body">
+        <Routes>
+          <Route path="/" element={<Tables />} />
+          <Route path="/tables/19/order" element={<CurrentOrder />} />
+          <Route path="/users/17/orders" element={<Orders />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
+      {logged && <Navbar />}
     </>
   );
 }

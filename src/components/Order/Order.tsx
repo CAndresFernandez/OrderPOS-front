@@ -11,10 +11,10 @@ function Order({ order }: { order: IOrder }) {
   // dispatch(editOrderThunk(order.id));
   return (
     <Link to={`/tables/${order.relatedTable_id}/orders`}>
-      <div className="card w-96 bg-base-100 shadow-xl">
+      <div className="order-card card w-96 bg-base-100 shadow-xl">
         <h3 className="card-title">Order {order.id}</h3>
-        <h3 className="card-title">Table {order.relatedTable_id}</h3>
-        <h3 className="card-title">Status {order.status}</h3>
+        <p className="card-title">Table {order.relatedTable_id}</p>
+        <p className="card-title">Status {order.status}</p>
       </div>
     </Link>
   );

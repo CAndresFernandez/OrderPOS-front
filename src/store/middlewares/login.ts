@@ -23,10 +23,10 @@ const checkLogin = createAsyncThunk("user/CHECK_LOGIN", async (_, thunkAPI) => {
   // on va enregistrer le token dans le state
 
   //   // on va enregistrer les entetes header autorisation dans l'instance d'axios
-  //   myAxiosInstance.defaults.headers.common.Authorization = `Bearer ${result.data.token}`;
+  myAxiosInstance.defaults.headers.common.Authorization = `Bearer ${result.data.token}`;
 
   //   // on va aussi enregistrer le token dans le localStorage
-  //   saveJWTToLocalStorage(result.data.token);
+  saveJWTToLocalStorage(result.data.token);
 
   /*
     on reçoit un JWT qui ressemble à ça : 
