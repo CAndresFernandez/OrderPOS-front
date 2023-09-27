@@ -3,16 +3,12 @@ export interface ITable {
   number: int;
   covers: int;
   active: boolean;
-  createdAt: string;
-  updatedAt: string;
 }
 export interface IItem {
   id: int;
   name: string;
   description: string;
   active: boolean;
-  createdAt: string;
-  updatedAt: string;
   category: ICategory[];
 }
 
@@ -21,14 +17,12 @@ export interface ICategory {
   name: string;
   description: string;
   active: boolean;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface IOrder {
   id: int;
+  relatedTable_id: int;
+  user_id: int;
   status: int;
-  createdAt: string;
-  updatedAt: string;
-  orderItems: [];
+  orderItems: IItem[];
 }

@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import "./CollapseOrder.scss";
+import { IOrder } from "../../@types/order";
+import { useAppSelector } from "../../hooks/redux";
 
 function CollapseOrder() {
   const [isVisible, setIsVisible] = useState(false);
+  const currentOrder: IOrder[] = useAppSelector((state) => state.orders.list);
+  console.log(currentOrder);
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
@@ -19,7 +23,7 @@ function CollapseOrder() {
       </button>
       <div className={`collapse ${isVisible ? "visible" : ""}`}>
         <div>STARTERS</div>
-        <div>MAIN COURSE</div>
+        <h3>Order {currentOrder.orderItems}</h3>
         <div>DRINK</div>
         <div>DESSERTS</div>
         <div>STARTERS</div>

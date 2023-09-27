@@ -23,6 +23,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {logged ? (
         <>
@@ -30,7 +31,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Tables />} />
               <Route path="/current-order" element={<CurrentOrder />} />
-              <Route path="/orders" element={<Orders />} />
+              <Route path="/users/17/orders" element={<Orders />} />
             </Routes>
           </div>
           <Navbar />

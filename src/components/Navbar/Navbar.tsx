@@ -11,7 +11,7 @@ function Navbar() {
         <NavLink className="btm-nav-label" to="/current-order">
           Current
         </NavLink>
-        <NavLink className="btm-nav-label" to="/orders">
+        <NavLink className="btm-nav-label" to="/users/17/orders">
           Orders
         </NavLink>
       </nav>

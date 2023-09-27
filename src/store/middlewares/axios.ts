@@ -12,5 +12,8 @@ const myAxiosInstance = axios.create({
 //     "http://johann-gourmelon.vpnuser.lan/apotheose/projet-8-o-commande-back/public/api/",
 
 //   timeout: 1000,
+//  headers: {
+//     "Content-Type": "application/json",
+//   },
 // });
 export default myAxiosInstance;
