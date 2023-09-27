@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 import { IOrder } from "../../@types/order";
 import "./Order.scss";
 import { useAppDispatch } from "../../hooks/redux";
-import { editOrderThunk } from "../../store/middlewares/orders";
+// import { editOrderThunk } from "../../store/middlewares/orders";
 
 function Order({ order }: { order: IOrder }) {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   console.log(order);
 
-  dispatch(editOrderThunk(order.id));
+  // dispatch(editOrderThunk(order.id));
   return (
     <Link to={`/tables/${order.relatedTable_id}/orders`}>
       <div className="card w-96 bg-base-100 shadow-xl">
