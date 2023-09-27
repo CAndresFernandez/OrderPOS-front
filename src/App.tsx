@@ -13,6 +13,7 @@ import { fetchOrdersThunk } from "./store/middlewares/orders";
 
 function App() {
   const dispatch = useAppDispatch();
+
   const logged = true;
   useEffect(() => {
     // APRES le premier chargement de l'app on veut aller chercher les tables
@@ -27,9 +28,9 @@ function App() {
       <div className="body">
         <Routes>
           <Route path="/" element={<Tables />} />
-          <Route path="/tables/19/order" element={<CurrentOrder />} />
-          <Route path="/users/17/orders" element={<Orders />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/tables/36/order" element={<CurrentOrder />} />
+          <Route path="/users/29/orders" element={<Orders />} />
+          <Route path="/login_check" element={<Login />} />
         </Routes>
       </div>
       {logged && <Navbar />}

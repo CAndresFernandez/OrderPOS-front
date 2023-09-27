@@ -9,23 +9,29 @@ const checkLogin = createAsyncThunk("user/CHECK_LOGIN", async (_, thunkAPI) => {
   // on va chercher les données dans le state de redux
   const state = thunkAPI.getState() as RootState;
 
-  const result = await myAxiosInstance.post("/login", {
-    login: state.login.login,
-    password: state.login.password,
-  });
-  console.log(result);
-  console.log("result");
-
+  const result = await myAxiosInstance.post(
+    "/login_check",
+    {
+      login: state.login,
+      password: state.login.password,
+    },
+    {
+      headers: {
+        "content-type": "application/json",
+      },
+    }
+  );
+  console.log(result.data);
   // on a recuperé le pseudo et le token de l'api : on veut les enregistrer dans le state
   // on veut mettre logged à true dans le state
   // on returne les données de l'API elle seront envoyée en payload de l'action fullfilled
   // le reducer pourra alors les recuperer et les enregistrer dans le state
   // on va enregistrer le token dans le state
 
-  //   // on va enregistrer les entetes header autorisation dans l'instance d'axios
+  // on va enregistrer les entetes header autorisation dans l'instance d'axios
   myAxiosInstance.defaults.headers.common.Authorization = `Bearer ${result.data.token}`;
 
-  //   // on va aussi enregistrer le token dans le localStorage
+  // on va aussi enregistrer le token dans le localStorage
   saveJWTToLocalStorage(result.data.token);
 
   /*
