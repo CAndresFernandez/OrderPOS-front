@@ -5,7 +5,7 @@ import checkLocalStorage from "../localStorage/localStorage";
 interface UserState {
   logged: boolean;
   credentials: {
-    email: string;
+    login: string;
     password: string;
   };
   pseudo: null | string;
@@ -15,7 +15,7 @@ interface UserState {
 export const initialState: UserState = {
   logged: false,
   credentials: {
-    email: "",
+    login: "",
     password: "",
   },
   pseudo: null,
@@ -25,7 +25,7 @@ export const initialState: UserState = {
 
 export const setCredentials = createAction<{
   inputValue: string;
-  inputName: "email" | "password";
+  inputName: "login" | "password";
 }>("user/SET_CREDENTIALS");
 
 export const logOut = createAction("user/LOGOUT");

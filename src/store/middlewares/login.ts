@@ -10,20 +10,23 @@ const checkLogin = createAsyncThunk("user/CHECK_LOGIN", async (_, thunkAPI) => {
   const state = thunkAPI.getState() as RootState;
 
   const result = await myAxiosInstance.post("/login", {
-    email: state.user.credentials.email,
-    password: state.user.credentials.password,
+    login: state.login.login,
+    password: state.login.password,
   });
+  console.log(result);
+  console.log("result");
+
   // on a recuperé le pseudo et le token de l'api : on veut les enregistrer dans le state
   // on veut mettre logged à true dans le state
   // on returne les données de l'API elle seront envoyée en payload de l'action fullfilled
   // le reducer pourra alors les recuperer et les enregistrer dans le state
   // on va enregistrer le token dans le state
 
-  // on va enregistrer les entetes header autorisation dans l'instance d'axios
-  myAxiosInstance.defaults.headers.common.Authorization = `Bearer ${result.data.token}`;
+  //   // on va enregistrer les entetes header autorisation dans l'instance d'axios
+  //   myAxiosInstance.defaults.headers.common.Authorization = `Bearer ${result.data.token}`;
 
-  // on va aussi enregistrer le token dans le localStorage
-  saveJWTToLocalStorage(result.data.token);
+  //   // on va aussi enregistrer le token dans le localStorage
+  //   saveJWTToLocalStorage(result.data.token);
 
   /*
     on reçoit un JWT qui ressemble à ça : 
@@ -32,10 +35,7 @@ const checkLogin = createAsyncThunk("user/CHECK_LOGIN", async (_, thunkAPI) => {
     on pourrait le stocker en cokie ou localStorage pour une plus longue durée de vie mais pour faire simple on va le stocker dans le state
     donc on le return pour qu'il soit ajouté au payload de l'action fullfilled qui va arriver chez le reducer
   */
-  return result.data as {
-    pseudo: string;
-    token: string;
-  };
+  return result.data;
 });
 
 export default checkLogin;

@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import tablesReducer from "./reducers/tablesReducer";
 import itemsReducer from "./reducers/itemsReducer";
 import ordersReducer from "./reducers/ordersReducer";
+import loginReducer from "./reducers/loginReducer";
 
 const store = configureStore({
   reducer: {
     tables: tablesReducer,
     items: itemsReducer,
     orders: ordersReducer,
+    login: loginReducer,
   },
 });
 
