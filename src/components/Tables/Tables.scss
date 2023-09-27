@@ -1,8 +1,13 @@
-ul{
+ul {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
     padding-left: 0;
+
 }
 
+.tables-list {
+    height: 70vh;
+    overflow-y: auto;
+}

@@ -1,29 +1,46 @@
-.collpase {
-    position: fixed;
+@use '../../styles/variables' as v;
+
+.container {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  text-align: center;
 }
 
-.collapse-details {
-    display: flex;
+.collapse {
+  padding: 0.5em;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  opacity: 0;
+  margin-top: 0;
+  margin-bottom: 0em;
+  background-color: v.$altNewColor;
+
+  &.visible {
+    max-height: 50em;
+    opacity: 1;
+  }
 }
 
-.settings {
-    position: fixed;
-    right: 1rem;
-    top: 1rem;
-    display: flex;
-    // de base on cache le bloc settings sur le coté droit
-    transform: translateY(85%);
-    transition: 0.5s;
+.toggle-button {
+  display: inline-block;
+  background-color: v.$darkerNewColor;
+  border: 0.1em solid #ccc;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  margin-bottom: 0;
+  transition: transform 0.3s ease;
+  color: v.$lighterNewColor;
 
+  &.open {
+    transform: rotate(180deg);
+  }
 
-
-    &--open {
-        // si y'a la classe --open on remet le bloc visible
-        transform: translateY(0);
-
-        .settings-button {
-            // on fait tourner le bouton plus de 45 degres pour qu'il soit une croix
-            transform: rotate(45deg);
-        }
-    }
+  &:focus {
+    outline: none;
+  }
 }
