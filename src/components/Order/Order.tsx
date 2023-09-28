@@ -6,7 +6,7 @@ import { useAppDispatch } from "../../hooks/redux";
 
 function Order({ order }: { order: IOrder }) {
   // const dispatch = useAppDispatch();
-  console.log(order);
+  // console.log(order);
 
   // dispatch(editOrderThunk(order.id));
   return (

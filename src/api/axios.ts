@@ -1,14 +1,13 @@
 import axios from "axios";
 
-const myAxiosLogInstance = axios.create({
-  baseURL:
-    "http://maxime-capette.vpnuser.lan/Apo/back/projet-8-o-commande-back/public/api",
+const myAxiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000/api/",
   timeout: 1000,
   headers: {
     "Content-Type": "application/json",
   },
 });
-// const myAxiosLogIstance = axios.create({
+// const myAxiosInstance = axios.create({
 //   baseURL:
 //     "http://johann-gourmelon.vpnuser.lan/apotheose/projet-8-o-commande-back/public/api/",
 
@@ -17,4 +16,4 @@ const myAxiosLogInstance = axios.create({
 //     "Content-Type": "application/json",
 //   },
 // });
-export default myAxiosLogInstance;
+export default myAxiosInstance;

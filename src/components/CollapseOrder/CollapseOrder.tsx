@@ -6,7 +6,7 @@ import { useAppSelector } from "../../hooks/redux";
 function CollapseOrder() {
   const [isVisible, setIsVisible] = useState(false);
   const currentOrder: IOrder[] = useAppSelector((state) => state.orders.list);
-  console.log(currentOrder);
+  // console.log(currentOrder);
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);

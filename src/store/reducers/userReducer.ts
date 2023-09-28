@@ -1,64 +1,51 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
-import checkLogin from "../middlewares/login";
+import myAxiosInstance from "../../api/axios";
+import { saveJWTToLocalStorage } from "../../localStorage/localStorage";
 
 interface UserState {
+  id: number | null;
   logged: boolean;
-  credentials: {
-    login: string;
-    password: string;
-  };
-  pseudo: null | string;
-  errorMessage: null | string;
+  login: string;
+  errorMessage: string | null;
   token: null | string;
 }
 export const initialState: UserState = {
+  id: null,
   logged: false,
-  credentials: {
-    login: "",
-    password: "",
-  },
-  pseudo: null,
+  login: "",
   errorMessage: null,
   token: null,
 };
 
-export const setCredentials = createAction<{
-  inputValue: string;
-  inputName: "login" | "password";
-}>("user/SET_CREDENTIALS");
-
-export const logOut = createAction("user/LOGOUT");
+export const getActionDisconnect = createAction("login/DISCONNECT");
+export const getActionLogin = createAction<{ token: string; id: number }>(
+  "login"
+);
 
 const userReducer = createReducer(initialState, (builder) => {
-  builder
-    .addCase(setCredentials, (state, action) => {
-      // mettre la valeur de inputValue dans l'emplacement inputName (soit email soit password)
-      // il recupere inputValue et inputName en payload !
-      state.credentials[action.payload.inputName] = action.payload.inputValue;
-      // state.credentials.email = action.payload.inputValue;
-      // state.credentials.password = action.payload.inputValue;
-    })
-    .addCase(checkLogin.fulfilled, (state, action) => {
-      // mettre isLogged à true dans le state
-      // enregistrer le speudo et le tocken dans le state
-      state.logged = true;
-      state.pseudo = action.payload.pseudo;
-      state.token = action.payload.token;
-      state.errorMessage = null;
-    })
-    .addCase(checkLogin.rejected, (state, action) => {
-      // enregistrer un message d'erreur
-      state.errorMessage = "erreur de connexion";
-    })
-    .addCase(logOut, (state, action) => {
-      // on met logged à false
-      state.logged = false;
-    })
-    .addCase(checkLocalStorage.fulfilled, (state, action) => {
-      // on enregistre le token dans le state et on dit qu'on est connecté
-      state.token = action.payload;
-      state.logged = true;
-    });
+  builder.addCase(getActionLogin, (state, action) => {
+    // mettre isLogged à true dans le state
+    // enregistrer le speudo et le tocken dans le state
+    console.log(action.id, action.token);
+    state.logged = true;
+    state.id = action.payload.id;
+    state.token = action.payload.token;
+    // on va enregistrer les entetes header autorisation dans l'instance d'axios
+    myAxiosInstance.defaults.headers.common.Authorization = `Bearer ${action.payload.token}`;
+
+    // on va aussi enregistrer le token dans le localStorage
+    saveJWTToLocalStorage(action.payload.token);
+
+    // state.errorMessage = null;
+  });
+  // .addCase(login.rejected, (state, action) => {
+  //   // enregistrer un message d'erreur
+  //   state.errorMessage = "erreur de connexion";
+  // })
+  // .addCase(getActionDisconnect, (state, action) => {
+  //   // on met logged à false
+  //   state.logged = false;
+  // });
 });
 
 export default userReducer;

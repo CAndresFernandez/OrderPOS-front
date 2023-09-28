@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import "./Navbar.scss";
 
-function Navbar({ userId }: { userId: string }) {
-  console.log(userId);
+function Navbar({ userId }: { userId: number }) {
+  // console.log(userId);
 
   return (
     <section className="section">

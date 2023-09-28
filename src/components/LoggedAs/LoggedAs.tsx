@@ -3,7 +3,7 @@ import "./LoggedAs.scss";
 
 function LoggedAs() {
   return (
-    <Link to="/login_check" className="logged-as">
+    <Link to="/login" className="logged-as">
       <p>
         Logged as: <span>John Doe</span>
       </p>

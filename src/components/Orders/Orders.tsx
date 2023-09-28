@@ -6,11 +6,11 @@ import LoggedAs from "../LoggedAs/LoggedAs";
 import Order from "../Order/Order";
 import "./Orders.scss";
 
-function Orders() {
+function Orders({ userId }: { userId: number }) {
   const dispatch = useAppDispatch();
   const orders: IOrder[] = useAppSelector((state) => state.orders.list);
   useEffect(() => {
-    dispatch(fetchOrdersThunk());
+    dispatch(fetchOrdersThunk(userId));
   }, []);
   return (
     <>

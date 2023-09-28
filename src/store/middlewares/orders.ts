@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import myAxiosInstance from "./axios";
+import myAxiosInstance from "../../api/axios";
 
 // ---- 6/ creation du thunk avec createAsyncThunk de toolkit
 
@@ -8,7 +8,7 @@ export const fetchOrdersThunk = createAsyncThunk(
   // nom de l'action :
   "orders/GET_ORDERS",
   // fonction asynchrone : c'est ici qu'on va faire l'appel AJAX
-  async (userId: string) => {
+  async (userId: number) => {
     // ---- 7/ ecriture de la requete API dans le thunk
     // console.log("result");
     const result = await myAxiosInstance.get(`/users/${userId}/orders`);

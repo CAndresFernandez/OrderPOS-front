@@ -14,7 +14,7 @@ function Table({ table }: { table: ITable }) {
       // ...
     };
     dispatch(addOrderThunk(newOrderData));
-    console.log(newOrderData);
+    // console.log(newOrderData);
   };
 
   return (

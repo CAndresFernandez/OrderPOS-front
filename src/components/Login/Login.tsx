@@ -1,48 +1,59 @@
-import { FormEvent, useState } from "react";
-
-import "./Login.scss";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import ControlledInput from "./ControlledInput";
-import checkLogin from "../../store/middlewares/login";
-import { getActionDisconnect } from "../../store/reducers/loginReducer";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import "./Login.scss";
+import login from "../../api/login";
+import { useAppDispatch } from "../../hooks/redux";
+import { getActionLogin } from "../../store/reducers/userReducer";
 
 function Login() {
-  const dispatch = useAppDispatch();
-  const isConnected = useAppSelector((state) => state.login.isConnected);
-  console.log(isConnected);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  // console.log(isConnected);
   // const isConnected = false;
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    dispatch(checkLogin());
+  const dispatch = useAppDispatch();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Remplacez l'URL par l'URL de votre API d'authentification
+      const response = await login(username, password);
+      const {
+        token,
+        data: { id },
+      } = response;
+      dispatch(getActionLogin({ token, id }));
+      // Gérez la réponse de l'API (par exemple, stockez le token dans le localStorage)
+      console.log(response.data);
+    } catch (error) {
+      // Gérez les erreurs de connexion
+      setError("Invalid credentials");
+    }
   };
 
-  const handleDisconnect = () => {
-    dispatch(getActionDisconnect());
-  };
   const loggedMessage = "You are login!";
   return (
     <div className="login-form">
-      {isConnected ? (
-        <div className="login-form-logged">
-          <p className="login-form-message">{loggedMessage}</p>
-          <button
-            type="button"
-            className="login-form-button"
-            onClick={handleDisconnect}
-          >
-            Logout
-          </button>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit}>
-          <ControlledInput name="login" />
-          <ControlledInput name="password" type="password" />
-          <button type="submit" className="login-form-button">
-            Login
-          </button>
-        </form>
-      )}
+      <form onSubmit={handleLogin}>
+        <input
+          type="text"
+          className="settings-input"
+          placeholder="username"
+          value={username} // control en lecture : on affiche la donnée de redux
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          className="settings-input"
+          placeholder="password"
+          value={password} // control en lecture : on affiche la donnée de redux
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit" className="login-form-button">
+          Login
+        </button>
+      </form>
+      {error && <p className="error-message">{error}</p>}
       <Link to="/">
         <button type="button" className="login-form-button">
           Back
