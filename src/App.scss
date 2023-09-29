@@ -1,17 +1,25 @@
+@use 'styles/variables'as v;
+
 #root {
   max-width: 1280px;
   min-width: 100px;
   margin: 0 auto;
   text-align: center;
+  background-color: v.$lighterNewColor;
 }
 
-.body {}
-
-
-
+.body {
+  background-color: v.$newColor;
+}
 
 .card {
-  padding: 2em;
+  padding: 1em;
+  background-color: v.$lightNewColor;
+  width: 4em;
+  height: 5em;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .read-the-docs {

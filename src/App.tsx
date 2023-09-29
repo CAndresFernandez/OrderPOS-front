@@ -1,40 +1,48 @@
-import { Route, Routes } from "react-router-dom";
-import "./App.scss";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useAppSelector } from "./hooks/redux";
 import Navbar from "./components/Navbar/Navbar";
 import Tables from "./components/Tables/Tables";
 import CurrentOrder from "./components/CurrentOrder/CurrentOrder";
 import Orders from "./components/Orders/Orders";
-import { useAppDispatch } from "./hooks/redux";
-import { fetchTablesThunk } from "./store/middlewares/tables";
-import { fetchItemsThunk } from "./store/middlewares/items";
+import Login from "./components/Login/Login";
+import Logout from "./components/Login/Logout";
+import "./App.scss";
 
 function App() {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    // APRES le premier chargement de l'app on veut aller chercher les tables
-    // App va dispatcher une action vers le thunk middleware qui s'occupe de l'appel API
-    dispatch(fetchTablesThunk());
+  const userId = useAppSelector((state) => state.user.id);
+  console.log(userId);
+  const navigate = useNavigate();
+  const isLogin = useAppSelector((state) => state.user.logged);
+  console.log(isLogin);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   useEffect(() => {
-    // APRES le premier chargement de l'app on veut aller chercher les tables
-    // App va dispatcher une action vers le thunk middleware qui s'occupe de l'appel API
+    if (!isLogin) {
+      navigate("/login");
+    }
 
-    dispatch(fetchItemsThunk());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    console.log(userId);
+  }, [isLogin, navigate]);
   return (
     <>
       <div className="body">
         <Routes>
-          <Route path="/" element={<Tables />} />
-          <Route path="/current-order" element={<CurrentOrder />} />
-          <Route path="/orders" element={<Orders />} />
+          {isLogin ? (
+            <>
+              <Route path="/" element={<Tables />} />
+              <Route path="/tables/30/order" element={<CurrentOrder />} />
+              <Route
+                path={`/users/${userId}/orders`}
+                element={<Orders userId={userId} />}
+              />
+              <Route path="/logout" element={<Logout />} />
+            </>
+          ) : (
+            <Route path="/login" element={<Login />} />
+          )}
         </Routes>
       </div>
-      <Navbar />
+      {isLogin && <Navbar userId={userId} />}
     </>
   );
 }

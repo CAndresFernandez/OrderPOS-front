@@ -2,7 +2,7 @@ import { IItem } from "../../@types/order";
 
 import "./Dish.scss";
 
-function Dish({ dish }: IItem) {
+function Dish({ dish }: { dish: IItem }) {
   // console.log(item.id);
 
   return (

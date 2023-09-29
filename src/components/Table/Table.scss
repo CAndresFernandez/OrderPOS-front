@@ -1,5 +1,9 @@
-.card{
+.card {
     padding: 0.5em;
     border: 1px solid black;
     border-radius: 5px;
+    line-height: 0.8;
+    &-title{
+        margin: 0;
+    }
 }

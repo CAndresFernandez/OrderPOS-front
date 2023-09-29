@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import myAxiosInstance from "./axios";
+import myAxiosInstance from "../../api/axios";
 
 // ---- 6/ creation du thunk avec createAsyncThunk de toolkit
 
