@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import myAxiosInstance from "../../api/axios";
+import { IOrder } from "../../@types/order";
 
 // ---- 6/ creation du thunk avec createAsyncThunk de toolkit
 
@@ -19,28 +20,43 @@ export const fetchOrdersThunk = createAsyncThunk(
   }
 );
 export const addOrderThunk = createAsyncThunk(
-  // nom de l'action :
   "orders/CREATE_ORDER",
-  // fonction asynchrone : c'est ici qu'on va faire l'appel AJAX
-  async (newOrderData) => {
-    // J'envoie à l'API le label de la nouvelle order
-    const result = await myAxiosInstance.post("/orders", newOrderData);
-    // l'API nous renvoie la nouvelle liste d'orders
-    // on maintient à jour le state avec cette valeur de retour
-    console.log(result);
-    return result.data;
+  async () => {
+    try {
+      const result = await myAxiosInstance.post("/orders");
+      console.log(result);
+      return result.data;
+    } catch (error) {
+      console.error("Error creating order:", error);
+      throw error;
+    }
   }
 );
+
 export const editOrderThunk = createAsyncThunk(
-  // nom de l'action :
   "orders/EDIT_ORDER",
-  // fonction asynchrone : c'est ici qu'on va faire l'appel AJAX
   async ({ id, ...newOrderData }) => {
-    // J'envoie à l'API le label de la nouvelle order
-    const result = await myAxiosInstance.put(`/orders/${id}`, newOrderData);
-    // l'API nous renvoie la nouvelle liste d'orders
-    // on maintient à jour le state avec cette valeur de retour
-    return result.data;
-    console.log(result);
+    try {
+      const result = await myAxiosInstance.put(`/orders/${id}`, newOrderData);
+      console.log(result);
+      return result.data;
+    } catch (error) {
+      console.error("Error editing order:", error);
+      throw error;
+    }
+  }
+);
+
+export const fetchOrderThunk = createAsyncThunk(
+  "orders/GET_ORDER",
+  async ({ id }) => {
+    try {
+      const result = await myAxiosInstance.get(`/orders/${id}`);
+      console.log(result);
+      return result.data;
+    } catch (error) {
+      console.error("Error fetching order:", error);
+      throw error;
+    }
   }
 );

@@ -1,8 +1,11 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 import myAxiosInstance from "../../api/axios";
-import { saveJWTToLocalStorage } from "../../localStorage/localStorage";
+import {
+  saveJWTToLocalStorage,
+  saveUserIdToLocalStorage,
+} from "../../localStorage/localStorage";
 
-interface UserState {
+export interface UserState {
   id: number | null;
   logged: boolean;
   login: string;
@@ -27,7 +30,7 @@ const userReducer = createReducer(initialState, (builder) => {
     .addCase(getActionLogin, (state, action) => {
       // mettre isLogged à true dans le state
       // enregistrer le speudo et le tocken dans le state
-      console.log(action.id, action.token);
+      // console.log(action.id, action.token);
       state.logged = true;
       state.id = action.payload.id;
       state.token = action.payload.token;
@@ -36,6 +39,7 @@ const userReducer = createReducer(initialState, (builder) => {
 
       // on va aussi enregistrer le token dans le localStorage
       saveJWTToLocalStorage(action.payload.token);
+      saveUserIdToLocalStorage(action.payload.id);
 
       // state.errorMessage = null;
     })

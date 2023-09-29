@@ -1,11 +1,16 @@
+import { IUser } from "./user";
+
 export interface ITable {
   id: int;
+  orderId?: int;
   number: int;
   covers: int;
   active: boolean;
+  relatedOrder?: IOrder;
 }
 export interface IItem {
   id: int;
+  category_id: int;
   name: string;
   description: string;
   active: boolean;
@@ -21,8 +26,8 @@ export interface ICategory {
 
 export interface IOrder {
   id: int;
-  relatedTable_id: int;
-  user_id: int;
-  status: int;
-  orderItems: IItem[];
+  relatedTable_id?: int;
+  user?: IUser;
+  status?: int;
+  orderItems?: IItem[];
 }

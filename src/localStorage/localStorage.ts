@@ -10,3 +10,10 @@ export const saveJWTToLocalStorage = (jwtValue: string) => {
 export const getJWTFromLocalStorage = () => {
   return localStorage.getItem("jwt");
 };
+
+export const saveUserIdToLocalStorage = (id: number) => {
+  localStorage.setItem("user_id", id.toString());
+};
+export const getUserIdFromLocalStorage = () => {
+  return localStorage.getItem("id");
+};

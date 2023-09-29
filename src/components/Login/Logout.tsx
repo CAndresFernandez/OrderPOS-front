@@ -2,9 +2,11 @@ import React from "react";
 import { getActionDisconnect } from "../../store/reducers/userReducer"; // Ajustez le chemin d'importation en fonction de votre structure de projet
 import "./Login.scss"; // Assurez-vous que le chemin vers le fichier SCSS est correct
 import { useAppDispatch } from "../../hooks/redux";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function Logout() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const loggedMessage = "You are logged in!";
 
   const handleDisconnect = () => {
@@ -14,6 +16,7 @@ function Logout() {
     dispatch(getActionDisconnect());
     // Redirigez l'utilisateur vers la page de connexion ou une autre page appropriée
     // Si vous utilisez react-router-dom, vous pouvez utiliser useHistory pour cela
+    navigate("/login");
   };
 
   return (

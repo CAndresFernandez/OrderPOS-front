@@ -1,8 +1,8 @@
-@use '../../styles/variables' as v;
+@use '../../styles/variables'as v;
 
 .container {
   position: fixed;
-  bottom: 90px;
+  bottom: 3.5em;
   left: 50%;
   transform: translateX(-50%);
   width: 70%;
