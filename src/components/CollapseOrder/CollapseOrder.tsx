@@ -24,10 +24,10 @@ function CollapseOrder() {
       <div className={`collapse ${isVisible ? "visible" : ""}`}>
         <div>STARTERS</div>
         <h3>Order {currentOrder.orderItems}</h3>
-        <div>DRINK</div>
-        <div>DESSERTS</div>
+        <div>facilis</div>
+        <div>doloremque</div>
         <div>STARTERS</div>
-        <div>MAIN COURSE</div>
+        <div>ratione</div>
         <div>DRINK</div>
         <div>DESSERTS</div>
         <div>STARTERS</div>

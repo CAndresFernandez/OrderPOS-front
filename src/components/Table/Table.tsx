@@ -8,12 +8,12 @@ function Table({ table }: { table: ITable }) {
   const dispatch = useAppDispatch();
 
   const handleTableClick = () => {
-    const newOrderData = {
-      relatedTable_id: table.id,
-      user_id: 12,
-      // ...
-    };
-    dispatch(addOrderThunk(newOrderData));
+    // const newOrderData = {
+    //   relatedTable_id: table.id,
+    //   user_id: 12,
+    //   // ...
+    // };
+    dispatch(addOrderThunk());
     // console.log(newOrderData);
   };
 

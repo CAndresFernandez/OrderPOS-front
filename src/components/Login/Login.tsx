@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.scss";
 import login from "../../api/login";
 import { useAppDispatch } from "../../hooks/redux";
@@ -9,6 +9,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
   // console.log(isConnected);
   // const isConnected = false;
   const dispatch = useAppDispatch();
@@ -16,13 +17,13 @@ function Login() {
     e.preventDefault();
 
     try {
-      // Remplacez l'URL par l'URL de votre API d'authentification
       const response = await login(username, password);
       const {
         token,
         data: { id },
       } = response;
       dispatch(getActionLogin({ token, id }));
+      navigate("/");
       // Gérez la réponse de l'API (par exemple, stockez le token dans le localStorage)
       console.log(response.data);
     } catch (error) {

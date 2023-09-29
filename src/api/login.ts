@@ -1,4 +1,3 @@
-import { saveJWTToLocalStorage } from "../localStorage/localStorage";
 import myAxiosInstance from "./axios";
 
 const login = (username, password) => {
