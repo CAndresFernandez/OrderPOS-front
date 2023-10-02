@@ -1,13 +1,10 @@
-ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    padding-left: 0;
-
-}
 
 .tables-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 10px;
+    padding-left: 0;
     height: 70vh;
     overflow-y: auto;
 }

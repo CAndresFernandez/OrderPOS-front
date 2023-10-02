@@ -36,6 +36,7 @@ export interface IOrderItem {
   item: IItem;
   name: string;
   relatedTable?: ITable;
+  status?: number;
   quantity: number;
   comment?: string | null;
   sent: boolean;

@@ -26,7 +26,7 @@ function App() {
   }, [logged, navigate]);
   return (
     <>
-      <div className="body">
+      <div className="container1">
         <Routes>
           {logged ? (
             <>

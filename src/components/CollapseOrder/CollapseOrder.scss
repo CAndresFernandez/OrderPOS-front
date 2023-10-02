@@ -1,12 +1,12 @@
 @use '../../styles/variables'as v;
 
-.container {
+.collapse-container {
   position: fixed;
   bottom: 3.5em;
+
   left: 50%;
   transform: translateX(-50%);
   width: 70%;
-  text-align: center;
 }
 
 .collapse {
@@ -25,9 +25,11 @@
     opacity: 1;
   }
 }
-.list{
+
+.list {
   flex-direction: column;
 }
+
 .toggle-button {
   display: inline-block;
   background-color: v.$darkerNewColor;
@@ -45,4 +47,34 @@
   &:focus {
     outline: none;
   }
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  color: #333;
+  font-size: 18px;
+  padding: 1px 5px;
+  margin: 1px;
+  min-width: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #e0e0e0;
+}
+
+.btn:active {
+  background-color: #d0d0d0;
+}
+
+.list-li {
+  display: flex;
+  justify-content: space-around;
 }

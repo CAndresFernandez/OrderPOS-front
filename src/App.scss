@@ -8,20 +8,32 @@
   background-color: v.$lighterNewColor;
 }
 
-.body {
+.container1 {
   background-color: v.$newColor;
+  height: 97vh;
+  border-radius: 15px;
 }
 
 .card {
   padding: 1em;
-  background-color: v.$lightNewColor;
   width: 4em;
   height: 5em;
   overflow: hidden;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  border-radius: 5px;
+  margin: 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+ border: 1px solid white;
+
 }
 
 .read-the-docs {
   color: #888;
+}
+
+h2{
+  color: white;
 }

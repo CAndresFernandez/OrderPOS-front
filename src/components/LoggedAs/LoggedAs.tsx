@@ -4,9 +4,9 @@ import { useAppSelector } from "../../hooks/redux";
 
 function LoggedAs() {
   return (
-    <Link to="/logout" className="logged-as">
-      <p>
-        Logged as: <span></span>
+    <Link to="/logout">
+      <p className="logged-as">
+        Logged as: <span>George Abitbol</span>
       </p>
     </Link>
   );

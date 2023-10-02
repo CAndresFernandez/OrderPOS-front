@@ -19,7 +19,7 @@ function CurrentOrder() {
   const { orderId } = useParams();
 
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
-  console.log(items, currentOrder);
+  // console.log(items, currentOrder);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -47,7 +47,7 @@ function CurrentOrder() {
         <NavCategories />
         <button
           type="button"
-          className="NavBtnBack"
+          className="btn btn-wide margin-small"
           onClick={() => navigate("/")}
         >
           BACK
