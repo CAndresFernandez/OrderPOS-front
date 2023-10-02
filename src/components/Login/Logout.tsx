@@ -2,7 +2,7 @@ import React from "react";
 import { getActionDisconnect } from "../../store/reducers/userReducer"; // Ajustez le chemin d'importation en fonction de votre structure de projet
 import "./Login.scss"; // Assurez-vous que le chemin vers le fichier SCSS est correct
 import { useAppDispatch } from "../../hooks/redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 function Logout() {
   const dispatch = useAppDispatch();
@@ -30,6 +30,9 @@ function Logout() {
         >
           Logout
         </button>
+        <Link to="/" className="login-form-button">
+          back
+        </Link>
       </div>
     </div>
   );

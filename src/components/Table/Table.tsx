@@ -20,22 +20,22 @@ function Table({ table }: { table: ITable }) {
   // };
   const userId = table.relatedOrder?.user?.id;
   const currentUser = useAppSelector((state) => state.user);
-  // console.log(table);
+  console.log(currentUser);
 
   const isOwner = userId === currentUser.id; // Comparer l'userId de la table avec l'userId actuel
   console.log(
     isOwner,
     userId,
+    table,
     currentUser.id,
-    table.relatedOrder.user.lastname
+    table.relatedOrder?.id,
+    table.relatedOrder?.user?.lastname
   );
 
   const isUnowned = !userId; // Vérifier si la table n'a pas de propriétaire
   const handleTableClick = () => {
     if (isUnowned) {
       dispatch(addOrderThunk());
-    } else if (isOwner) {
-      dispatch(fetchOrderThunk());
     }
   };
 
@@ -49,11 +49,16 @@ function Table({ table }: { table: ITable }) {
           <div>{table.relatedOrder?.user?.lastname}</div>
         </div>
       ) : (
-        <Link to={`/tables/${table.id}/orders`} onClick={handleTableClick}>
-          <div className="card active-link w-96 bg-base-100 shadow-xl">
-            <h3 className="card-title">Table {table.id}</h3>
-          </div>
-        </Link>
+        table.relatedOrder && (
+          <Link
+            to={`/orders/${table.relatedOrder.id}`}
+            onClick={handleTableClick}
+          >
+            <div className="card active-link w-96 bg-base-100 shadow-xl">
+              <h3 className="card-title">Table {table.id}</h3>
+            </div>
+          </Link>
+        )
       )}
     </>
   );

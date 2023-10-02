@@ -1,13 +1,19 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { IOrder } from "../../@types/order";
-import { fetchOrderThunk, fetchOrdersThunk } from "../middlewares/orders";
+import {
+  fetchOrderByTableIdThunk,
+  fetchOrderThunk,
+  fetchOrdersThunk,
+} from "../middlewares/orders";
 
 interface RootState {
   list: IOrder[];
+  currentOrder: IOrder | null;
 }
 
 export const initialState: RootState = {
   list: [],
+  currentOrder: null,
 };
 
 const ordersReducer = createReducer(initialState, (builder) => {
@@ -15,16 +21,23 @@ const ordersReducer = createReducer(initialState, (builder) => {
     .addCase(fetchOrdersThunk.fulfilled, (state, action) => {
       state.list = action.payload;
     })
-    .addCase(fetchOrdersThunk.rejected, (state, action) => {
+    .addCase(fetchOrdersThunk.rejected, () => {
       // puisqu'on la requette à planté on précise qu'on peut enlever le loader
       console.log("rejected");
     })
     .addCase(fetchOrderThunk.fulfilled, (state, action) => {
       if (action.payload) {
-        state.list = [...state.list, action.payload];
+        state.currentOrder = action.payload;
       }
     })
-    .addCase(fetchOrderThunk.rejected, (state, action) => {
+    .addCase(fetchOrderThunk.rejected, () => {
+      // puisqu'on la requette à planté on précise qu'on peut enlever le loader
+      console.log("fetch order rejected");
+    })
+    .addCase(fetchOrderByTableIdThunk.fulfilled, (state, action) => {
+      state.currentOrder = action.payload;
+    })
+    .addCase(fetchOrderByTableIdThunk.rejected, () => {
       // puisqu'on la requette à planté on précise qu'on peut enlever le loader
       console.log("rejected");
     });

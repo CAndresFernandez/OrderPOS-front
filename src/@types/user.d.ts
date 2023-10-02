@@ -3,6 +3,6 @@ export interface IUser {
   logged?: boolean;
   login?: string;
   roles?: string;
-  firsName?: string;
-  lastName?: string;
+  firsname?: string;
+  lastname?: string;
 }

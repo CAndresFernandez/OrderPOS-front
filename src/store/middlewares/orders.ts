@@ -49,10 +49,23 @@ export const editOrderThunk = createAsyncThunk(
 
 export const fetchOrderThunk = createAsyncThunk(
   "orders/GET_ORDER",
-  async ({ id }) => {
+  async (id: number) => {
     try {
       const result = await myAxiosInstance.get(`/orders/${id}`);
       console.log(result);
+      return result.data;
+    } catch (error) {
+      console.error("Error fetching order:", error);
+      throw error;
+    }
+  }
+);
+export const fetchOrderByTableIdThunk = createAsyncThunk(
+  "orders/GET_ORDER_BY_TABLE_ID",
+  async (tableId: number) => {
+    try {
+      const result = await myAxiosInstance.get(`/tables/${tableId}/orders`);
+      console.log(result.data);
       return result.data;
     } catch (error) {
       console.error("Error fetching order:", error);

@@ -55,11 +55,6 @@ function Login() {
         </button>
       </form>
       {error && <p className="error-message">{error}</p>}
-      <Link to="/">
-        <button type="button" className="login-form-button">
-          Back
-        </button>
-      </Link>
     </div>
   );
 }

@@ -2,7 +2,6 @@ import { IUser } from "./user";
 
 export interface ITable {
   id: int;
-  orderId?: int;
   number: int;
   covers: int;
   active: boolean;
@@ -12,7 +11,8 @@ export interface IItem {
   id: int;
   category_id: int;
   name: string;
-  description: string;
+  price: number;
+  description?: string;
   active: boolean;
   category: ICategory[];
 }
@@ -30,4 +30,21 @@ export interface IOrder {
   user?: IUser;
   status?: int;
   orderItems?: IItem[];
+}
+export interface IOrderItem {
+  id: number;
+  item: IItem;
+  name: string;
+  related_order_id: number;
+  quantity: number;
+  comment?: string | null;
+  sent: boolean;
+}
+interface IClosedOrder {
+  id: number;
+  items: string;
+  paid: boolean;
+  total: number;
+  count: number;
+  user_id: string;
 }

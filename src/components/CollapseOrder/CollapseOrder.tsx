@@ -1,41 +1,39 @@
 import React, { useState } from "react";
 import "./CollapseOrder.scss";
-import { IOrder } from "../../@types/order";
+import { IOrderItem } from "../../@types/order";
 import { useAppSelector } from "../../hooks/redux";
 
-function CollapseOrder({ orderId }: { orderId: number }) {
+function CollapseOrder() {
   const [isVisible, setIsVisible] = useState(false);
-  const CurrentOrder = useAppSelector((state) => state.orders.list);
+  const currentOrder = useAppSelector((state) => state.orders.currentOrder);
+  const items: IOrderItem[] = currentOrder?.orderItems || [];
+  console.log(items);
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
 
   return (
-    <div className="container">
-      <button
-        type="button"
-        className="toggle-button"
-        onClick={toggleVisibility}
-      >
-        {isVisible ? "\u25BC" : "\u25B2"}
-      </button>
-      <div className={`collapse ${isVisible ? "visible" : ""}`}>
-        <div>STARTERS</div>
-        <h3>Order</h3>
-        <div>facilis</div>
-        <div>doloremque</div>
-        <div>STARTERS</div>
-        <div>ratione</div>
-        <div>DRINK</div>
-        <div>DESSERTS</div>
-        <div>STARTERS</div>
-        <div>MAIN COURSE</div>
-        <div>DRINK</div>
-        <div>DESSERTS</div>
-      </div>
-    </div>
+    <>
+      {currentOrder && (
+        <div className="container">
+          <button
+            type="button"
+            className="toggle-button"
+            onClick={toggleVisibility}
+          >
+            {isVisible ? "\u25BC" : "\u25B2"}
+          </button>
+          <div className={`collapse ${isVisible ? "visible" : ""}`}>
+            <ul>
+              {items.map((item) => (
+                <li key={item.id}>{item.item.name}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
-
 export default CollapseOrder;

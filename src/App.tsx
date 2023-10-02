@@ -8,7 +8,7 @@ import CurrentOrder from "./components/CurrentOrder/CurrentOrder";
 import Login from "./components/Login/Login";
 import Logout from "./components/Login/Logout";
 import "./App.scss";
-import isLogged from "./store/selectors/user";
+import CollapseOrder from "./components/CollapseOrder/CollapseOrder";
 
 function App() {
   const tables = useAppSelector((state) => state.tables.list);
@@ -32,10 +32,7 @@ function App() {
           {logged ? (
             <>
               <Route path="/" element={<Tables />} />
-              <Route
-                path="/tables/:tableId/orders"
-                element={<CurrentOrder />}
-              />
+              <Route path="/orders/:orderId" element={<CurrentOrder />} />
               {/* <Route
                 path={`/users/${userId}/orders`}
                 element={<Orders userId={userId} />}
@@ -48,6 +45,7 @@ function App() {
         </Routes>
       </div>
       {/* {isLogin && <Navbar userId={userId} />} */}
+      <CollapseOrder />
     </>
   );
 }
