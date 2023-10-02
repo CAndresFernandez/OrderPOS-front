@@ -25,7 +25,9 @@
     opacity: 1;
   }
 }
-
+.list{
+  flex-direction: column;
+}
 .toggle-button {
   display: inline-block;
   background-color: v.$darkerNewColor;

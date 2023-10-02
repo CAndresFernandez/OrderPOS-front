@@ -1,6 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { IOrder } from "../../@types/order";
 import {
+  addItemToCurrentOrderThunk,
   fetchOrderByTableIdThunk,
   fetchOrderThunk,
   fetchOrdersThunk,
@@ -26,6 +27,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
       console.log("rejected");
     })
     .addCase(fetchOrderThunk.fulfilled, (state, action) => {
+      console.log("fetched items");
       if (action.payload) {
         state.currentOrder = action.payload;
       }
@@ -38,6 +40,13 @@ const ordersReducer = createReducer(initialState, (builder) => {
       state.currentOrder = action.payload;
     })
     .addCase(fetchOrderByTableIdThunk.rejected, () => {
+      // puisqu'on la requette à planté on précise qu'on peut enlever le loader
+      console.log("rejected");
+    })
+    .addCase(addItemToCurrentOrderThunk.fulfilled, (state, action) => {
+      state.currentOrder = action.payload;
+    })
+    .addCase(addItemToCurrentOrderThunk.rejected, () => {
       // puisqu'on la requette à planté on précise qu'on peut enlever le loader
       console.log("rejected");
     });

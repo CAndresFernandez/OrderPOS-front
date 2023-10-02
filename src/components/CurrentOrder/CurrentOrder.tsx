@@ -8,7 +8,10 @@ import { IItem } from "../../@types/order";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import "./CurrentOrder.scss";
 import { fetchItemsThunk } from "../../store/middlewares/items";
-import { fetchOrderThunk } from "../../store/middlewares/orders";
+import {
+  addItemToCurrentOrderThunk,
+  fetchOrderThunk,
+} from "../../store/middlewares/orders";
 
 function CurrentOrder() {
   const items: IItem[] = useAppSelector((state) => state.items.list);
@@ -26,6 +29,16 @@ function CurrentOrder() {
     if (orderId) dispatch(fetchOrderThunk(parseInt(orderId, 10)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderId]);
+
+  const handleClick = (itemId: number) => {
+    dispatch(
+      addItemToCurrentOrderThunk({
+        orderId: parseInt(orderId, 10),
+        itemId,
+      })
+    );
+    //dispatch(fetchOrderThunk(parseInt(orderId, 10)));
+  };
   return (
     <>
       <header>
@@ -43,7 +56,11 @@ function CurrentOrder() {
 
       <ul className="dish-list">
         {items.map((item) => (
-          <li key={item.id}>
+          <li
+            className="li-clickable"
+            onClick={() => handleClick(item.id)}
+            key={item.id}
+          >
             <Dish dish={item} />
           </li>
         ))}

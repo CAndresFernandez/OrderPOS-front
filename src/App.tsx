@@ -15,7 +15,6 @@ function App() {
   // console.log(tables);
 
   const logged = useAppSelector((state) => state.user.logged);
-  // console.log(userId);
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -20,17 +20,17 @@ function Table({ table }: { table: ITable }) {
   // };
   const userId = table.relatedOrder?.user?.id;
   const currentUser = useAppSelector((state) => state.user);
-  console.log(currentUser);
+  // console.log(currentUser);
 
   const isOwner = userId === currentUser.id; // Comparer l'userId de la table avec l'userId actuel
-  console.log(
-    isOwner,
-    userId,
-    table,
-    currentUser.id,
-    table.relatedOrder?.id,
-    table.relatedOrder?.user?.lastname
-  );
+  // console.log(
+  //   isOwner,
+  //   userId,
+  //   table,
+  //   currentUser.id,
+  //   table.relatedOrder?.id,
+  //   table.relatedOrder?.user?.lastname
+  // );
 
   const isUnowned = !userId; // Vérifier si la table n'a pas de propriétaire
   const handleTableClick = () => {
