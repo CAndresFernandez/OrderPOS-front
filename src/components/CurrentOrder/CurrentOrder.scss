@@ -1,4 +1,17 @@
 .dish-list {
     height: 70vh;
     overflow-y: auto;
+    padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;    
+    gap: 5px;
+}
+.li-clickable {
+    transition: transform 0.1s ease; /* Smooth transition for the transform property */
+    cursor: pointer; /* Hand cursor on hover */
+}
+
+.li-clickable:active { /* :active pseudo-class applies styles when the element is being clicked */
+    transform: scale(0.95); /* Scale the element down to 95% of its original size */
 }

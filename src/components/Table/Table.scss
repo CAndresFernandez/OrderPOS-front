@@ -1,9 +1,31 @@
 .card {
-    padding: 0.5em;
-    border: 1px solid black;
-    border-radius: 5px;
-    line-height: 0.8;
-    &-title{
-        margin: 0;
+    line-height: 0.7;
+    justify-content: flex-start;
+    color: white;
+    overflow: scroll;
+
+    &-title {
+        margin: 0.1em;
+        white-space: nowrap;
     }
 }
+
+// .active-link {
+//     color: green !important;
+//     border-color: green;
+// }
+
+.status-in-progress {
+  background-color:  green; // Color for "In progress"
+  border: none !important;
+  }
+  
+  .status-cooking {
+    background-color:  orange; // Color for "Cooking"
+    border: none !important;
+  }
+  
+  .status-waiting-payment {
+    background-color:  red; // Color for "Waiting payment"
+    border: none !important;
+  }

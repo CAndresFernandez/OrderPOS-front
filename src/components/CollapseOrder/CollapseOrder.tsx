@@ -1,42 +1,117 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CollapseOrder.scss";
-import { IOrder } from "../../@types/order";
-import { useAppSelector } from "../../hooks/redux";
+import { IOrderItem } from "../../@types/order";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import {
+  addItemToCurrentOrderThunk,
+  changeStatusOrderThunk,
+  minusItemToCurrentOrderThunk,
+  plusItemToCurrentOrderThunk,
+} from "../../store/middlewares/orders";
 
 function CollapseOrder() {
   const [isVisible, setIsVisible] = useState(false);
-  const currentOrder: IOrder[] = useAppSelector((state) => state.orders.list);
-  // console.log(currentOrder);
-
+  const currentOrder = useAppSelector((state) => state.orders.currentOrder);
+  console.log(currentOrder);
+  const [localItems, setLocalItems] = useState<IOrderItem[]>([]);
+  const dispatch = useAppDispatch();
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
-
+  useEffect(() => {
+    if (currentOrder?.orderItems) {
+      setLocalItems(currentOrder.orderItems);
+    }
+  }, [currentOrder]);
+  // useEffect(() => {
+  //   if (currentOrder) {
+  //     dispatch(editOrderThunk(currentOrder.id, { orderItems: items }));
+  //   }
+  // }, [dispatch, items, currentOrder]);
+  const handleMinusClick = (itemId: number) => {
+    dispatch(
+      minusItemToCurrentOrderThunk({
+        orderId: currentOrder.id,
+        itemId,
+      })
+    );
+  };
+  const handlePlusClick = (itemId: number) => {
+    dispatch(
+      plusItemToCurrentOrderThunk({
+        orderId: currentOrder.id,
+        itemId,
+      })
+    );
+  };
+  const handleStatusClick = (orderId: number) => {
+    if (currentOrder) {
+      dispatch(
+        changeStatusOrderThunk({
+          orderId: parseInt(orderId, 10),
+          orderStatus: currentOrder.status,
+        })
+      );
+    }
+  };
   return (
-    <div className="container">
-      <button
-        type="button"
-        className="toggle-button"
-        onClick={toggleVisibility}
-      >
-        {isVisible ? "\u25BC" : "\u25B2"}
-      </button>
-      <div className={`collapse ${isVisible ? "visible" : ""}`}>
-        <div>STARTERS</div>
-        <h3>Order {currentOrder.orderItems}</h3>
-        <div>facilis</div>
-        <div>doloremque</div>
-        <div>STARTERS</div>
-        <div>ratione</div>
-        <div>DRINK</div>
-        <div>DESSERTS</div>
-        <div>STARTERS</div>
-        <div>MAIN COURSE</div>
-        <div>DRINK</div>
-        <div>DESSERTS</div>
-      </div>
-    </div>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
+      {currentOrder && (
+        <div className="collapse-container">
+          <div className={`collapse ${isVisible ? "visible" : ""}`}>
+            <ul className="list">
+              {localItems.map((item) => (
+                <li className="list-li" key={item.id}>
+                  <span>{item.item.name}</span>
+                  <span>{item.quantity}</span>
+                  {item.comment?.length > 0 && (
+                    <div className="comment">{item.comment}</div>
+                  )}
+                  <div className="counter">
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() => handleMinusClick(item.id)}
+                      key={item.id}
+                    >
+                      -
+                    </button>
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() => handlePlusClick(item.id)}
+                      key={item.id}
+                    >
+                      +
+                    </button>
+                    <button type="button" className="btn">
+                      comm
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => handleStatusClick(currentOrder.id)}
+            >
+              {currentOrder.status === 0 && "send"}
+              {[1, 2].includes(currentOrder.status) && "modify"}
+            </button>
+            {currentOrder.status === 2 && <button>Pay</button>}
+          </div>
+          <button
+            type="button"
+            className="toggle-button"
+            onClick={toggleVisibility}
+          >
+            {isVisible ? "\u25BC" : "\u25B2"}
+          </button>
+        </div>
+      )}
+    </>
   );
 }
-
 export default CollapseOrder;
