@@ -2,7 +2,7 @@
     line-height: 0.7;
     justify-content: flex-start;
     color: white;
-    
+    overflow: scroll;
 
     &-title {
         margin: 0.1em;
@@ -28,5 +28,4 @@
   .status-waiting-payment {
     background-color:  red; // Color for "Waiting payment"
     border: none !important;
-    white-space: wrap !important;
   }

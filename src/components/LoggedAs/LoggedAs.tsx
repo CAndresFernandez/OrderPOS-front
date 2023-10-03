@@ -3,6 +3,9 @@ import "./LoggedAs.scss";
 import { useAppSelector } from "../../hooks/redux";
 
 function LoggedAs() {
+  const login = useAppSelector((state) => state.user.login.username);
+  console.log(login);
+
   return (
     <Link to="/logout">
       <p className="logged-as">

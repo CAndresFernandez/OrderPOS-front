@@ -22,6 +22,7 @@ export interface ICategory {
   name: string;
   description: string;
   active: boolean;
+  items: IItem[];
 }
 
 export interface IOrder {
@@ -38,8 +39,15 @@ export interface IOrderItem {
   relatedTable?: ITable;
   status?: number;
   quantity: number;
-  comment?: string | null;
+  comment?: IComment | null;
   sent: boolean;
+}
+
+interface IComment {
+  id: number;
+  comment: string;
+  orderItem_id: number;
+  quantity: number;
 }
 interface IClosedOrder {
   id: number;

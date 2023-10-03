@@ -34,8 +34,8 @@ function Login() {
 
   const loggedMessage = "You are login!";
   return (
-    <div className="login-form">
-      <form onSubmit={handleLogin}>
+    <>
+      <form className="login-form" onSubmit={handleLogin}>
         <input
           type="text"
           className="settings-input"
@@ -55,7 +55,7 @@ function Login() {
         </button>
       </form>
       {error && <p className="error-message">{error}</p>}
-    </div>
+    </>
   );
 }
 export default Login;

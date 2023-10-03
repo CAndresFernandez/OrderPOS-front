@@ -89,3 +89,20 @@ export const addItemToCurrentOrderThunk = createAsyncThunk(
     }
   }
 );
+export const changeStatusOrderThunk = createAsyncThunk(
+  "orders/CHANGE_STATUS_CURRENT_ORDER",
+  async ({ orderId, ...newOrderData }: { orderId: number }) => {
+    try {
+      // Assuming the API endpoint to add an item to an order is `/orders/:orderId/items`
+      const result = await myAxiosInstance.put(
+        `/orders/${orderId}/status`,
+        newOrderData
+      );
+      console.log(result);
+      return result.data;
+    } catch (error) {
+      console.error("Error adding item to order:", error);
+      throw error;
+    }
+  }
+);
