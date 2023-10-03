@@ -111,3 +111,32 @@ export const changeStatusOrderThunk = createAsyncThunk(
     }
   }
 );
+
+export const plusItemToCurrentOrderThunk = createAsyncThunk(
+  "order-items/ADD_ITEM_TO_CURRENT_ORDER",
+  async ({ orderId, itemId }: { orderId: number; itemId: number }) => {
+    try {
+      // Assuming the API endpoint to add an item to an order is `/orders/:orderId/items`
+      const result = await myAxiosInstance.put(`/order-items/add/${itemId}`);
+      console.log(result);
+      return result.data;
+    } catch (error) {
+      console.error("Error adding item to order:", error);
+      throw error;
+    }
+  }
+);
+export const minusItemToCurrentOrderThunk = createAsyncThunk(
+  "order-items/REMOVE_ITEM_FROM_CURRENT_ORDER",
+  async ({ orderId, itemId }: { orderId: number; itemId: number }) => {
+    try {
+      // Assuming the API endpoint to add an item to an order is `/orders/:orderId/items`
+      const result = await myAxiosInstance.put(`/order-items/remove/${itemId}`);
+      console.log(result);
+      return result.data;
+    } catch (error) {
+      console.error("Error adding item to order:", error);
+      throw error;
+    }
+  }
+);

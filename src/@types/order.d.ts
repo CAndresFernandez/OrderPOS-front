@@ -39,16 +39,10 @@ export interface IOrderItem {
   relatedTable?: ITable;
   status?: number;
   quantity: number;
-  comment?: IComment | null;
+  comment?: string | null;
   sent: boolean;
 }
 
-interface IComment {
-  id: number;
-  comment: string;
-  orderItem_id: number;
-  quantity: number;
-}
 interface IClosedOrder {
   id: number;
   items: string;

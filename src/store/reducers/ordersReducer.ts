@@ -5,6 +5,8 @@ import {
   fetchOrderByTableIdThunk,
   fetchOrderThunk,
   fetchOrdersThunk,
+  minusItemToCurrentOrderThunk,
+  plusItemToCurrentOrderThunk,
 } from "../middlewares/orders";
 
 interface RootState {
@@ -47,6 +49,22 @@ const ordersReducer = createReducer(initialState, (builder) => {
       state.currentOrder = action.payload;
     })
     .addCase(addItemToCurrentOrderThunk.rejected, () => {
+      // puisqu'on la requette à planté on précise qu'on peut enlever le loader
+      console.log("rejected");
+    })
+
+    .addCase(plusItemToCurrentOrderThunk.fulfilled, (state, action) => {
+      state.currentOrder = action.payload;
+    })
+    .addCase(plusItemToCurrentOrderThunk.rejected, () => {
+      // puisqu'on la requette à planté on précise qu'on peut enlever le loader
+      console.log("rejected");
+    })
+
+    .addCase(minusItemToCurrentOrderThunk.fulfilled, (state, action) => {
+      state.currentOrder = action.payload;
+    })
+    .addCase(minusItemToCurrentOrderThunk.rejected, () => {
       // puisqu'on la requette à planté on précise qu'on peut enlever le loader
       console.log("rejected");
     });

@@ -5,6 +5,8 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import {
   addItemToCurrentOrderThunk,
   changeStatusOrderThunk,
+  minusItemToCurrentOrderThunk,
+  plusItemToCurrentOrderThunk,
 } from "../../store/middlewares/orders";
 
 function CollapseOrder() {
@@ -26,10 +28,18 @@ function CollapseOrder() {
   //     dispatch(editOrderThunk(currentOrder.id, { orderItems: items }));
   //   }
   // }, [dispatch, items, currentOrder]);
+  const handleMinusClick = (itemId: number) => {
+    dispatch(
+      minusItemToCurrentOrderThunk({
+        orderId: currentOrder.id,
+        itemId,
+      })
+    );
+  };
   const handlePlusClick = (itemId: number) => {
     dispatch(
-      addItemToCurrentOrderThunk({
-        orderId: parseInt(orderId, 10),
+      plusItemToCurrentOrderThunk({
+        orderId: currentOrder.id,
         itemId,
       })
     );
@@ -62,12 +72,17 @@ function CollapseOrder() {
                     <button
                       type="button"
                       className="btn"
-                      onClick={() => handlePlusClick(item.id)}
+                      onClick={() => handleMinusClick(item.id)}
                       key={item.id}
                     >
                       -
                     </button>
-                    <button type="button" className="btn">
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() => handlePlusClick(item.id)}
+                      key={item.id}
+                    >
                       +
                     </button>
                     <button type="button" className="btn">

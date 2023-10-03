@@ -31,7 +31,7 @@ function Table({ table }: { table: ITable }) {
     <>
       {!isOwner ? (
         <div className={`card w-96 bg-base-100 shadow-xl `}>
-          <h3 className="card-title">Table {table.id}</h3>
+          <h3 className="card-title">Table {table.number}</h3>
           <p>{table.relatedOrder?.user?.lastname}</p>
           <p
             className={`card-title ${
@@ -53,7 +53,7 @@ function Table({ table }: { table: ITable }) {
               }`}
             >
               <div className="card-title">
-                <h3 className="card-title">Table {table.id}</h3>
+                <h3 className="card-title">Table {table.number}</h3>
                 <p>{table.covers} covers</p>
                 <p>{statusMapping[table.relatedOrder.status] || "Unknown"}</p>
               </div>
