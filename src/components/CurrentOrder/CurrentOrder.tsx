@@ -7,7 +7,10 @@ import NavCategories from "../NavCategories/NavCategories";
 import { IItem } from "../../@types/order";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import "./CurrentOrder.scss";
-import { fetchItemsThunk } from "../../store/middlewares/items";
+import {
+  fetchItemsByCategoryIdThunk,
+  fetchItemsThunk,
+} from "../../store/middlewares/items";
 import {
   addItemToCurrentOrderThunk,
   fetchOrderThunk,
@@ -17,7 +20,6 @@ function CurrentOrder() {
   const items: IItem[] = useAppSelector((state) => state.items.list);
   const navigate = useNavigate();
   const { orderId } = useParams();
-
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
   // console.log(items, currentOrder);
 

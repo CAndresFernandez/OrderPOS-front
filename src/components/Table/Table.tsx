@@ -35,10 +35,10 @@ function Table({ table }: { table: ITable }) {
           <p>{table.relatedOrder?.user?.lastname}</p>
           <p
             className={`card-title ${
-              statusClassMapping[table.relatedOrder.status] || ""
+              statusClassMapping[table.relatedOrder?.status] || ""
             }`}
           >
-            {statusMapping[table.relatedOrder.status] || "Unknown"}
+            {statusMapping[table.relatedOrder?.status] || "Unknown"}
           </p>
         </div>
       ) : (

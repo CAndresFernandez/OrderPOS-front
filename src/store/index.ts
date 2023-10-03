@@ -3,6 +3,7 @@ import tablesReducer from "./reducers/tablesReducer";
 import itemsReducer from "./reducers/itemsReducer";
 import ordersReducer from "./reducers/ordersReducer";
 import userReducer from "./reducers/userReducer";
+import categoriesReducer from "./reducers/categoriesReducer";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     items: itemsReducer,
     orders: ordersReducer,
     user: userReducer,
+    categories: categoriesReducer,
   },
 });
 
