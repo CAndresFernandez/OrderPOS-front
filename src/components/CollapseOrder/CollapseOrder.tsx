@@ -83,8 +83,9 @@ function CollapseOrder() {
               onClick={() => handleStatusClick(currentOrder.id)}
             >
               {currentOrder.status === 0 && "send"}
-              {currentOrder.status === 1 && "modify"}
+              {[1, 2].includes(currentOrder.status) && "modify"}
             </button>
+            {currentOrder.status === 2 && <button>Pay</button>}
           </div>
           <button
             type="button"
