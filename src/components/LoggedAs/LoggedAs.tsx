@@ -4,14 +4,13 @@ import { useAppSelector } from "../../hooks/redux";
 import { getUserIdFromLocalStorage } from "../../localStorage/localStorage";
 
 function LoggedAs() {
-  const login = useAppSelector((state) => state.user.login);
-  const tokenUserId = getUserIdFromLocalStorage();
-  // console.log(tokenUserId);
+  const currentUser = useAppSelector((state) => state.user);
+  console.log(currentUser);
 
   return (
     <Link to="/logout">
       <p className="logged-as">
-        Logged as: <span>George Abitbol</span>
+        Logged as: <span>{currentUser?.id}</span>
       </p>
     </Link>
   );

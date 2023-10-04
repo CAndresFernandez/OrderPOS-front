@@ -8,6 +8,7 @@ import { getActionLogin } from "../../store/reducers/userReducer";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState();
   const [error, setError] = useState("");
   const navigate = useNavigate();
   // console.log(isConnected);

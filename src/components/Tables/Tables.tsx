@@ -13,7 +13,7 @@ function Tables() {
     // APRES le premier chargement de l'app on veut aller chercher les tables
     // App va dispatcher une action vers le thunk middleware qui s'occupe de l'appel API
     dispatch(fetchTablesThunk());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>

@@ -1,36 +1,36 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useAppSelector } from "./hooks/redux";
 // import Navbar from "./components/Navbar/Navbar";
 import Tables from "./components/Tables/Tables";
 import CurrentOrder from "./components/CurrentOrder/CurrentOrder";
-
 import Login from "./components/Login/Login";
 import Logout from "./components/Login/Logout";
-import "./App.scss";
 import CollapseOrder from "./components/CollapseOrder/CollapseOrder";
+import { getFromLocalStorage } from "./localStorage/localStorage";
+import "./App.scss";
+import { getActionLogin } from "./store/reducers/userReducer";
 
 function App() {
+  const dispatch = useDispatch();
   const tables = useAppSelector((state) => state.tables.list);
   // console.log(tables);
-
   const logged = useAppSelector((state) => state.user.logged);
   const navigate = useNavigate();
-
   useEffect(() => {
     if (!logged) {
-      navigate("/login");
+      // TODO : remplir le store avec le localstorage
+      const auth = getFromLocalStorage("auth");
+      if (auth) {
+        dispatch(getActionLogin(auth));
+      } else {
+        navigate("/login");
+      }
     }
 
     // console.log(userId);
-  }, [logged, navigate]);
-  useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
-    if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      setUser(foundUser);
-    }
-  }, []);
+  }, [logged]);
 
   return (
     <>

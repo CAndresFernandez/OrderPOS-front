@@ -46,7 +46,6 @@ function Table({ table }: { table: ITable }) {
 
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
-    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {isOwner || isUnowned ? (
         <Link
