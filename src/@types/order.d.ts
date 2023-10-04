@@ -40,7 +40,6 @@ export interface IOrderItem {
   sent: boolean;
   quantity: number;
   comment?: string | null;
-  sent: boolean;
 }
 
 interface IClosedOrder {

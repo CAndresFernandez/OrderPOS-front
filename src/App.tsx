@@ -24,6 +24,14 @@ function App() {
 
     // console.log(userId);
   }, [logged, navigate]);
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser);
+    }
+  }, []);
+
   return (
     <>
       <div className="container1">

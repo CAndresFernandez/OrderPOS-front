@@ -5,6 +5,8 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import {
   addItemToCurrentOrderThunk,
   changeStatusOrderThunk,
+  deleteOrderThunk,
+  editCommOrderThunk,
   minusItemToCurrentOrderThunk,
   plusItemToCurrentOrderThunk,
 } from "../../store/middlewares/orders";
@@ -66,9 +68,21 @@ function CollapseOrder() {
 
   const handleSubmit = () => {
     // onAddComment(comment);
-    setComment("");
+
+    dispatch(
+      editCommOrderThunk({
+        orderId: currentOrder.id,
+        itemId: modalItemId,
+        comment: comment,
+      })
+    );
     handleCloseModal();
   };
+
+  const handleCheckoutClick = () => {
+    dispatch(deleteOrderThunk(currentOrder.id));
+  };
+
   const adjustTextareaHeight = (event) => {
     const textarea = event.target;
     textarea.style.height = "auto"; // Réinitialise la hauteur
@@ -159,7 +173,11 @@ function CollapseOrder() {
               {[1, 2].includes(currentOrder.status) && "modify"}
             </button>
             {currentOrder.status === 2 && (
-              <button type="button" className="btn">
+              <button
+                type="button"
+                className="btn"
+                onClick={handleCheckoutClick}
+              >
                 checkout
               </button>
             )}

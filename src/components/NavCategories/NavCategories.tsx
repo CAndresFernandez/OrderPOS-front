@@ -10,7 +10,7 @@ function NavCategories() {
   const categories: ICategory[] = useAppSelector(
     (state) => state.categories.list
   );
-  console.log(categories);
+  // console.log(categories);
 
   useEffect(() => {
     // APRES le premier chargement de l'app on veut aller chercher les categories
