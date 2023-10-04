@@ -1,9 +1,6 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 import myAxiosInstance from "../../api/axios";
-import {
-  saveJWTToLocalStorage,
-  saveUserIdToLocalStorage,
-} from "../../localStorage/localStorage";
+import { saveToLocalStorage } from "../../localStorage/localStorage";
 
 export interface UserState {
   id: number | null;
@@ -24,6 +21,7 @@ export const getActionDisconnect = createAction("login/DISCONNECT");
 export const getActionLogin = createAction<{ token: string; id: number }>(
   "login"
 );
+// export const refreshFromLocalStorage = createAction<{}>("login/REFRESH");
 
 const userReducer = createReducer(initialState, (builder) => {
   builder
@@ -38,8 +36,10 @@ const userReducer = createReducer(initialState, (builder) => {
       myAxiosInstance.defaults.headers.common.Authorization = `Bearer ${action.payload.token}`;
 
       // on va aussi enregistrer le token dans le localStorage
-      saveJWTToLocalStorage(action.payload.token);
-      saveUserIdToLocalStorage(action.payload.id);
+      saveToLocalStorage("auth", {
+        token: action.payload.token,
+        id: action.payload.id,
+      });
 
       // state.errorMessage = null;
     })

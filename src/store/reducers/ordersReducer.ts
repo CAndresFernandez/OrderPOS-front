@@ -54,7 +54,6 @@ const ordersReducer = createReducer(initialState, (builder) => {
       // puisqu'on la requette à planté on précise qu'on peut enlever le loader
       console.log("rejected");
     })
-
     .addCase(plusItemToCurrentOrderThunk.fulfilled, (state, action) => {
       state.currentOrder = action.payload;
     })

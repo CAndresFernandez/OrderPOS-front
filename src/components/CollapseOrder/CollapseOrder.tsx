@@ -12,6 +12,7 @@ import {
 } from "../../store/middlewares/orders";
 import ModalCom from "./ModalCom";
 import { useNavigate } from "react-router-dom";
+import { fetchTablesThunk } from "../../store/middlewares/tables";
 
 function CollapseOrder() {
   const [isVisible, setIsVisible] = useState(false);
@@ -97,6 +98,7 @@ function CollapseOrder() {
       {currentOrder && (
         <div className="collapse-container">
           <div className={`collapse ${isVisible ? "visible" : ""}`}>
+            <h4>{currentOrder.id}</h4>
             <ul className="list">
               <li className="list-titles">
                 <h4>Name</h4>
