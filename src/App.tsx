@@ -11,12 +11,18 @@ import CollapseOrder from "./components/CollapseOrder/CollapseOrder";
 import { getFromLocalStorage } from "./localStorage/localStorage";
 import "./App.scss";
 import { getActionLogin } from "./store/reducers/userReducer";
+import Kitchen from "./components/Kitchen/Kitchen";
 
 function App() {
   const dispatch = useDispatch();
-  const tables = useAppSelector((state) => state.tables.list);
   // console.log(tables);
   const logged = useAppSelector((state) => state.user.logged);
+  const user = useAppSelector((state) => state.user);
+  const currentUser =
+    // recuperer dans le localstorage
+    getFromLocalStorage("auth");
+  console.log(currentUser, user);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (!logged) {
@@ -41,10 +47,11 @@ function App() {
               <Route path="/" element={<Tables />} />
               <Route path="/orders/:orderId" element={<CurrentOrder />} />
               {/* <Route
-                path={`/users/${userId}/orders`}
-                element={<Orders userId={userId} />}
-              /> */}
+                  path={`/users/${userId}/orders`}
+                  element={<Orders userId={userId} />}
+                /> */}
               <Route path="/logout" element={<Logout />} />
+              <Route path="/kitchen" element={<Kitchen />} />
             </>
           ) : (
             <Route path="/login" element={<Login />} />
@@ -56,5 +63,4 @@ function App() {
     </>
   );
 }
-
 export default App;

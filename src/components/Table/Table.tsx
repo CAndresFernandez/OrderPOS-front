@@ -1,18 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ITable } from "../../@types/order";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { addOrderThunk, fetchOrderThunk } from "../../store/middlewares/orders";
+import { addOrderThunk } from "../../store/middlewares/orders";
 import "./Table.scss";
 
 function Table({ table }: { table: ITable }) {
   const dispatch = useAppDispatch();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const userId = table.relatedOrder?.user?.id;
   const currentUser = useAppSelector((state) => state.user);
   const isOwner = userId === currentUser.id; // Comparer l'userId de la table avec l'userId actuel
   const isUnowned = !userId;
-  // console.log(isUnowned);
-  // Vérifier si la table n'a pas de propriétaire
   const statusMapping = {
     0: "In progress",
     1: "Cooking",
@@ -53,14 +51,14 @@ function Table({ table }: { table: ITable }) {
           onClick={handleTableClick}
         >
           <div
-            className={`card active-link w-96 bg-base-100 shadow-xl ${
+            className={`card w-96 bg-base-100 shadow-xl ${
               statusClassMapping[table.relatedOrder?.status] || "freeTable"
             }`}
           >
             <div className="card-title">
               <h3 className="card-title">Table {table.number}</h3>
               <p>{table.covers} covers</p>
-              <p>Order {table.relatedOrder?.id}</p>
+              {table.relatedOrder && <p>Order {table.relatedOrder.id}</p>}
               <p>{statusMapping[table.relatedOrder?.status] || "Free"}</p>
             </div>
           </div>
@@ -68,8 +66,8 @@ function Table({ table }: { table: ITable }) {
       ) : (
         <div className="card w-96 bg-base-100 shadow-xl">
           <h3 className="card-title">Table {table.number}</h3>
-          <div>{table.covers} covers</div>
-          <div>{table.relatedOrder?.user?.lastname}</div>
+          <p>{table.covers} covers</p>
+          <p>{table.relatedOrder?.user?.lastname}</p>
         </div>
       )}
     </>

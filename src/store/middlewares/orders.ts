@@ -19,9 +19,29 @@ export const fetchOrdersThunk = createAsyncThunk(
     return result.data;
   }
 );
+export const fetchOrdersKitchenThunk = createAsyncThunk(
+  // nom de l'action :
+  "orders/GET_ORDERS_WITH_STATUS_1",
+  // fonction asynchrone : c'est ici qu'on va faire l'appel AJAX
+  async () => {
+    // ---- 7/ ecriture de la requete API dans le thunk
+    // console.log("result");
+    const result = await myAxiosInstance.get(`/orders`);
+    console.log(result);
+
+    // ---- 10/ return dans le thunk de la réponse de l'API : elle sera dispo dans le payload de l'action fullfilled
+    return result.data;
+  }
+);
 export const addOrderThunk = createAsyncThunk(
   "orders/CREATE_ORDER",
-  async ({ user_id, relatedTable_id }) => {
+  async ({
+    user_id,
+    relatedTable_id,
+  }: {
+    user_id: number;
+    relatedTable_id: number;
+  }) => {
     try {
       const result = await myAxiosInstance.post("/orders", {
         user_id,

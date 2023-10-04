@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./CollapseOrder.scss";
+import { useNavigate } from "react-router-dom";
 import { IOrderItem } from "../../@types/order";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import {
@@ -10,20 +10,18 @@ import {
   minusItemToCurrentOrderThunk,
   plusItemToCurrentOrderThunk,
 } from "../../store/middlewares/orders";
-import ModalCom from "./ModalCom";
-import { useNavigate } from "react-router-dom";
-import { fetchTablesThunk } from "../../store/middlewares/tables";
+import "./CollapseOrder.scss";
 
 function CollapseOrder() {
-  const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [isVisible, setIsVisible] = useState(false);
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
   const [comment, setComment] = useState("");
   const [modalItemId, setModalItemId] = useState<number | null>(null);
-  console.log(currentOrder);
+  // console.log(currentOrder);
   const [localItems, setLocalItems] = useState<IOrderItem[]>([]);
   const emoji = "\ud83d\udd89";
-  const dispatch = useAppDispatch();
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
@@ -34,26 +32,30 @@ function CollapseOrder() {
   }, [currentOrder]);
 
   const handleMinusClick = (itemId: number) => {
-    dispatch(
-      minusItemToCurrentOrderThunk({
-        orderId: currentOrder.id,
-        itemId,
-      })
-    );
+    if (currentOrder) {
+      dispatch(
+        minusItemToCurrentOrderThunk({
+          orderId: currentOrder.id,
+          itemId,
+        })
+      );
+    }
   };
   const handlePlusClick = (itemId: number) => {
-    dispatch(
-      plusItemToCurrentOrderThunk({
-        orderId: currentOrder.id,
-        itemId,
-      })
-    );
+    if (currentOrder) {
+      dispatch(
+        plusItemToCurrentOrderThunk({
+          orderId: currentOrder.id,
+          itemId,
+        })
+      );
+    }
   };
   const handleStatusClick = (orderId: number) => {
     if (currentOrder) {
       dispatch(
         changeStatusOrderThunk({
-          orderId: parseInt(orderId, 10),
+          orderId: orderId,
           orderStatus: currentOrder.status,
         })
       );
@@ -70,21 +72,24 @@ function CollapseOrder() {
   };
 
   const handleSubmit = () => {
-    // onAddComment(comment);
-
-    dispatch(
-      editCommOrderThunk({
-        orderId: currentOrder.id,
-        itemId: modalItemId,
-        comment: comment,
-      })
-    );
-    handleCloseModal();
+    if (currentOrder && modalItemId !== null) {
+      dispatch(
+        editCommOrderThunk({
+          orderId: currentOrder.id,
+          itemId: modalItemId,
+          comment: comment,
+        })
+      );
+      handleCloseModal();
+    }
   };
 
   const handleCheckoutClick = () => {
-    dispatch(deleteOrderThunk(currentOrder.id));
-    navigate("/");
+    if (currentOrder) {
+      dispatch(deleteOrderThunk(currentOrder.id));
+      toggleVisibility();
+      navigate("/");
+    }
   };
 
   const adjustTextareaHeight = (event) => {
@@ -98,7 +103,7 @@ function CollapseOrder() {
       {currentOrder && (
         <div className="collapse-container">
           <div className={`collapse ${isVisible ? "visible" : ""}`}>
-            <h4>{currentOrder.id}</h4>
+            <h4>Order {currentOrder.id}</h4>
             <ul className="list">
               <li className="list-titles">
                 <h4>Name</h4>
@@ -175,7 +180,7 @@ function CollapseOrder() {
               onClick={() => handleStatusClick(currentOrder.id)}
             >
               {currentOrder.status === 0 && "send"}
-              {[1, 2].includes(currentOrder.status) && "modify"}
+              {[1, 2].includes(currentOrder.status) && "edit"}
             </button>
             {currentOrder.status === 2 && (
               <button

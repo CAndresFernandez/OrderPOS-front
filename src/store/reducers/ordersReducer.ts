@@ -6,6 +6,7 @@ import {
   editCommOrderThunk,
   fetchOrderByTableIdThunk,
   fetchOrderThunk,
+  fetchOrdersKitchenThunk,
   fetchOrdersThunk,
   minusItemToCurrentOrderThunk,
   plusItemToCurrentOrderThunk,
@@ -27,6 +28,13 @@ const ordersReducer = createReducer(initialState, (builder) => {
       state.list = action.payload;
     })
     .addCase(fetchOrdersThunk.rejected, () => {
+      // puisqu'on la requette à planté on précise qu'on peut enlever le loader
+      console.log("rejected");
+    })
+    .addCase(fetchOrdersKitchenThunk.fulfilled, (state, action) => {
+      state.list = action.payload;
+    })
+    .addCase(fetchOrdersKitchenThunk.rejected, () => {
       // puisqu'on la requette à planté on précise qu'on peut enlever le loader
       console.log("rejected");
     })

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import "./LoggedAs.scss";
 import { useAppSelector } from "../../hooks/redux";
-import { getUserIdFromLocalStorage } from "../../localStorage/localStorage";
 
 function LoggedAs() {
   const currentUser = useAppSelector((state) => state.user);
