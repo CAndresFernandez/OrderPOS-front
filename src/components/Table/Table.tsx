@@ -55,13 +55,14 @@ function Table({ table }: { table: ITable }) {
         >
           <div
             className={`card active-link w-96 bg-base-100 shadow-xl ${
-              statusClassMapping[table.relatedOrder?.status] || ""
+              statusClassMapping[table.relatedOrder?.status] || "freeTable"
             }`}
           >
             <div className="card-title">
               <h3 className="card-title">Table {table.number}</h3>
               <p>{table.covers} covers</p>
-              <p>{statusMapping[table.relatedOrder?.status] || "Unknown"}</p>
+              <p>Order {table.relatedOrder?.id}</p>
+              <p>{statusMapping[table.relatedOrder?.status] || "Free"}</p>
             </div>
           </div>
         </Link>

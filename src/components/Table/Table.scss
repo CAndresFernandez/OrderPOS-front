@@ -9,7 +9,9 @@
         white-space: nowrap;
     }
 }
-
+.freeTable {
+    background-color: rgb(80, 80, 141);
+}
 .status-in-progress {
   background-color:  green; // Color for "In progress"
   border: none !important;
@@ -21,6 +23,6 @@
   }
   
   .status-waiting-payment {
-    background-color:  red; // Color for "Waiting payment"
+    background-color:  rgb(237, 69, 69); // Color for "Waiting payment"
     border: none !important;
   }

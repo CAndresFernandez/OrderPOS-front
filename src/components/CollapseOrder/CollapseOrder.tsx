@@ -11,9 +11,11 @@ import {
   plusItemToCurrentOrderThunk,
 } from "../../store/middlewares/orders";
 import ModalCom from "./ModalCom";
+import { useNavigate } from "react-router-dom";
 
 function CollapseOrder() {
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
   const [comment, setComment] = useState("");
   const [modalItemId, setModalItemId] = useState<number | null>(null);
@@ -81,6 +83,7 @@ function CollapseOrder() {
 
   const handleCheckoutClick = () => {
     dispatch(deleteOrderThunk(currentOrder.id));
+    navigate("/");
   };
 
   const adjustTextareaHeight = (event) => {
