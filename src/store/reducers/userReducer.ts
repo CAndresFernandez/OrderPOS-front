@@ -50,6 +50,9 @@ const userReducer = createReducer(initialState, (builder) => {
     .addCase(getActionDisconnect, (state, action) => {
       // on met logged à false
       state.logged = false;
+      // detruit auth dans le local storage
+      delete myAxiosInstance.defaults.headers.common.Authorization;
+      localStorage.removeItem("auth");
     });
 });
 
