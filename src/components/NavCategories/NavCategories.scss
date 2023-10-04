@@ -1,11 +1,13 @@
 .NavCat {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    font-size: 0.5rem;
-
-    .NavBtn {
-        margin: 0;
+    overflow:scroll;
+    margin-left: 14%;
+   
+    
+    .NavLink {
+        margin: 10px;
     }
 
   

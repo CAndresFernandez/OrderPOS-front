@@ -5,15 +5,23 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import {
   addItemToCurrentOrderThunk,
   changeStatusOrderThunk,
+  deleteOrderThunk,
+  editCommOrderThunk,
   minusItemToCurrentOrderThunk,
   plusItemToCurrentOrderThunk,
 } from "../../store/middlewares/orders";
+import ModalCom from "./ModalCom";
+import { useNavigate } from "react-router-dom";
 
 function CollapseOrder() {
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
+  const [comment, setComment] = useState("");
+  const [modalItemId, setModalItemId] = useState<number | null>(null);
   console.log(currentOrder);
   const [localItems, setLocalItems] = useState<IOrderItem[]>([]);
+  const emoji = "\ud83d\udd89";
   const dispatch = useAppDispatch();
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
@@ -23,11 +31,7 @@ function CollapseOrder() {
       setLocalItems(currentOrder.orderItems);
     }
   }, [currentOrder]);
-  // useEffect(() => {
-  //   if (currentOrder) {
-  //     dispatch(editOrderThunk(currentOrder.id, { orderItems: items }));
-  //   }
-  // }, [dispatch, items, currentOrder]);
+
   const handleMinusClick = (itemId: number) => {
     dispatch(
       minusItemToCurrentOrderThunk({
@@ -54,6 +58,39 @@ function CollapseOrder() {
       );
     }
   };
+  const handleOpenModal = (itemId: number) => {
+    const itemComment =
+      localItems.find((item) => item.id === itemId)?.comment || "";
+    setComment(itemComment);
+    setModalItemId(itemId);
+  };
+  const handleCloseModal = () => {
+    setModalItemId(null);
+  };
+
+  const handleSubmit = () => {
+    // onAddComment(comment);
+
+    dispatch(
+      editCommOrderThunk({
+        orderId: currentOrder.id,
+        itemId: modalItemId,
+        comment: comment,
+      })
+    );
+    handleCloseModal();
+  };
+
+  const handleCheckoutClick = () => {
+    dispatch(deleteOrderThunk(currentOrder.id));
+    navigate("/");
+  };
+
+  const adjustTextareaHeight = (event) => {
+    const textarea = event.target;
+    textarea.style.height = "auto"; // Réinitialise la hauteur
+    textarea.style.height = `${textarea.scrollHeight}px`; // Ajuste la hauteur en fonction du contenu
+  };
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
@@ -61,33 +98,71 @@ function CollapseOrder() {
         <div className="collapse-container">
           <div className={`collapse ${isVisible ? "visible" : ""}`}>
             <ul className="list">
+              <li className="list-titles">
+                <h4>Name</h4>
+                <h4>Quantity</h4>
+                <h4>Comment</h4>
+              </li>
               {localItems.map((item) => (
                 <li className="list-li" key={item.id}>
-                  <span>{item.item.name}</span>
-                  <span>{item.quantity}</span>
-                  {item.comment?.length > 0 && (
-                    <div className="comment">{item.comment}</div>
-                  )}
-                  <div className="counter">
+                  <div className="list-li-div">{item.item.name}</div>
+                  <div className="list-li-div">{item.quantity}</div>
+                  <div className="counter list-li-div">
                     <button
                       type="button"
-                      className="btn"
+                      className="btn minusPlusBtn"
                       onClick={() => handleMinusClick(item.id)}
-                      key={item.id}
+                      key={`minus-${item.id}`} // Unique key for the minus button
                     >
                       -
                     </button>
                     <button
                       type="button"
-                      className="btn"
+                      className="btn minusPlusBtn"
                       onClick={() => handlePlusClick(item.id)}
-                      key={item.id}
+                      key={`plus-${item.id}`} // Unique key for the plus button
                     >
                       +
                     </button>
-                    <button type="button" className="btn">
-                      comm
+                    <button
+                      onClick={() => handleOpenModal(item.id)}
+                      type="button"
+                      className="btn"
+                      key={`comm-${item.id}`} // Unique key for the comm button
+                    >
+                      {emoji}
                     </button>
+
+                    {modalItemId === item.id && (
+                      <div className="modal">
+                        <div className="modal-content">
+                          <h2>Add Comment</h2>
+                          <textarea
+                            value={comment}
+                            onChange={(e) => {
+                              setComment(e.target.value);
+                              adjustTextareaHeight(e);
+                            }}
+                            onInput={adjustTextareaHeight}
+                            placeholder="Write your comment here..."
+                          />
+                          <button
+                            type="button"
+                            className="btn"
+                            onClick={handleSubmit}
+                          >
+                            Submit
+                          </button>
+                          <button
+                            type="button"
+                            className="btn"
+                            onClick={handleCloseModal}
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </li>
               ))}
@@ -100,7 +175,15 @@ function CollapseOrder() {
               {currentOrder.status === 0 && "send"}
               {[1, 2].includes(currentOrder.status) && "modify"}
             </button>
-            {currentOrder.status === 2 && <button>Pay</button>}
+            {currentOrder.status === 2 && (
+              <button
+                type="button"
+                className="btn"
+                onClick={handleCheckoutClick}
+              >
+                checkout
+              </button>
+            )}
           </div>
           <button
             type="button"

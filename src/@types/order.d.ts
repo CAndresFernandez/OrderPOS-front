@@ -30,17 +30,16 @@ export interface IOrder {
   relatedTable_id?: int;
   user?: IUser;
   status?: int;
-  orderItems?: IItem[];
+  orderItems?: IOrderItem[];
 }
 export interface IOrderItem {
   id: number;
   item: IItem;
   name: string;
   relatedTable?: ITable;
-  status?: number;
+  sent: boolean;
   quantity: number;
   comment?: string | null;
-  sent: boolean;
 }
 
 interface IClosedOrder {
