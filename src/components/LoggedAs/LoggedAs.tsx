@@ -4,7 +4,7 @@ import { useAppSelector } from "../../hooks/redux";
 
 function LoggedAs() {
   const currentUser = useAppSelector((state) => state.user);
-  console.log(currentUser);
+  // console.log(currentUser);
 
   return (
     <Link to="/logout">

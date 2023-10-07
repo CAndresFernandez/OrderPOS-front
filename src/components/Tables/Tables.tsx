@@ -21,14 +21,14 @@ function Tables() {
     <>
       <header>
         <LoggedAs />
-        <h2>Tables</h2>
         <button
           type="button"
-          className="NavBtnBack"
+          className="NavBtnBack kitchenVue"
           onClick={() => navigate("/kitchen")}
         >
-          cuisine
+          kitchen vue
         </button>
+        <h2>Tables</h2>
       </header>
       <ul className="tables-list">
         {tables.map((table) => (

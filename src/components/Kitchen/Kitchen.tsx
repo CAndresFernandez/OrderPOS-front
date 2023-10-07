@@ -23,10 +23,13 @@ function Kitchen() {
   const handleStatusClick = (orderId: number, orderStatus: number) => {
     dispatch(
       changeStatusOrderThunk({
-        orderId: parseInt(orderId, 10),
-        orderStatus: orderStatus,
+        orderId,
+        orderStatus,
       })
-    );
+    ).then(() => {
+      // Refetch the orders after updating the status
+      dispatch(fetchOrdersKitchenThunk());
+    });
   };
   return (
     <>
@@ -45,7 +48,7 @@ function Kitchen() {
         <ul className="kitchen-order-list">
           {orders.map((order) => (
             <li key={order.id} className="kitchen-list-li">
-              <h4>{order.id}</h4>
+              <h4>Order {order.id}</h4>
               {order.orderItems?.map((item) => (
                 <>
                   <div className="kitchen-list-li-div">
@@ -53,7 +56,7 @@ function Kitchen() {
                     <p>{item.item.name}</p>
                   </div>
 
-                  {item.comment?.length > 0 && (
+                  {item.comment && (
                     <div className="comment">{item.comment}</div>
                   )}
                 </>

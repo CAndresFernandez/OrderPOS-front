@@ -12,7 +12,7 @@
     display: flex;
     overflow-x: auto;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .kitchen-order-list li {
@@ -23,19 +23,26 @@
     background-color: white;
     margin-right: 0.3em;
     justify-content: flex-start;
+    border-radius: 5px;
 }
 
 .kitchen-NavBtnBack {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    
+        position: fixed;
+        top: 2em;
+        right: 32px;
+        padding: 1em;
+    
 }
 
 .kitchen-list-li-div {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    gap: 15px;
+    gap: 10px;
     background-color: v.$lighterNewColor;
-    ;
+    margin: 5px 0;
+}
+.kitchen-list-li-div p {
+    margin: 2px;
 }

@@ -27,7 +27,7 @@ export const fetchOrdersKitchenThunk = createAsyncThunk(
     // ---- 7/ ecriture de la requete API dans le thunk
     // console.log("result");
     const result = await myAxiosInstance.get(`/orders`);
-    console.log(result);
+    // console.log(result);
 
     // ---- 10/ return dans le thunk de la réponse de l'API : elle sera dispo dans le payload de l'action fullfilled
     return result.data;
@@ -75,7 +75,7 @@ export const fetchOrderThunk = createAsyncThunk(
   async (id: number) => {
     try {
       const result = await myAxiosInstance.get(`/orders/${id}`);
-      console.log(result);
+      console.log(result.data);
       return result.data;
     } catch (error) {
       console.error("Error fetching order:", error);
@@ -114,18 +114,11 @@ export const addItemToCurrentOrderThunk = createAsyncThunk(
 );
 export const changeStatusOrderThunk = createAsyncThunk(
   "orders/CHANGE_STATUS_CURRENT_ORDER",
-  async ({
-    orderId,
-    orderStatus,
-  }: {
-    orderId: number;
-    orderStatus: number;
-  }) => {
+  async ({ orderId }: { orderId: number }) => {
     try {
       // Assuming the API endpoint to add an item to an order is `/orders/:orderId/items`
-      const result = await myAxiosInstance.put(`/orders/${orderId}/status`, {
-        orderStatus,
-      });
+      const result = await myAxiosInstance.put(`/orders/${orderId}/status`);
+
       console.log(result);
       return result.data;
     } catch (error) {

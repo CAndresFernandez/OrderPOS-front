@@ -20,8 +20,19 @@ function CollapseOrder() {
   const [comment, setComment] = useState("");
   const [modalItemId, setModalItemId] = useState<number | null>(null);
   // console.log(currentOrder);
+  const currentOrderItems = useAppSelector(
+    (state) => state.orders.currentOrder?.orderItems
+  );
   const [localItems, setLocalItems] = useState<IOrderItem[]>([]);
   const emoji = "\ud83d\udd89";
+  const hasSomeUnsentItems = currentOrder?.orderItems?.some(
+    (orderItem) => !orderItem.sent
+  );
+
+  const hasSomeSentItems = currentOrder?.orderItems?.some(
+    (orderItem) => orderItem.sent
+  );
+
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
@@ -55,8 +66,7 @@ function CollapseOrder() {
     if (currentOrder) {
       dispatch(
         changeStatusOrderThunk({
-          orderId: orderId,
-          orderStatus: currentOrder.status,
+          orderId,
         })
       );
     }
@@ -97,6 +107,7 @@ function CollapseOrder() {
     textarea.style.height = "auto"; // Réinitialise la hauteur
     textarea.style.height = `${textarea.scrollHeight}px`; // Ajuste la hauteur en fonction du contenu
   };
+
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
@@ -104,6 +115,13 @@ function CollapseOrder() {
         <div className="collapse-container">
           <div className={`collapse ${isVisible ? "visible" : ""}`}>
             <h4>Order {currentOrder.id}</h4>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => navigate(`/orders/${currentOrder.id}`)}
+            >
+              View Order Details
+            </button>
             <ul className="list">
               <li className="list-titles">
                 <h4>Name</h4>
@@ -112,12 +130,20 @@ function CollapseOrder() {
               </li>
               {localItems.map((item) => (
                 <li className="list-li" key={item.id}>
-                  <div className="list-li-div">{item.item.name}</div>
+                  <div
+                    className={`list-li-div ${
+                      item.sent ? "item-status-1" : ""
+                    }`}
+                  >
+                    {item.item.name}
+                  </div>
                   <div className="list-li-div">{item.quantity}</div>
                   <div className="counter list-li-div">
                     <button
                       type="button"
-                      className="btn minusPlusBtn"
+                      className={`btn minusPlusBtn ${
+                        item.sent ? "notclickable" : ""
+                      }`}
                       onClick={() => handleMinusClick(item.id)}
                       key={`minus-${item.id}`} // Unique key for the minus button
                     >
@@ -125,7 +151,9 @@ function CollapseOrder() {
                     </button>
                     <button
                       type="button"
-                      className="btn minusPlusBtn"
+                      className={`btn minusPlusBtn ${
+                        item.sent ? "notclickable" : ""
+                      }`}
                       onClick={() => handlePlusClick(item.id)}
                       key={`plus-${item.id}`} // Unique key for the plus button
                     >
@@ -134,7 +162,7 @@ function CollapseOrder() {
                     <button
                       onClick={() => handleOpenModal(item.id)}
                       type="button"
-                      className="btn"
+                      className={`btn ${item.sent ? "notclickable" : ""}`}
                       key={`comm-${item.id}`} // Unique key for the comm button
                     >
                       {emoji}
@@ -173,24 +201,27 @@ function CollapseOrder() {
                   </div>
                 </li>
               ))}
-            </ul>
-            <button
-              type="button"
-              className="btn"
-              onClick={() => handleStatusClick(currentOrder.id)}
-            >
-              {currentOrder.status === 0 && "send"}
-              {[1, 2].includes(currentOrder.status) && "edit"}
-            </button>
-            {currentOrder.status === 2 && (
               <button
                 type="button"
-                className="btn"
-                onClick={handleCheckoutClick}
+                className={`btn ${!hasSomeUnsentItems ? "notclickable" : ""}`}
+                onClick={() => handleStatusClick(currentOrder.id)}
               >
-                checkout
+                {currentOrder.status === 0 && "send"}
+                {currentOrder.status === 2 && "edit"}
+                {/* {[1, 2].includes(currentOrder.status) && "edit"} */}
               </button>
-            )}
+              {currentOrder.status === 2 && (
+                <button
+                  type="button"
+                  className={`btn ${hasSomeUnsentItems ? "notclickable" : ""}`}
+                  onClick={
+                    !hasSomeUnsentItems ? handleCheckoutClick : undefined
+                  }
+                >
+                  checkout
+                </button>
+              )}
+            </ul>
           </div>
           <button
             type="button"

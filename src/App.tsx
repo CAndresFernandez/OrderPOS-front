@@ -21,7 +21,7 @@ function App() {
   const currentUser =
     // recuperer dans le localstorage
     getFromLocalStorage("auth");
-  console.log(currentUser, user);
+  // console.log(currentUser, user);
 
   const navigate = useNavigate();
   useEffect(() => {

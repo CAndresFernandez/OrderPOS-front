@@ -122,3 +122,12 @@
     
   }
 }
+.item-status-1 {
+  background-color: #f2d6d6; // Example color for status 1
+}
+
+.notclickable{
+  background-color: #e0e0e0; /* Gray color */
+  cursor: not-allowed; /* Display a not-allowed cursor */
+  pointer-events: none; /* Ensure the button doesn't receive click events */
+}
