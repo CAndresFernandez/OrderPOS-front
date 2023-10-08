@@ -26,6 +26,13 @@ function Tables() {
         >
           kitchen vue
         </button>
+        <button
+          type="button"
+          className="NavBtnBack carte"
+          onClick={() => navigate("/carte")}
+        >
+          La Carte
+        </button>
         <h2>Tables</h2>
       </header>
       <ul className="tables-list">

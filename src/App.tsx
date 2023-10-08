@@ -12,6 +12,7 @@ import { getFromLocalStorage } from "./localStorage/localStorage";
 import "./App.scss";
 import { getActionLogin } from "./store/reducers/userReducer";
 import Kitchen from "./components/Kitchen/Kitchen";
+import CustomersCarte from "./components/CustomersCarte/CustomersCarte";
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ function App() {
                 /> */}
               <Route path="/logout" element={<Logout />} />
               <Route path="/kitchen" element={<Kitchen />} />
+              <Route path="/carte" element={<CustomersCarte />} />
             </>
           ) : (
             <Route path="/login" element={<Login />} />
