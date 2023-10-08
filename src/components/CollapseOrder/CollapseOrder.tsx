@@ -1,25 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import { IOrderItem } from "../../@types/order";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+
 import {
-  addItemToCurrentOrderThunk,
   changeStatusOrderThunk,
   deleteOrderThunk,
   editCommOrderThunk,
   minusItemToCurrentOrderThunk,
   plusItemToCurrentOrderThunk,
 } from "../../store/middlewares/orders";
+
 import "./CollapseOrder.scss";
 
 function CollapseOrder() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const location = useLocation();
+
   const [isVisible, setIsVisible] = useState(false);
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
+  const isOnCurrentOrderPage =
+    location.pathname === `/orders/${currentOrder?.id}`;
   const [comment, setComment] = useState("");
   const [modalItemId, setModalItemId] = useState<number | null>(null);
-  // console.log(currentOrder);
   const currentOrderItems = useAppSelector(
     (state) => state.orders.currentOrder?.orderItems
   );
@@ -28,55 +33,58 @@ function CollapseOrder() {
   const hasSomeUnsentItems = currentOrder?.orderItems?.some(
     (orderItem) => !orderItem.sent
   );
-
   const hasSomeSentItems = currentOrder?.orderItems?.some(
     (orderItem) => orderItem.sent
   );
+  const hasSomeItems = currentOrder?.orderItems?.some((orderItem) => orderItem);
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
+
   useEffect(() => {
     if (currentOrder?.orderItems) {
       setLocalItems(currentOrder.orderItems);
     }
-  }, [currentOrder]);
+  }, [currentOrder?.orderItems, currentOrder?.status]);
 
-  const handleMinusClick = (itemId: number) => {
-    if (currentOrder) {
-      dispatch(
-        minusItemToCurrentOrderThunk({
-          orderId: currentOrder.id,
-          itemId,
-        })
-      );
-    }
-  };
-  const handlePlusClick = (itemId: number) => {
-    if (currentOrder) {
-      dispatch(
-        plusItemToCurrentOrderThunk({
-          orderId: currentOrder.id,
-          itemId,
-        })
-      );
-    }
-  };
+  const handleMinusClick = useCallback(
+    (itemId: number) => {
+      if (currentOrder) {
+        dispatch(
+          minusItemToCurrentOrderThunk({ orderId: currentOrder.id, itemId })
+        );
+      }
+    },
+    [currentOrder, dispatch]
+  );
+
+  const handlePlusClick = useCallback(
+    (itemId: number) => {
+      if (currentOrder) {
+        dispatch(
+          plusItemToCurrentOrderThunk({ orderId: currentOrder.id, itemId })
+        );
+      }
+    },
+    [currentOrder, dispatch]
+  );
+
   const handleStatusClick = (orderId: number) => {
     if (currentOrder) {
-      dispatch(
-        changeStatusOrderThunk({
-          orderId,
-        })
-      );
+      dispatch(changeStatusOrderThunk({ orderId }));
+      toggleVisibility();
+      navigate("/");
     }
   };
+
   const handleOpenModal = (itemId: number) => {
     const itemComment =
       localItems.find((item) => item.id === itemId)?.comment || "";
     setComment(itemComment);
     setModalItemId(itemId);
   };
+
   const handleCloseModal = () => {
     setModalItemId(null);
   };
@@ -87,7 +95,7 @@ function CollapseOrder() {
         editCommOrderThunk({
           orderId: currentOrder.id,
           itemId: modalItemId,
-          comment: comment,
+          comment,
         })
       );
       handleCloseModal();
@@ -96,6 +104,7 @@ function CollapseOrder() {
 
   const handleCheckoutClick = () => {
     if (currentOrder) {
+      setLocalItems([]);
       dispatch(deleteOrderThunk(currentOrder.id));
       toggleVisibility();
       navigate("/");
@@ -104,8 +113,8 @@ function CollapseOrder() {
 
   const adjustTextareaHeight = (event) => {
     const textarea = event.target;
-    textarea.style.height = "auto"; // Réinitialise la hauteur
-    textarea.style.height = `${textarea.scrollHeight}px`; // Ajuste la hauteur en fonction du contenu
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
   };
 
   return (
@@ -131,85 +140,85 @@ function CollapseOrder() {
               {localItems.map((item) => (
                 <li className="list-li" key={item.id}>
                   <div
-                    className={`list-li-div ${
-                      item.sent ? "item-status-1" : ""
-                    }`}
+                    className={`list-li-div ${item.sent ? "item-sent" : ""}`}
                   >
                     {item.item.name}
                   </div>
                   <div className="list-li-div">{item.quantity}</div>
-                  <div className="counter list-li-div">
-                    <button
-                      type="button"
-                      className={`btn minusPlusBtn ${
-                        item.sent ? "notclickable" : ""
-                      }`}
-                      onClick={() => handleMinusClick(item.id)}
-                      key={`minus-${item.id}`} // Unique key for the minus button
-                    >
-                      -
-                    </button>
-                    <button
-                      type="button"
-                      className={`btn minusPlusBtn ${
-                        item.sent ? "notclickable" : ""
-                      }`}
-                      onClick={() => handlePlusClick(item.id)}
-                      key={`plus-${item.id}`} // Unique key for the plus button
-                    >
-                      +
-                    </button>
-                    <button
-                      onClick={() => handleOpenModal(item.id)}
-                      type="button"
-                      className={`btn ${item.sent ? "notclickable" : ""}`}
-                      key={`comm-${item.id}`} // Unique key for the comm button
-                    >
-                      {emoji}
-                    </button>
-
-                    {modalItemId === item.id && (
-                      <div className="modal">
-                        <div className="modal-content">
-                          <h2>Add Comment</h2>
-                          <textarea
-                            value={comment}
-                            onChange={(e) => {
-                              setComment(e.target.value);
-                              adjustTextareaHeight(e);
-                            }}
-                            onInput={adjustTextareaHeight}
-                            placeholder="Write your comment here..."
-                          />
-                          <button
-                            type="button"
-                            className="btn"
-                            onClick={handleSubmit}
-                          >
-                            Submit
-                          </button>
-                          <button
-                            type="button"
-                            className="btn"
-                            onClick={handleCloseModal}
-                          >
-                            Close
-                          </button>
+                  {isOnCurrentOrderPage && (
+                    <div className="counter list-li-div">
+                      <button
+                        type="button"
+                        className={`btn minusPlusBtn ${
+                          item.sent ? "notclickable" : ""
+                        }`}
+                        onClick={() => handleMinusClick(item.id)}
+                        key={`minus-${item.id}`}
+                      >
+                        -
+                      </button>
+                      <button
+                        type="button"
+                        className={`btn minusPlusBtn ${
+                          item.sent ? "notclickable" : ""
+                        }`}
+                        onClick={() => handlePlusClick(item.id)}
+                        key={`plus-${item.id}`}
+                      >
+                        +
+                      </button>
+                      <button
+                        onClick={() => handleOpenModal(item.id)}
+                        type="button"
+                        className={`btn ${item.sent ? "notclickable" : ""}`}
+                        key={`comm-${item.id}`}
+                      >
+                        {emoji}
+                      </button>
+                      {modalItemId === item.id && (
+                        <div className="modal">
+                          <div className="modal-content">
+                            <h2>Add Comment</h2>
+                            <textarea
+                              value={comment}
+                              onChange={(e) => {
+                                setComment(e.target.value);
+                                adjustTextareaHeight(e);
+                              }}
+                              onInput={adjustTextareaHeight}
+                              placeholder="Write your comment here..."
+                            />
+                            <button
+                              type="button"
+                              className="btn"
+                              onClick={handleSubmit}
+                            >
+                              Submit
+                            </button>
+                            <button
+                              type="button"
+                              className="btn"
+                              onClick={handleCloseModal}
+                            >
+                              Close
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
+                      )}
+                    </div>
+                  )}
                 </li>
               ))}
-              <button
-                type="button"
-                className={`btn ${!hasSomeUnsentItems ? "notclickable" : ""}`}
-                onClick={() => handleStatusClick(currentOrder.id)}
-              >
-                {currentOrder.status === 0 && "send"}
-                {currentOrder.status === 2 && "edit"}
-                {/* {[1, 2].includes(currentOrder.status) && "edit"} */}
-              </button>
+              {currentOrder.status !== 1 && hasSomeUnsentItems && (
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={() => handleStatusClick(currentOrder.id)}
+                >
+                  {currentOrder.status === 0 && "send"}
+                  {currentOrder.status === 2 && "edit"}
+                </button>
+              )}
               {currentOrder.status === 2 && (
                 <button
                   type="button"
@@ -235,4 +244,5 @@ function CollapseOrder() {
     </>
   );
 }
+
 export default CollapseOrder;

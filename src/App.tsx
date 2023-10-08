@@ -15,6 +15,7 @@ import Kitchen from "./components/Kitchen/Kitchen";
 
 function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // console.log(tables);
   const logged = useAppSelector((state) => state.user.logged);
   const user = useAppSelector((state) => state.user);
@@ -23,7 +24,6 @@ function App() {
     getFromLocalStorage("auth");
   // console.log(currentUser, user);
 
-  const navigate = useNavigate();
   useEffect(() => {
     if (!logged) {
       // TODO : remplir le store avec le localstorage
