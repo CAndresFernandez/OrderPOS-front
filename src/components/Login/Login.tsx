@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.scss";
 import login from "../../api/login";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { getActionLogin } from "../../store/reducers/userReducer";
 
 function Login() {
@@ -41,9 +41,12 @@ function Login() {
 
       // Envoi d'une action pour gérer la connexion.
       dispatch(getActionLogin({ token, id }));
-
+      if (response.data.role.includes("ROLE_KITCHEN")) {
+        navigate("/kitchen");
+      } else {
+        navigate("/");
+      }
       // Redirection vers la page d'accueil.
-      navigate("/");
 
       // (Commentaire de débogage) Affichage des données de la réponse.
       console.log(response.data);
@@ -52,6 +55,8 @@ function Login() {
       setError("Invalid credentials");
     }
   };
+  const userRole = useAppSelector((state) => state.user.role);
+  console.log(userRole);
 
   // Message indiquant que l'utilisateur est connecté.
   const loggedMessage = "You are login!";

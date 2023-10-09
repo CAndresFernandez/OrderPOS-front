@@ -23,7 +23,7 @@ function NavCategories() {
       {categories.map((category) => (
         <NavLink
           className="NavLink"
-          // to={`/categories/${category.id}`}
+          to={`/categories/${category.id}/items`}
           key={category.id}
         >
           {category.name}

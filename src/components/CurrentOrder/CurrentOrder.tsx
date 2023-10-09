@@ -6,7 +6,10 @@ import NavCategories from "../NavCategories/NavCategories";
 import { IItem } from "../../@types/order";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import "./CurrentOrder.scss";
-import { fetchItemsThunk } from "../../store/middlewares/items";
+import {
+  fetchItemsByCategoryIdThunk,
+  fetchItemsThunk,
+} from "../../store/middlewares/items";
 import {
   addItemToCurrentOrderThunk,
   fetchOrderThunk,
@@ -25,6 +28,10 @@ function CurrentOrder() {
 
   // Utilisation du sélecteur Redux pour obtenir la commande actuelle.
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
+  const { categoryId } = useParams();
+  const filteredItems = categoryId
+    ? items.filter((item) => item?.category_id === categoryId)
+    : items;
 
   // (Commentaire de débogage) Affichage des articles et de la commande actuelle.
   // console.log(items, currentOrder);
@@ -36,7 +43,11 @@ function CurrentOrder() {
   useEffect(() => {
     // Après le premier chargement de l'application, on veut récupérer les tables.
     // L'application va envoyer une action au middleware thunk qui gère l'appel API.
-    dispatch(fetchItemsThunk());
+    if (categoryId) {
+      dispatch(fetchItemsByCategoryIdThunk());
+    } else {
+      dispatch(fetchItemsThunk());
+    }
 
     // Si un ID de commande est présent, on récupère la commande correspondante.
     if (orderId) dispatch(fetchOrderThunk(parseInt(orderId, 10)));
@@ -73,7 +84,7 @@ function CurrentOrder() {
       </header>
 
       <ul className="dish-list">
-        {items.map((item) => (
+        {filteredItems.map((item) => (
           <li
             className="li-clickable"
             onClick={() => handleClick(item.id)}

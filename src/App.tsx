@@ -47,6 +47,8 @@ function App() {
             <>
               <Route path="/" element={<Tables />} />
               <Route path="/orders/:orderId" element={<CurrentOrder />} />
+              <Route path="/categories/:id/items" element={<CurrentOrder />} />
+
               {/* <Route
                   path={`/users/${userId}/orders`}
                   element={<Orders userId={userId} />}
