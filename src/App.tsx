@@ -13,6 +13,7 @@ import "./App.scss";
 import { getActionLogin } from "./store/reducers/userReducer";
 import Kitchen from "./components/Kitchen/Kitchen";
 import CustomersCarte from "./components/CustomersCarte/CustomersCarte";
+import Chat from "./components/Websocket/Chat";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function App() {
               <Route path="/" element={<Tables />} />
               <Route path="/orders/:orderId" element={<CurrentOrder />} />
               <Route path="/categories/:id/items" element={<CurrentOrder />} />
+              <Route path="/chat" element={<Chat />} />
 
               {/* <Route
                   path={`/users/${userId}/orders`}
