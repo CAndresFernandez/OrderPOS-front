@@ -74,7 +74,7 @@ function CurrentOrder() {
       <header>
         <LoggedAs />
         <h5>Order n {orderId}</h5>
-        <h5>Table {currentOrder?.relatedTable.number}</h5>
+        <h5>Table {currentOrder?.relatedTable?.number}</h5>
         <NavCategories />
         <button
           type="button"

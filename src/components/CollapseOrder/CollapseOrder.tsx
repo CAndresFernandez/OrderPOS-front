@@ -124,7 +124,7 @@ function CollapseOrder() {
         <div className="collapse-container">
           <div className={`collapse ${isVisible ? "visible" : ""}`}>
             <h5>Order {currentOrder.id}</h5>
-            <h5>Table {currentOrder.relatedTable.number}</h5>
+            <h5>Table {currentOrder.relatedTable?.number}</h5>
             <button
               type="button"
               className="btn"
@@ -138,78 +138,79 @@ function CollapseOrder() {
                 <h4>Quantity</h4>
                 <h4>Comment</h4>
               </li>
-              {localItems.map((item) => (
-                <li className="list-li" key={item.id}>
-                  <div
-                    className={`list-li-div ${item.sent ? "item-sent" : ""}`}
-                  >
-                    {item.item.name}
-                  </div>
-                  <div className="list-li-div">{item.quantity}</div>
-                  {isOnCurrentOrderPage && (
-                    <div className="counter list-li-div">
-                      <button
-                        type="button"
-                        className={`btn minusPlusBtn ${
-                          item.sent ? "notclickable" : ""
-                        }`}
-                        onClick={() => handleMinusClick(item.id)}
-                        key={`minus-${item.id}`}
-                      >
-                        -
-                      </button>
-                      <button
-                        type="button"
-                        className={`btn minusPlusBtn ${
-                          item.sent ? "notclickable" : ""
-                        }`}
-                        onClick={() => handlePlusClick(item.id)}
-                        key={`plus-${item.id}`}
-                      >
-                        +
-                      </button>
-                      <button
-                        onClick={() => handleOpenModal(item.id)}
-                        type="button"
-                        className={`btn ${item.sent ? "notclickable" : ""}`}
-                        key={`comm-${item.id}`}
-                      >
-                        {emoji}
-                      </button>
-                      {modalItemId === item.id && (
-                        <div className="modal">
-                          <div className="modal-content">
-                            <h2>Add Comment</h2>
-                            <textarea
-                              value={comment}
-                              onChange={(e) => {
-                                setComment(e.target.value);
-                                adjustTextareaHeight(e);
-                              }}
-                              onInput={adjustTextareaHeight}
-                              placeholder="Write your comment here..."
-                            />
-                            <button
-                              type="button"
-                              className="btn"
-                              onClick={handleSubmit}
-                            >
-                              Submit
-                            </button>
-                            <button
-                              type="button"
-                              className="btn"
-                              onClick={handleCloseModal}
-                            >
-                              Close
-                            </button>
-                          </div>
-                        </div>
-                      )}
+              {localItems &&
+                localItems.map((item) => (
+                  <li className="list-li" key={item.id}>
+                    <div
+                      className={`list-li-div ${item.sent ? "item-sent" : ""}`}
+                    >
+                      {item.item.name}
                     </div>
-                  )}
-                </li>
-              ))}
+                    <div className="list-li-div">{item.quantity}</div>
+                    {isOnCurrentOrderPage && (
+                      <div className="counter list-li-div">
+                        <button
+                          type="button"
+                          className={`btn minusPlusBtn ${
+                            item.sent ? "notclickable" : ""
+                          }`}
+                          onClick={() => handleMinusClick(item.id)}
+                          key={`minus-${item.id}`}
+                        >
+                          -
+                        </button>
+                        <button
+                          type="button"
+                          className={`btn minusPlusBtn ${
+                            item.sent ? "notclickable" : ""
+                          }`}
+                          onClick={() => handlePlusClick(item.id)}
+                          key={`plus-${item.id}`}
+                        >
+                          +
+                        </button>
+                        <button
+                          onClick={() => handleOpenModal(item.id)}
+                          type="button"
+                          className={`btn ${item.sent ? "notclickable" : ""}`}
+                          key={`comm-${item.id}`}
+                        >
+                          {emoji}
+                        </button>
+                        {modalItemId === item.id && (
+                          <div className="modal">
+                            <div className="modal-content">
+                              <h2>Add Comment</h2>
+                              <textarea
+                                value={comment}
+                                onChange={(e) => {
+                                  setComment(e.target.value);
+                                  adjustTextareaHeight(e);
+                                }}
+                                onInput={adjustTextareaHeight}
+                                placeholder="Write your comment here..."
+                              />
+                              <button
+                                type="button"
+                                className="btn"
+                                onClick={handleSubmit}
+                              >
+                                Submit
+                              </button>
+                              <button
+                                type="button"
+                                className="btn"
+                                onClick={handleCloseModal}
+                              >
+                                Close
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </li>
+                ))}
               {currentOrder.status !== 1 && hasSomeUnsentItems && (
                 <button
                   type="button"
