@@ -30,13 +30,13 @@ function CollapseOrder() {
   );
   const [localItems, setLocalItems] = useState<IOrderItem[]>([]);
   const emoji = "\ud83d\udd89";
-  const hasSomeUnsentItems = currentOrder?.orderItems?.some(
-    (orderItem) => !orderItem.sent
-  );
-  const hasSomeSentItems = currentOrder?.orderItems?.some(
-    (orderItem) => orderItem.sent
-  );
-  const hasSomeItems = currentOrder?.orderItems?.some((orderItem) => orderItem);
+  const hasSomeUnsentItems =
+    Array.isArray(currentOrder?.orderItems) &&
+    currentOrder?.orderItems?.some((orderItem) => !orderItem.sent);
+  // const hasSomeSentItems = currentOrder?.orderItems?.some(
+  //   (orderItem) => orderItem.sent
+  // );
+  // const hasSomeItems = currentOrder?.orderItems?.some((orderItem) => orderItem);
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);

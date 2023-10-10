@@ -31,6 +31,7 @@ function Kitchen() {
 
     const url = new URL("http://localhost:3000/.well-known/mercure");
     url.searchParams.append("topic", `orders`);
+
     // Ici, vous créez une nouvelle instance de EventSource pour établir une connexion avec le serveur Mercure.
     const es = new EventSource(url);
     console.log(es);
@@ -43,7 +44,7 @@ function Kitchen() {
       dispatch(updateSpecificOrder(updatedOrder));
       // Après avoir reçu une mise à jour, vous envoiez une autre action pour récupérer à nouveau toutes les commandes destinées à la cuisine.
       // Cela garantit que votre application affiche toujours les données les plus récentes.
-      // dispatch(fetchOrdersKitchenThunk());
+      dispatch(fetchOrdersKitchenThunk());
     };
 
     // Cette fonction de nettoyage est appelée lorsque le composant est démonté.
@@ -109,7 +110,9 @@ function Kitchen() {
                 className="btn"
                 onClick={() => handleStatusClick(order.id, order.status)}
               >
-                envoyer
+                {order.orderItems && order.orderItems.length > 0
+                  ? "send"
+                  : "cancel"}
               </button>
             </li>
           ))}

@@ -93,6 +93,10 @@ const ordersReducer = createReducer(initialState, (builder) => {
     })
     .addCase(updateSpecificOrder, (state, action) => {
       const updatedOrder = action.payload;
+      if (!updatedOrder || !updatedOrder.id) {
+        console.error("Invalid order:", updatedOrder);
+        return;
+      }
       state.list = state.list.map((order) => {
         if (order.id !== updatedOrder.id) {
           return order;
