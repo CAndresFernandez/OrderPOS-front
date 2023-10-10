@@ -24,9 +24,10 @@ function CurrentOrder() {
   const navigate = useNavigate();
 
   // Récupération de l'ID de la commande à partir des paramètres de l'URL.
-  const { orderId } = useParams();
-
+  // const { orderId } = useParams();
   // Utilisation du sélecteur Redux pour obtenir la commande actuelle.
+  // const orderId = useAppSelector((state) => state.orders.currentOrder?.id);
+  const { orderId } = useParams();
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
   const { categoryId } = useParams();
   const filteredItems = categoryId
@@ -72,7 +73,8 @@ function CurrentOrder() {
     <>
       <header>
         <LoggedAs />
-        <h2>Order n {orderId}</h2>
+        <h5>Order n {orderId}</h5>
+        <h5>Table {currentOrder?.relatedTable.number}</h5>
         <NavCategories />
         <button
           type="button"

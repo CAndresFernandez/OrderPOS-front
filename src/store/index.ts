@@ -4,6 +4,7 @@ import itemsReducer from "./reducers/itemsReducer";
 import ordersReducer from "./reducers/ordersReducer";
 import userReducer from "./reducers/userReducer";
 import categoriesReducer from "./reducers/categoriesReducer";
+import chatSlice from "./reducers/chatSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     orders: ordersReducer,
     user: userReducer,
     categories: categoriesReducer,
+    // chat: chatSlice.reducer,
   },
 });
 

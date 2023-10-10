@@ -1,4 +1,4 @@
-import { createReducer } from "@reduxjs/toolkit";
+import { createAction, createReducer } from "@reduxjs/toolkit";
 import { IOrder } from "../../@types/order";
 import {
   addItemToCurrentOrderThunk,
@@ -21,6 +21,7 @@ export const initialState: RootState = {
   list: [],
   currentOrder: null,
 };
+export const updateSpecificOrder = createAction<IOrder>("orders/UPDATE_LIST");
 
 const ordersReducer = createReducer(initialState, (builder) => {
   builder
@@ -89,6 +90,15 @@ const ordersReducer = createReducer(initialState, (builder) => {
     .addCase(deleteOrderThunk.rejected, () => {
       // puisqu'on la requette à planté on précise qu'on peut enlever le loader
       console.log("rejected");
+    })
+    .addCase(updateSpecificOrder, (state, action) => {
+      const updatedOrder = action.payload;
+      state.list = state.list.map((order) => {
+        if (order.id !== updatedOrder.id) {
+          return order;
+        }
+        return updatedOrder;
+      });
     });
 });
 

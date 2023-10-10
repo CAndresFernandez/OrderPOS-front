@@ -123,7 +123,8 @@ function CollapseOrder() {
       {currentOrder && (
         <div className="collapse-container">
           <div className={`collapse ${isVisible ? "visible" : ""}`}>
-            <h4>Order {currentOrder.id}</h4>
+            <h5>Order {currentOrder.id}</h5>
+            <h5>Table {currentOrder.relatedTable.number}</h5>
             <button
               type="button"
               className="btn"

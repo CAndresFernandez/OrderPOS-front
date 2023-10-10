@@ -27,12 +27,12 @@
 }
 
 .kitchen-NavBtnBack {
-    
-        position: fixed;
-        top: 2em;
-        right: 32px;
-        padding: 1em;
-    
+
+    position: fixed;
+    top: 2em;
+    right: 32px;
+    padding: 1em;
+
 }
 
 .kitchen-list-li-div {
@@ -43,9 +43,15 @@
     background-color: v.$lighterNewColor;
     margin: 5px 0;
 }
+
 .kitchen-list-li-div p {
     margin: 2px;
 }
+
 .item-sent {
     color: gray;
+}
+
+.kitchen-list-li h4 {
+    color: black;
 }
