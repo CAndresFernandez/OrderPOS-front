@@ -1,4 +1,4 @@
-import { createReducer } from "@reduxjs/toolkit";
+import { createAction, createReducer } from "@reduxjs/toolkit";
 import { IOrder } from "../../@types/order";
 import {
   addItemToCurrentOrderThunk,
@@ -6,6 +6,7 @@ import {
   editCommOrderThunk,
   fetchOrderByTableIdThunk,
   fetchOrderThunk,
+  fetchOrdersKitchenThunk,
   fetchOrdersThunk,
   minusItemToCurrentOrderThunk,
   plusItemToCurrentOrderThunk,
@@ -20,6 +21,7 @@ export const initialState: RootState = {
   list: [],
   currentOrder: null,
 };
+export const updateSpecificOrder = createAction<IOrder>("orders/UPDATE_LIST");
 
 const ordersReducer = createReducer(initialState, (builder) => {
   builder
@@ -27,6 +29,13 @@ const ordersReducer = createReducer(initialState, (builder) => {
       state.list = action.payload;
     })
     .addCase(fetchOrdersThunk.rejected, () => {
+      // puisqu'on la requette à planté on précise qu'on peut enlever le loader
+      console.log("rejected");
+    })
+    .addCase(fetchOrdersKitchenThunk.fulfilled, (state, action) => {
+      state.list = action.payload;
+    })
+    .addCase(fetchOrdersKitchenThunk.rejected, () => {
       // puisqu'on la requette à planté on précise qu'on peut enlever le loader
       console.log("rejected");
     })
@@ -81,6 +90,19 @@ const ordersReducer = createReducer(initialState, (builder) => {
     .addCase(deleteOrderThunk.rejected, () => {
       // puisqu'on la requette à planté on précise qu'on peut enlever le loader
       console.log("rejected");
+    })
+    .addCase(updateSpecificOrder, (state, action) => {
+      const updatedOrder = action.payload;
+      if (!updatedOrder || !updatedOrder.id) {
+        console.error("Invalid order:", updatedOrder);
+        return;
+      }
+      state.list = state.list.map((order) => {
+        if (order.id !== updatedOrder.id) {
+          return order;
+        }
+        return updatedOrder;
+      });
     });
 });
 

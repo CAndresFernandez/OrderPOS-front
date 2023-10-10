@@ -11,13 +11,21 @@ import CollapseOrder from "./components/CollapseOrder/CollapseOrder";
 import { getFromLocalStorage } from "./localStorage/localStorage";
 import "./App.scss";
 import { getActionLogin } from "./store/reducers/userReducer";
+import Kitchen from "./components/Kitchen/Kitchen";
+import CustomersCarte from "./components/CustomersCarte/CustomersCarte";
+// import Chat from "./components/Websocket/Chat";
 
 function App() {
   const dispatch = useDispatch();
-  const tables = useAppSelector((state) => state.tables.list);
+  const navigate = useNavigate();
   // console.log(tables);
   const logged = useAppSelector((state) => state.user.logged);
-  const navigate = useNavigate();
+  const user = useAppSelector((state) => state.user);
+  const currentUser =
+    // recuperer dans le localstorage
+    getFromLocalStorage("auth");
+  // console.log(currentUser, user);
+
   useEffect(() => {
     if (!logged) {
       // TODO : remplir le store avec le localstorage
@@ -40,11 +48,16 @@ function App() {
             <>
               <Route path="/" element={<Tables />} />
               <Route path="/orders/:orderId" element={<CurrentOrder />} />
+              <Route path="/categories/:id/items" element={<CurrentOrder />} />
+              {/* <Route path="/chat" element={<Chat />} /> */}
+
               {/* <Route
-                path={`/users/${userId}/orders`}
-                element={<Orders userId={userId} />}
-              /> */}
+                  path={`/users/${userId}/orders`}
+                  element={<Orders userId={userId} />}
+                /> */}
               <Route path="/logout" element={<Logout />} />
+              <Route path="/kitchen" element={<Kitchen />} />
+              <Route path="/carte" element={<CustomersCarte />} />
             </>
           ) : (
             <Route path="/login" element={<Login />} />
@@ -56,5 +69,4 @@ function App() {
     </>
   );
 }
-
 export default App;

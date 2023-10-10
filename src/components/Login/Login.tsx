@@ -2,38 +2,65 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.scss";
 import login from "../../api/login";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { getActionLogin } from "../../store/reducers/userReducer";
 
 function Login() {
+  // Initialisation de l'état pour le nom d'utilisateur avec une valeur initiale vide.
   const [username, setUsername] = useState("");
+
+  // Initialisation de l'état pour le mot de passe avec une valeur initiale vide.
   const [password, setPassword] = useState("");
+
+  // Initialisation de l'état pour l'utilisateur.
   const [user, setUser] = useState();
+
+  // Initialisation de l'état pour les erreurs avec une valeur initiale vide.
   const [error, setError] = useState("");
+
+  // Utilisation du hook navigate pour la navigation.
   const navigate = useNavigate();
-  // console.log(isConnected);
-  // const isConnected = false;
+
+  // Utilisation du hook dispatch pour envoyer des actions à Redux.
   const dispatch = useAppDispatch();
+
+  // Définition de la fonction handleLogin qui sera appelée lors de la tentative de connexion.
   const handleLogin = async (e) => {
+    // Empêche le comportement par défaut du formulaire.
     e.preventDefault();
 
     try {
+      // Tentative de connexion avec le nom d'utilisateur et le mot de passe.
       const response = await login(username, password);
+
+      // Extraction du token et de l'ID de la réponse.
       const {
         token,
         data: { id },
       } = response;
+
+      // Envoi d'une action pour gérer la connexion.
       dispatch(getActionLogin({ token, id }));
-      navigate("/");
-      // Gérez la réponse de l'API (par exemple, stockez le token dans le localStorage)
+      if (response.data.role.includes("ROLE_KITCHEN")) {
+        navigate("/kitchen");
+      } else {
+        navigate("/");
+      }
+      // Redirection vers la page d'accueil.
+
+      // (Commentaire de débogage) Affichage des données de la réponse.
       console.log(response.data);
     } catch (error) {
-      // Gérez les erreurs de connexion
+      // Gestion des erreurs de connexion.
       setError("Invalid credentials");
     }
   };
+  const userRole = useAppSelector((state) => state.user.role);
+  console.log(userRole);
 
+  // Message indiquant que l'utilisateur est connecté.
   const loggedMessage = "You are login!";
+
   return (
     <>
       <form className="login-form" onSubmit={handleLogin}>

@@ -19,9 +19,29 @@ export const fetchOrdersThunk = createAsyncThunk(
     return result.data;
   }
 );
+export const fetchOrdersKitchenThunk = createAsyncThunk(
+  // nom de l'action :
+  "orders/GET_ORDERS_WITH_STATUS_1",
+  // fonction asynchrone : c'est ici qu'on va faire l'appel AJAX
+  async () => {
+    // ---- 7/ ecriture de la requete API dans le thunk
+    // console.log("result");
+    const result = await myAxiosInstance.get(`/orders`);
+    // console.log(result);
+
+    // ---- 10/ return dans le thunk de la réponse de l'API : elle sera dispo dans le payload de l'action fullfilled
+    return result.data;
+  }
+);
 export const addOrderThunk = createAsyncThunk(
   "orders/CREATE_ORDER",
-  async ({ user_id, relatedTable_id }) => {
+  async ({
+    user_id,
+    relatedTable_id,
+  }: {
+    user_id: number;
+    relatedTable_id: number;
+  }) => {
     try {
       const result = await myAxiosInstance.post("/orders", {
         user_id,
@@ -55,7 +75,7 @@ export const fetchOrderThunk = createAsyncThunk(
   async (id: number) => {
     try {
       const result = await myAxiosInstance.get(`/orders/${id}`);
-      console.log(result);
+      console.log(result.data);
       return result.data;
     } catch (error) {
       console.error("Error fetching order:", error);
@@ -94,18 +114,11 @@ export const addItemToCurrentOrderThunk = createAsyncThunk(
 );
 export const changeStatusOrderThunk = createAsyncThunk(
   "orders/CHANGE_STATUS_CURRENT_ORDER",
-  async ({
-    orderId,
-    orderStatus,
-  }: {
-    orderId: number;
-    orderStatus: number;
-  }) => {
+  async ({ orderId }: { orderId: number }) => {
     try {
       // Assuming the API endpoint to add an item to an order is `/orders/:orderId/items`
-      const result = await myAxiosInstance.put(`/orders/${orderId}/status`, {
-        orderStatus,
-      });
+      const result = await myAxiosInstance.put(`/orders/${orderId}/status`);
+
       console.log(result);
       return result.data;
     } catch (error) {

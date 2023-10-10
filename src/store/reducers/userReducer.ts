@@ -6,21 +6,26 @@ export interface UserState {
   id: number | null;
   logged: boolean;
   login: string;
-  errorMessage: string | null;
   token: null | string;
+  name: string;
+  role?: [];
 }
 export const initialState: UserState = {
   id: null,
   logged: false,
   login: "",
-  errorMessage: null,
   token: null,
+  name: "",
+  role: [],
 };
 
 export const getActionDisconnect = createAction("login/DISCONNECT");
-export const getActionLogin = createAction<{ token: string; id: number }>(
-  "login"
-);
+export const getActionLogin = createAction<{
+  token: string;
+  id: number;
+  name: string;
+  role: [];
+}>("login");
 // export const refreshFromLocalStorage = createAction<{}>("login/REFRESH");
 
 const userReducer = createReducer(initialState, (builder) => {
@@ -32,6 +37,8 @@ const userReducer = createReducer(initialState, (builder) => {
       state.logged = true;
       state.id = action.payload.id;
       state.token = action.payload.token;
+      state.name = action.payload.name;
+      state.role = action.payload.role;
       // on va enregistrer les entetes header autorisation dans l'instance d'axios
       myAxiosInstance.defaults.headers.common.Authorization = `Bearer ${action.payload.token}`;
 

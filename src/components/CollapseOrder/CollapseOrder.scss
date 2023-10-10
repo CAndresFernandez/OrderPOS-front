@@ -29,6 +29,7 @@
 .list {
   display: flex;
   flex-direction: column;
+  height: 50vh;
 }
 
 .toggle-button {
@@ -120,4 +121,13 @@
     max-width: 500px; // ou une autre taille de votre choix
     
   }
+}
+.item-sent {
+  background-color: #f2d6d6; // Example color for status 1
+}
+
+.notclickable{
+  background-color: #e0e0e0; /* Gray color */
+  cursor: not-allowed; /* Display a not-allowed cursor */
+  pointer-events: none; /* Ensure the button doesn't receive click events */
 }
