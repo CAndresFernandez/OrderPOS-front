@@ -21,13 +21,12 @@ function CollapseOrder() {
 
   const [isVisible, setIsVisible] = useState(false);
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
+  console.log(currentOrder);
+
   const isOnCurrentOrderPage =
     location.pathname === `/orders/${currentOrder?.id}`;
   const [comment, setComment] = useState("");
   const [modalItemId, setModalItemId] = useState<number | null>(null);
-  const currentOrderItems = useAppSelector(
-    (state) => state.orders.currentOrder?.orderItems
-  );
   const [localItems, setLocalItems] = useState<IOrderItem[]>([]);
   const emoji = "\ud83d\udd89";
   const hasSomeUnsentItems =
@@ -48,36 +47,6 @@ function CollapseOrder() {
     }
   }, [currentOrder?.orderItems, currentOrder?.status]);
 
-  const handleMinusClick = useCallback(
-    (itemId: number) => {
-      if (currentOrder) {
-        dispatch(
-          minusItemToCurrentOrderThunk({ orderId: currentOrder.id, itemId })
-        );
-      }
-    },
-    [currentOrder, dispatch]
-  );
-
-  const handlePlusClick = useCallback(
-    (itemId: number) => {
-      if (currentOrder) {
-        dispatch(
-          plusItemToCurrentOrderThunk({ orderId: currentOrder.id, itemId })
-        );
-      }
-    },
-    [currentOrder, dispatch]
-  );
-
-  const handleStatusClick = (orderId: number) => {
-    if (currentOrder) {
-      dispatch(changeStatusOrderThunk({ orderId }));
-      toggleVisibility();
-      navigate("/");
-    }
-  };
-
   const handleOpenModal = (itemId: number) => {
     const itemComment =
       localItems.find((item) => item.id === itemId)?.comment || "";
@@ -87,6 +56,51 @@ function CollapseOrder() {
 
   const handleCloseModal = () => {
     setModalItemId(null);
+  };
+
+  // Utilisation de `useCallback` pour mémoriser la fonction et éviter des re-rendus inutiles.
+  // Cette fonction est appelée lorsque l'utilisateur clique sur le bouton "moins" pour un article.
+  const handleMinusClick = useCallback(
+    (itemId: number) => {
+      // Vérifie si une commande actuelle existe.
+      if (currentOrder) {
+        // Si oui, déclenche l'action pour soustraire un article de la commande actuelle.
+        // L'action prend l'ID de la commande actuelle et l'ID de l'article comme arguments.
+        dispatch(
+          minusItemToCurrentOrderThunk({ orderId: currentOrder.id, itemId })
+        );
+      }
+    },
+    // Les dépendances de `useCallback` sont `currentOrder` et `dispatch`.
+    // Cela signifie que la fonction sera mémorisée tant que `currentOrder` et `dispatch` ne changent pas.
+    [currentOrder, dispatch]
+  );
+
+  // Utilisation de `useCallback` pour mémoriser la fonction et éviter des re-rendus inutiles.
+  // Cette fonction est appelée lorsque l'utilisateur clique sur le bouton "plus" pour un article.
+
+  const handlePlusClick = useCallback(
+    (itemId: number) => {
+      // Vérifie si une commande actuelle existe.
+      if (currentOrder) {
+        // Si oui, déclenche l'action pour ajouter un article à la commande actuelle.
+        // L'action prend l'ID de la commande actuelle et l'ID de l'article comme arguments.
+        dispatch(
+          plusItemToCurrentOrderThunk({ orderId: currentOrder.id, itemId })
+        );
+      }
+    },
+    // Les dépendances de `useCallback` sont `currentOrder` et `dispatch`.
+    // Cela signifie que la fonction sera mémorisée tant que `currentOrder` et `dispatch` ne changent pas.
+    [currentOrder, dispatch]
+  );
+
+  const handleStatusClick = (orderId: number) => {
+    if (currentOrder) {
+      dispatch(changeStatusOrderThunk({ orderId }));
+      toggleVisibility();
+      navigate("/");
+    }
   };
 
   const handleSubmit = () => {
