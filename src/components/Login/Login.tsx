@@ -41,7 +41,7 @@ function Login() {
 
       // Envoi d'une action pour gérer la connexion.
       dispatch(getActionLogin({ token, id }));
-      if (response.data.role.includes("ROLE_KITCHEN")) {
+      if (response.data.roles.includes("ROLE_KITCHEN")) {
         navigate("/kitchen");
       } else {
         navigate("/");
@@ -55,7 +55,7 @@ function Login() {
       setError("Invalid credentials");
     }
   };
-  const userRole = useAppSelector((state) => state.user.role);
+  const userRole = useAppSelector((state) => state.user.roles);
   console.log(userRole);
 
   // Message indiquant que l'utilisateur est connecté.

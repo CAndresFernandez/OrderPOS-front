@@ -1,14 +1,16 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 import myAxiosInstance from "../../api/axios";
 import { saveToLocalStorage } from "../../localStorage/localStorage";
+import { IUser } from "../../@types/user";
 
 export interface UserState {
   id: number | null;
-  logged: boolean;
-  login: string;
+  logged?: boolean;
+  login?: string;
   token: null | string;
+  roles?: [];
   name: string;
-  role?: [];
+  lastname: string;
 }
 export const initialState: UserState = {
   id: null,
@@ -16,7 +18,8 @@ export const initialState: UserState = {
   login: "",
   token: null,
   name: "",
-  role: [],
+  lastname: "",
+  roles: [],
 };
 
 export const getActionDisconnect = createAction("login/DISCONNECT");
@@ -24,7 +27,7 @@ export const getActionLogin = createAction<{
   token: string;
   id: number;
   name: string;
-  role: [];
+  roles: [];
 }>("login");
 // export const refreshFromLocalStorage = createAction<{}>("login/REFRESH");
 
@@ -38,7 +41,7 @@ const userReducer = createReducer(initialState, (builder) => {
       state.id = action.payload.id;
       state.token = action.payload.token;
       state.name = action.payload.name;
-      state.role = action.payload.role;
+      state.roles = action.payload.roles;
       // on va enregistrer les entetes header autorisation dans l'instance d'axios
       myAxiosInstance.defaults.headers.common.Authorization = `Bearer ${action.payload.token}`;
 

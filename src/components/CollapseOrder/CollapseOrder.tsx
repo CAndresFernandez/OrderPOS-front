@@ -13,6 +13,7 @@ import {
 } from "../../store/middlewares/orders";
 
 import "./CollapseOrder.scss";
+import { IUser } from "../../@types/user";
 
 function CollapseOrder() {
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ function CollapseOrder() {
   const [isVisible, setIsVisible] = useState(false);
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
   console.log(currentOrder);
+  const currentUser: IUser = useAppSelector((state) => state.user);
+  console.log(currentUser);
 
   const isOnCurrentOrderPage =
     location.pathname === `/orders/${currentOrder?.id}`;
@@ -94,7 +97,7 @@ function CollapseOrder() {
     // Cela signifie que la fonction sera mémorisée tant que `currentOrder` et `dispatch` ne changent pas.
     [currentOrder, dispatch]
   );
-
+  // Fonction pour gérer le changement de statut de la commande.
   const handleStatusClick = (orderId: number) => {
     if (currentOrder) {
       dispatch(changeStatusOrderThunk({ orderId }));
@@ -102,7 +105,7 @@ function CollapseOrder() {
       navigate("/");
     }
   };
-
+  // Fonction pour soumettre le commentaire d'un article.
   const handleSubmit = () => {
     if (currentOrder && modalItemId !== null) {
       dispatch(
@@ -115,7 +118,7 @@ function CollapseOrder() {
       handleCloseModal();
     }
   };
-
+  // Fonction pour gérer le clic sur le bouton de paiement.
   const handleCheckoutClick = () => {
     if (currentOrder) {
       setLocalItems([]);
@@ -124,7 +127,7 @@ function CollapseOrder() {
       navigate("/");
     }
   };
-
+  // Fonction pour ajuster la hauteur du textarea en fonction de son contenu.
   const adjustTextareaHeight = (event) => {
     const textarea = event.target;
     textarea.style.height = "auto";
@@ -225,7 +228,7 @@ function CollapseOrder() {
                     )}
                   </li>
                 ))}
-              {currentOrder.status !== 1 && hasSomeUnsentItems && (
+              {currentOrder.status !== 1 && hasSomeUnsentItems ? (
                 <button
                   type="button"
                   className="btn"
@@ -234,17 +237,20 @@ function CollapseOrder() {
                   {currentOrder.status === 0 && "send"}
                   {currentOrder.status === 2 && "edit"}
                 </button>
-              )}
-              {currentOrder.status === 2 && (
-                <button
-                  type="button"
-                  className={`btn ${hasSomeUnsentItems ? "notclickable" : ""}`}
-                  onClick={
-                    !hasSomeUnsentItems ? handleCheckoutClick : undefined
-                  }
-                >
-                  checkout
-                </button>
+              ) : (
+                currentOrder.status === 2 && (
+                  <button
+                    type="button"
+                    className={`btn ${
+                      hasSomeUnsentItems ? "notclickable" : ""
+                    }`}
+                    onClick={
+                      !hasSomeUnsentItems ? handleCheckoutClick : undefined
+                    }
+                  >
+                    checkout
+                  </button>
+                )
               )}
             </ul>
           </div>
