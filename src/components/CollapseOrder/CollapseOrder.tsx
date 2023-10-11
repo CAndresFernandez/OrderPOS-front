@@ -8,12 +8,14 @@ import {
   changeStatusOrderThunk,
   deleteOrderThunk,
   editCommOrderThunk,
+  fetchOrderThunk,
   minusItemToCurrentOrderThunk,
   plusItemToCurrentOrderThunk,
 } from "../../store/middlewares/orders";
 
 import "./CollapseOrder.scss";
 import { IUser } from "../../@types/user";
+import { updateSpecificOrder } from "../../store/reducers/ordersReducer";
 
 function CollapseOrder() {
   const navigate = useNavigate();
@@ -22,15 +24,19 @@ function CollapseOrder() {
 
   const [isVisible, setIsVisible] = useState(false);
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
-  console.log(currentOrder);
+  // console.log(currentOrder);
   const currentUser: IUser = useAppSelector((state) => state.user);
   console.log(currentUser);
+  const orderItems: IOrderItem[] = useAppSelector(
+    (state) => state.orders.currentOrder?.orderItems
+  );
+  console.log(orderItems);
 
   const isOnCurrentOrderPage =
     location.pathname === `/orders/${currentOrder?.id}`;
   const [comment, setComment] = useState("");
   const [modalItemId, setModalItemId] = useState<number | null>(null);
-  const [localItems, setLocalItems] = useState<IOrderItem[]>([]);
+  // const [localItems, setLocalItems] = useState<IOrderItem[]>([]);
   const emoji = "\ud83d\udd89";
   const hasSomeUnsentItems =
     Array.isArray(currentOrder?.orderItems) &&
@@ -39,20 +45,33 @@ function CollapseOrder() {
   //   (orderItem) => orderItem.sent
   // );
   // const hasSomeItems = currentOrder?.orderItems?.some((orderItem) => orderItem);
-
+  // Le hook useEffect est utilisé pour exécuter du code après le rendu du composant.
+  useEffect(() => {
+    const url = new URL("http://localhost:3000/.well-known/mercure");
+    url.searchParams.append("topic", `orders`);
+    const es = new EventSource(url);
+    console.log(es);
+    // Cette fonction est appelée chaque fois qu'un message est reçu du serveur Mercure.
+    es.onmessage = (event) => {
+      console.log("ouiii ça a marché !", event);
+      // Vous parsez le message reçu pour le convertir en objet JavaScript.
+      const updatedOrder = JSON.parse(event.data);
+      dispatch(updateSpecificOrder(updatedOrder));
+      dispatch(fetchOrderThunk(updatedOrder.id));
+    };
+    return () => {
+      es?.close();
+    };
+    // La dépendance [dispatch] signifie que le code à l'intérieur de useEffect sera exécuté chaque fois que la fonction dispatch change.
+    // En pratique, avec Redux, dispatch ne change jamais, donc useEffect ne s'exécutera qu'une fois, similaire à componentDidMount.
+  }, [dispatch]);
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
 
-  useEffect(() => {
-    if (currentOrder?.orderItems) {
-      setLocalItems(currentOrder.orderItems);
-    }
-  }, [currentOrder?.orderItems, currentOrder?.status]);
-
   const handleOpenModal = (itemId: number) => {
     const itemComment =
-      localItems.find((item) => item.id === itemId)?.comment || "";
+      orderItems.find((item) => item.id === itemId)?.comment || "";
     setComment(itemComment);
     setModalItemId(itemId);
   };
@@ -121,7 +140,7 @@ function CollapseOrder() {
   // Fonction pour gérer le clic sur le bouton de paiement.
   const handleCheckoutClick = () => {
     if (currentOrder) {
-      setLocalItems([]);
+      // setLocalItems([]);
       dispatch(deleteOrderThunk(currentOrder.id));
       toggleVisibility();
       navigate("/");
@@ -155,8 +174,9 @@ function CollapseOrder() {
                 <h4>Quantity</h4>
                 <h4>Comment</h4>
               </li>
-              {localItems &&
-                localItems.map((item) => (
+
+              {orderItems &&
+                orderItems.map((item) => (
                   <li className="list-li" key={item.id}>
                     <div
                       className={`list-li-div ${item.sent ? "item-sent" : ""}`}

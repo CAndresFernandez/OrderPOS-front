@@ -7,10 +7,12 @@
     justify-content: center;    
     margin-top: 100px;
     padding: 0;
+    
 }
 .li-clickable {
     transition: transform 0.1s ease; /* Smooth transition for the transform property */
     cursor: pointer; /* Hand cursor on hover */
+   
 }
 
 .li-clickable:active { /* :active pseudo-class applies styles when the element is being clicked */

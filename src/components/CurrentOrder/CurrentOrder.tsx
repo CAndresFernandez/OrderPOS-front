@@ -67,7 +67,7 @@ function CurrentOrder() {
       })
     );
     // (Commentaire de débogage) Récupération de la commande après l'ajout de l'article.
-    //dispatch(fetchOrderThunk(parseInt(orderId, 10)));
+    // dispatch(fetchOrderThunk(parseInt(orderId, 10)));
   };
   return (
     <>
