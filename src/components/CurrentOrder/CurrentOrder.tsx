@@ -51,7 +51,7 @@ function CurrentOrder() {
     }
 
     // Si un ID de commande est présent, on récupère la commande correspondante.
-    if (orderId) dispatch(fetchOrderThunk(parseInt(orderId, 10)));
+    // if (orderId) dispatch(fetchOrderThunk(parseInt(orderId, 10)));
 
     // (Commentaire pour ESLint) Désactivation de la règle exhaustive-deps pour ce hook.
     // eslint-disable-next-line react-hooks/exhaustive-deps
