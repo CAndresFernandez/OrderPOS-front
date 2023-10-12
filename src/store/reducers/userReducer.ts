@@ -1,10 +1,19 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 import myAxiosInstance from "../../api/axios";
 import { saveToLocalStorage } from "../../localStorage/localStorage";
-import { IUser } from "../../@types/user";
 
-export const initialState: IUser = {
-  id: null,
+export interface RootState {
+  id: number;
+  logged?: boolean;
+  login?: string;
+  token: null | string;
+  roles?: [];
+  name: string;
+  lastname: string;
+}
+
+export const initialState: RootState = {
+  id: 0,
   logged: false,
   login: "",
   token: null,

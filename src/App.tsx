@@ -22,9 +22,9 @@ function App() {
   const logged = useAppSelector((state) => state.user.logged);
   // const user = useAppSelector((state) => state.user);
 
-  // recuperer dans le localstorage
-  getFromLocalStorage("auth");
-  console.log(getFromLocalStorage("auth"));
+  // // recuperer dans le localstorage
+  // getFromLocalStorage("auth");
+  // console.log(getFromLocalStorage("auth"));
 
   // console.log(currentUser, user);
 

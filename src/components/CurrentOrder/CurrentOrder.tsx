@@ -6,10 +6,7 @@ import NavCategories from "../NavCategories/NavCategories";
 import { IItem } from "../../@types/order";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import "./CurrentOrder.scss";
-import {
-  fetchItemsByCategoryIdThunk,
-  fetchItemsThunk,
-} from "../../store/middlewares/items";
+import { fetchItemsThunk } from "../../store/middlewares/items";
 import {
   addItemToCurrentOrderThunk,
   fetchOrderThunk,
@@ -22,6 +19,8 @@ function CurrentOrder() {
 
   // Utilisation du hook navigate pour la navigation.
   const navigate = useNavigate();
+  // Utilisation du hook dispatch pour envoyer des actions à Redux.
+  const dispatch = useAppDispatch();
 
   // Récupération de l'ID de la commande à partir des paramètres de l'URL.
   // const { orderId } = useParams();
@@ -29,26 +28,16 @@ function CurrentOrder() {
   // const orderId = useAppSelector((state) => state.orders.currentOrder?.id);
   const { orderId } = useParams();
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
-  const { categoryId } = useParams();
-  const filteredItems = categoryId
-    ? items.filter((item) => item?.category_id === categoryId)
-    : items;
 
   // (Commentaire de débogage) Affichage des articles et de la commande actuelle.
   // console.log(items, currentOrder);
-
-  // Utilisation du hook dispatch pour envoyer des actions à Redux.
-  const dispatch = useAppDispatch();
 
   // Utilisation du hook useEffect pour exécuter du code après le rendu du composant.
   useEffect(() => {
     // Après le premier chargement de l'application, on veut récupérer les tables.
     // L'application va envoyer une action au middleware thunk qui gère l'appel API.
-    if (categoryId) {
-      dispatch(fetchItemsByCategoryIdThunk());
-    } else {
-      dispatch(fetchItemsThunk());
-    }
+
+    dispatch(fetchItemsThunk());
 
     // Si un ID de commande est présent, on récupère la commande correspondante.
     if (orderId) dispatch(fetchOrderThunk(parseInt(orderId || "", 10)));
@@ -73,7 +62,7 @@ function CurrentOrder() {
     <>
       <header>
         <LoggedAs />
-        <h5>Order n {orderId}</h5>
+        <h5>Order n {currentOrder.id}</h5>
         <h5>Table {currentOrder?.relatedTable?.number}</h5>
         <NavCategories />
         <button
@@ -86,7 +75,7 @@ function CurrentOrder() {
       </header>
 
       <ul className="dish-list">
-        {filteredItems.map((item) => (
+        {items.map((item) => (
           <li
             className="li-clickable"
             onClick={() => handleClick(item.id)}

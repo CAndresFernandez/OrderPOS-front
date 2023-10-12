@@ -61,10 +61,11 @@ function Kitchen() {
         orderId,
         orderStatus,
       })
-    ).then(() => {
-      // Récupération des commandes après la mise à jour du statut.
-      dispatch(fetchOrdersKitchenThunk());
-    });
+      // ).then(() => {
+      //   // Récupération des commandes après la mise à jour du statut.
+      //   dispatch(fetchOrdersKitchenThunk());
+      //
+    );
   };
 
   return (

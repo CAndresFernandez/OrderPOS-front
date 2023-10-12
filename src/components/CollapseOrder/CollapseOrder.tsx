@@ -24,7 +24,7 @@ function CollapseOrder() {
 
   const [isVisible, setIsVisible] = useState(false);
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
-  // console.log(currentOrder);
+  console.log(currentOrder);
   // const currentUser: IUser = useAppSelector((state) => state.user);
   // console.log(currentUser);
   const orderItems: IOrderItem[] | undefined = useAppSelector(

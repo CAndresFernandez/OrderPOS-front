@@ -58,7 +58,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
     // Gère le cas où la requête pour récupérer une commande spécifique est réussie.
     .addCase(fetchOrderThunk.fulfilled, (state, action) => {
       // Affiche un message dans la console pour indiquer que les articles ont été récupérés.
-      // console.log("fetched items");
+      console.log("fetched items");
       // Si des données sont renvoyées par l'action, met à jour la commande actuelle avec ces données.
       if (action.payload) {
         state.currentOrder = action.payload;

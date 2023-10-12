@@ -4,7 +4,7 @@ import { getFromLocalStorage } from "../../localStorage/localStorage";
 
 function LoggedAs() {
   const storeUser = getFromLocalStorage("auth");
-  console.log(storeUser);
+  // console.log(storeUser);
 
   return (
     <Link to="/logout">
