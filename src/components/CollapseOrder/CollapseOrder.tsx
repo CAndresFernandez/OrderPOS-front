@@ -58,7 +58,9 @@ function CollapseOrder() {
       // Vous parsez le message reçu pour le convertir en objet JavaScript.
       const updatedOrder = JSON.parse(event.data);
       dispatch(updateSpecificOrder(updatedOrder));
-      dispatch(fetchOrderThunk(updatedOrder?.id));
+      if (updatedOrder) {
+        dispatch(fetchOrderThunk(updatedOrder.id));
+      }
     };
     return () => {
       es?.close();
