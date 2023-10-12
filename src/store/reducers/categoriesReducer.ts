@@ -23,7 +23,7 @@ const categoriesReducer = createReducer(initialState, (builder) => {
       console.log("fulfilled");
     })
     // En cas d'échec de la requête pour récupérer les catégories.
-    .addCase(fetchCategoriesThunk.rejected, (state, action) => {
+    .addCase(fetchCategoriesThunk.rejected, () => {
       // Log pour indiquer que la requête a échoué.
       console.log("rejected");
     });

@@ -1,7 +1,7 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "./hooks/redux";
+
+import { useAppDispatch, useAppSelector } from "./hooks/redux";
 // import Navbar from "./components/Navbar/Navbar";
 import Tables from "./components/Tables/Tables";
 import CurrentOrder from "./components/CurrentOrder/CurrentOrder";
@@ -16,14 +16,14 @@ import CustomersCarte from "./components/CustomersCarte/CustomersCarte";
 // import Chat from "./components/Websocket/Chat";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   // console.log(tables);
   const logged = useAppSelector((state) => state.user.logged);
-  const user = useAppSelector((state) => state.user);
-  const currentUser =
-    // recuperer dans le localstorage
-    getFromLocalStorage("auth");
+  // const user = useAppSelector((state) => state.user);
+  // const currentUser =
+  // recuperer dans le localstorage
+  getFromLocalStorage("auth");
   // console.log(currentUser, user);
 
   useEffect(() => {

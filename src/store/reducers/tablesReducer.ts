@@ -15,7 +15,7 @@ const tablesReducer = createReducer(initialState, (builder) => {
     .addCase(fetchTablesThunk.fulfilled, (state, action) => {
       state.list = action.payload;
     })
-    .addCase(fetchTablesThunk.rejected, (state, action) => {
+    .addCase(fetchTablesThunk.rejected, () => {
       // puisqu'on la requette à planté on précise qu'on peut enlever le loader
       console.log("rejected");
     })

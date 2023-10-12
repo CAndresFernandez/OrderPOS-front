@@ -7,7 +7,10 @@ export function findOrder(
   return orders.find((order) => order.id === orderId);
 }
 
-export function findOrderByTableId(tableId, tables) {
+export function findOrderByTableId(
+  tableId: number,
+  tables: ITable[]
+): IOrder | null {
   // Find the table by its ID
   const table = tables.find((t) => t.id === tableId);
 

@@ -35,14 +35,28 @@ function Table({ table }: { table: ITable }) {
     1: "status-cooking",
     2: "status-waiting-payment",
   };
+  const status = table.relatedOrder?.status;
+  const className =
+    statusClassMapping[status as keyof typeof statusClassMapping] ||
+    "freeTable";
+  const pName =
+    statusMapping[status as keyof typeof statusClassMapping] || "Free table";
+
   // Fonction pour gérer le clic sur une table.
-  const handleTableClick = async (event) => {
+  const handleTableClick = async (
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
     // Prévention du comportement par défaut du clic.
     event.preventDefault();
     // Si la table n'a pas de propriétaire.
-    if (isUnowned) {
+    if (
+      isUnowned &&
+      typeof currentUser.id === "number" &&
+      typeof table.id === "number"
+    ) {
       try {
         // Tentative d'ajout d'une commande pour la table.
+
         const actionResult = await dispatch(
           addOrderThunk({ user_id: currentUser.id, relatedTable_id: table.id })
         );
@@ -51,7 +65,7 @@ function Table({ table }: { table: ITable }) {
         // Récupération de l'ID de la commande créée.
         const createdOrderId = createdOrder.id;
         // Affichage de l'ID de la commande créée dans la console.
-        console.log("Created order ID:", createdOrderId);
+        // console.log("Created order ID:", createdOrderId);
         // Navigation vers la page de la commande créée.
         navigate(`/orders/${createdOrderId}`);
       } catch (error) {
@@ -68,16 +82,12 @@ function Table({ table }: { table: ITable }) {
   return isOwner || isUnowned ? (
     // Si l'utilisateur actuel est le propriétaire ou si la table n'a pas de propriétaire, affichage d'un lien vers la commande.
     <Link to={`/orders/${table.relatedOrder?.id}`} onClick={handleTableClick}>
-      <div
-        className={`card w-96 bg-base-100 shadow-xl ${
-          statusClassMapping[table.relatedOrder?.status] || "freeTable"
-        }`}
-      >
+      <div className={`card w-96 bg-base-100 shadow-xl ${className}`}>
         <div className="card-title">
           <h3 className="card-title">Table {table.number}</h3>
           <p>{table.covers} covers</p>
           {table.relatedOrder && <p>Order {table.relatedOrder.id}</p>}
-          <p>{statusMapping[table.relatedOrder?.status] || "Free"}</p>
+          <p>{pName}</p>
         </div>
       </div>
     </Link>

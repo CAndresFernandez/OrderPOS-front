@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { IOrderItem } from "../../@types/order";
@@ -14,7 +14,7 @@ import {
 } from "../../store/middlewares/orders";
 
 import "./CollapseOrder.scss";
-import { IUser } from "../../@types/user";
+// import { IUser } from "../../@types/user";
 import { updateSpecificOrder } from "../../store/reducers/ordersReducer";
 
 function CollapseOrder() {
@@ -25,12 +25,12 @@ function CollapseOrder() {
   const [isVisible, setIsVisible] = useState(false);
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
   // console.log(currentOrder);
-  const currentUser: IUser = useAppSelector((state) => state.user);
-  console.log(currentUser);
-  const orderItems: IOrderItem[] = useAppSelector(
+  // const currentUser: IUser = useAppSelector((state) => state.user);
+  // console.log(currentUser);
+  const orderItems: IOrderItem[] | undefined = useAppSelector(
     (state) => state.orders.currentOrder?.orderItems
   );
-  console.log(orderItems);
+  // console.log(orderItems);
 
   const isOnCurrentOrderPage =
     location.pathname === `/orders/${currentOrder?.id}`;
@@ -51,10 +51,10 @@ function CollapseOrder() {
     url.searchParams.append("authorization", import.meta.env.VITE_MERCURE_JWT);
     url.searchParams.append("topic", `orders`);
     const es = new EventSource(url, { withCredentials: true });
-    console.log(es);
+    // console.log(es);
     // Cette fonction est appelée chaque fois qu'un message est reçu du serveur Mercure.
     es.onmessage = (event) => {
-      console.log("ouiii ça a marché !", event);
+      // console.log("ouiii ça a marché !", event);
       // Vous parsez le message reçu pour le convertir en objet JavaScript.
       const updatedOrder = JSON.parse(event.data);
       dispatch(updateSpecificOrder(updatedOrder));
@@ -72,7 +72,7 @@ function CollapseOrder() {
 
   const handleOpenModal = (itemId: number) => {
     const itemComment =
-      orderItems.find((item) => item.id === itemId)?.comment || "";
+      orderItems?.find((item) => item.id === itemId)?.comment || "";
     setComment(itemComment);
     setModalItemId(itemId);
   };
@@ -118,9 +118,9 @@ function CollapseOrder() {
     [currentOrder, dispatch]
   );
   // Fonction pour gérer le changement de statut de la commande.
-  const handleStatusClick = (orderId: number) => {
+  const handleStatusClick = (orderId: number, orderStatus: number) => {
     if (currentOrder) {
-      dispatch(changeStatusOrderThunk({ orderId }));
+      dispatch(changeStatusOrderThunk({ orderId, orderStatus }));
       toggleVisibility();
       navigate("/");
     }
@@ -142,14 +142,16 @@ function CollapseOrder() {
   const handleCheckoutClick = () => {
     if (currentOrder) {
       // setLocalItems([]);
-      handleStatusClick(currentOrder.id);
+      handleStatusClick(currentOrder.id, currentOrder.status);
       dispatch(deleteOrderThunk(currentOrder.id));
       toggleVisibility();
       navigate("/");
     }
   };
   // Fonction pour ajuster la hauteur du textarea en fonction de son contenu.
-  const adjustTextareaHeight = (event) => {
+  const adjustTextareaHeight = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const textarea = event.target;
     textarea.style.height = "auto";
     textarea.style.height = `${textarea.scrollHeight}px`;
@@ -254,7 +256,9 @@ function CollapseOrder() {
                 <button
                   type="button"
                   className="btn"
-                  onClick={() => handleStatusClick(currentOrder.id)}
+                  onClick={() =>
+                    handleStatusClick(currentOrder.id, currentOrder.status)
+                  }
                 >
                   {currentOrder.status === 0 && "send"}
                   {currentOrder.status === 2 && "edit"}

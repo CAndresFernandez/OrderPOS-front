@@ -1,6 +1,6 @@
 import myAxiosInstance from "./axios";
 
-const login = (username, password) => {
+const login = (username: string, password: string) => {
   return myAxiosInstance
     .post("/login_check", {
       login: username,

@@ -1,7 +1,6 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 import myAxiosInstance from "../../api/axios";
 import { saveToLocalStorage } from "../../localStorage/localStorage";
-import { IUser } from "../../@types/user";
 
 export interface UserState {
   id: number | null;
@@ -57,7 +56,7 @@ const userReducer = createReducer(initialState, (builder) => {
     //   // enregistrer un message d'erreur
     //   state.errorMessage = "erreur de connexion";
     // })
-    .addCase(getActionDisconnect, (state, action) => {
+    .addCase(getActionDisconnect, (state) => {
       // on met logged à false
       state.logged = false;
       // detruit auth dans le local storage

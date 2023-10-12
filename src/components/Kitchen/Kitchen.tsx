@@ -1,10 +1,9 @@
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import {
   changeStatusOrderThunk,
   fetchOrdersKitchenThunk,
-  minusItemToCurrentOrderThunk,
 } from "../../store/middlewares/orders";
 
 import LoggedAs from "../LoggedAs/LoggedAs";

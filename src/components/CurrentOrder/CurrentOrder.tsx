@@ -62,7 +62,7 @@ function CurrentOrder() {
     // Envoi d'une action pour ajouter un article à la commande actuelle.
     dispatch(
       addItemToCurrentOrderThunk({
-        orderId: parseInt(orderId, 10),
+        orderId: parseInt(orderId || "", 10),
         itemId,
       })
     );
