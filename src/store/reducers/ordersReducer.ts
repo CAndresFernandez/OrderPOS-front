@@ -136,7 +136,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
       // Vérifie si la commande mise à jour est valide.
       if (!updatedOrder || !updatedOrder.id) {
         // Si elle ne l'est pas, affiche un message d'erreur dans la console.
-        console.error("Invalid order:", updatedOrder);
+        // console.error("Invalid order:", updatedOrder);
         return;
       }
       // Met à jour la liste des commandes en remplaçant la commande existante par la commande mise à jour.
