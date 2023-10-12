@@ -21,15 +21,19 @@ function App() {
   // console.log(tables);
   const logged = useAppSelector((state) => state.user.logged);
   // const user = useAppSelector((state) => state.user);
-  // const currentUser =
+
   // recuperer dans le localstorage
   getFromLocalStorage("auth");
+  console.log(getFromLocalStorage("auth"));
+
   // console.log(currentUser, user);
 
   useEffect(() => {
     if (!logged) {
       // TODO : remplir le store avec le localstorage
       const auth = getFromLocalStorage("auth");
+      console.log(auth);
+
       if (auth) {
         dispatch(getActionLogin(auth));
       } else {

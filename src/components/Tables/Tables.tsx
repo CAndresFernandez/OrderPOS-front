@@ -22,9 +22,9 @@ function Tables() {
     url.searchParams.append("topic", `tables`);
     const es = new EventSource(url, { withCredentials: true });
     es.onmessage = (event) => {
-      console.log("ouiii ça a marché !", event);
+      // console.log("ouiii ça a marché !", event);
       const updatedTable = JSON.parse(event.data);
-      console.log(updatedTable);
+      // console.log(updatedTable);
 
       // Dispatchez une action pour mettre à jour la liste des tables
       dispatch(updateTablesAction(updatedTable));

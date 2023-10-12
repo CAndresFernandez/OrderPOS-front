@@ -19,7 +19,7 @@ function Kitchen() {
   const dispatch = useAppDispatch();
   // Utilisation du sélecteur Redux pour obtenir la liste des commandes.
   const orders = useAppSelector((state) => state.orders.list);
-  console.log(orders);
+  // console.log(orders);
 
   // const hasSomeItems = currentOrder?.orderItems?.some((orderItem) => orderItem);
 
@@ -32,11 +32,11 @@ function Kitchen() {
     url.searchParams.append("authorization", import.meta.env.VITE_MERCURE_JWT);
     url.searchParams.append("topic", `orders`);
     const es = new EventSource(url, { withCredentials: true });
-    console.log(es);
+    // console.log(es);
 
     // Cette fonction est appelée chaque fois qu'un message est reçu du serveur Mercure.
     es.onmessage = (event) => {
-      console.log("ouiii ça a marché !", event);
+      // console.log("ouiii ça a marché !", event);
       // Vous parsez le message reçu pour le convertir en objet JavaScript.
       const updatedOrder = JSON.parse(event.data);
       dispatch(updateSpecificOrder(updatedOrder));

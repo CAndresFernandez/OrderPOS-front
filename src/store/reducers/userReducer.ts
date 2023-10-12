@@ -1,17 +1,9 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 import myAxiosInstance from "../../api/axios";
 import { saveToLocalStorage } from "../../localStorage/localStorage";
+import { IUser } from "../../@types/user";
 
-export interface UserState {
-  id: number | null;
-  logged?: boolean;
-  login?: string;
-  token: null | string;
-  roles?: [];
-  name: string;
-  lastname: string;
-}
-export const initialState: UserState = {
+export const initialState: IUser = {
   id: null,
   logged: false,
   login: "",
@@ -48,6 +40,8 @@ const userReducer = createReducer(initialState, (builder) => {
       saveToLocalStorage("auth", {
         token: action.payload.token,
         id: action.payload.id,
+        name: action.payload.name,
+        roles: action.payload.roles,
       });
 
       // state.errorMessage = null;

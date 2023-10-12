@@ -46,7 +46,7 @@ export const addOrderThunk = createAsyncThunk(
         user_id,
         relatedTable_id,
       });
-      console.log(result.data);
+      // console.log(result.data);
       return result.data;
     } catch (error) {
       console.error("Error creating order:", error);
@@ -63,7 +63,7 @@ export const editOrderThunk = createAsyncThunk(
   async ({ id, ...newOrderData }: EditOrderData) => {
     try {
       const result = await myAxiosInstance.put(`/orders/${id}`, newOrderData);
-      console.log(result);
+      // console.log(result);
       return result.data;
     } catch (error) {
       console.error("Error editing order:", error);
@@ -77,7 +77,7 @@ export const fetchOrderThunk = createAsyncThunk(
   async (id: number) => {
     try {
       const result = await myAxiosInstance.get(`/orders/${id}`);
-      console.log(result.data);
+      // console.log(result.data);
       return result.data;
     } catch (error) {
       console.error("Error fetching order:", error);
@@ -90,7 +90,7 @@ export const fetchOrderByTableIdThunk = createAsyncThunk(
   async (tableId: number) => {
     try {
       const result = await myAxiosInstance.get(`/tables/${tableId}/orders`);
-      console.log(result.data);
+      // console.log(result.data);
       return result.data;
     } catch (error) {
       console.error("Error fetching order:", error);
@@ -106,7 +106,7 @@ export const addItemToCurrentOrderThunk = createAsyncThunk(
       const result = await myAxiosInstance.put(
         `/orders/${orderId}/items/${itemId}`
       );
-      console.log(result);
+      // console.log(result);
       return result.data;
     } catch (error) {
       console.error("Error adding item to order:", error);
@@ -127,7 +127,7 @@ export const changeStatusOrderThunk = createAsyncThunk(
         status: orderStatus, // Par exemple, si votre API attend une propriété "status"
       });
 
-      console.log(result);
+      // console.log(result);
       return result.data;
     } catch (error) {
       console.error("Error adding item to order:", error);
@@ -142,7 +142,7 @@ export const plusItemToCurrentOrderThunk = createAsyncThunk(
     try {
       // Assuming the API endpoint to add an item to an order is `/orders/:orderId/items`
       const result = await myAxiosInstance.put(`/order-items/add/${itemId}`);
-      console.log(result);
+      // console.log(result);
       return result.data;
     } catch (error) {
       console.error("Error adding item to order:", error);
@@ -156,7 +156,7 @@ export const minusItemToCurrentOrderThunk = createAsyncThunk(
     try {
       // Assuming the API endpoint to add an item to an order is `/orders/:orderId/items`
       const result = await myAxiosInstance.put(`/order-items/remove/${itemId}`);
-      console.log(result);
+      // console.log(result);
       return result.data;
     } catch (error) {
       console.error("Error adding item to order:", error);
@@ -180,7 +180,7 @@ export const editCommOrderThunk = createAsyncThunk(
         `/order-items/comment/${itemId}`,
         { comment }
       );
-      console.log(result);
+      // console.log(result);
       return result.data;
     } catch (error) {
       console.error("Error adding item to order:", error);
@@ -193,7 +193,7 @@ export const deleteOrderThunk = createAsyncThunk(
   async (orderId: number) => {
     try {
       const result = await myAxiosInstance.post(`/orders/${orderId}/closed`);
-      console.log(result.data);
+      // console.log(result.data);
       return result.data;
     } catch (error) {
       console.error("Error creating order:", error);

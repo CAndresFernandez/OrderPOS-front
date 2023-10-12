@@ -20,12 +20,12 @@ const categoriesReducer = createReducer(initialState, (builder) => {
     .addCase(fetchCategoriesThunk.fulfilled, (state, action) => {
       // Mise à jour de la liste des catégories avec les données reçues.
       state.list = action.payload;
-      console.log("fulfilled");
+      // console.log("fulfilled");
     })
     // En cas d'échec de la requête pour récupérer les catégories.
     .addCase(fetchCategoriesThunk.rejected, () => {
       // Log pour indiquer que la requête a échoué.
-      console.log("rejected");
+      // console.log("rejected");
     });
 });
 

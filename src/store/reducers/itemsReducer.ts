@@ -17,19 +17,19 @@ const itemsReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(fetchItemsThunk.fulfilled, (state, action) => {
       state.list = action.payload;
-      console.log("fulfilled");
+      // console.log("fulfilled");
     })
     .addCase(fetchItemsThunk.rejected, () => {
       // puisqu'on la requette à planté on précise qu'on peut enlever le loader
-      console.log("rejected");
+      // console.log("rejected");
     })
     .addCase(fetchItemsByCategoryIdThunk.fulfilled, (state, action) => {
       state.list = action.payload;
-      console.log("fulfilled");
+      // console.log("fulfilled");
     })
     .addCase(fetchItemsByCategoryIdThunk.rejected, () => {
       // puisqu'on la requette à planté on précise qu'on peut enlever le loader
-      console.log("rejected");
+      // console.log("rejected");
     });
 });
 

@@ -43,7 +43,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
     // Gère le cas où la requête pour récupérer toutes les commandes échoue.
     .addCase(fetchOrdersThunk.rejected, () => {
       // Affiche un message d'erreur dans la console.
-      console.log("rejected");
+      // console.log("rejected");
     })
     // Gère le cas où la requête pour récupérer toutes les commandes pour la cuisine est réussie.
     .addCase(fetchOrdersKitchenThunk.fulfilled, (state, action) => {
@@ -53,12 +53,12 @@ const ordersReducer = createReducer(initialState, (builder) => {
     // Gère le cas où la requête pour récupérer toutes les commandes pour la cuisine échoue.
     .addCase(fetchOrdersKitchenThunk.rejected, () => {
       // Affiche un message d'erreur dans la console.
-      console.log("rejected");
+      // console.log("rejected");
     })
     // Gère le cas où la requête pour récupérer une commande spécifique est réussie.
     .addCase(fetchOrderThunk.fulfilled, (state, action) => {
       // Affiche un message dans la console pour indiquer que les articles ont été récupérés.
-      console.log("fetched items");
+      // console.log("fetched items");
       // Si des données sont renvoyées par l'action, met à jour la commande actuelle avec ces données.
       if (action.payload) {
         state.currentOrder = action.payload;
@@ -67,7 +67,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
     // Gère le cas où la requête pour récupérer une commande spécifique échoue.
     .addCase(fetchOrderThunk.rejected, () => {
       // Affiche un message d'erreur dans la console.
-      console.log("fetch order rejected");
+      // console.log("fetch order rejected");
     })
     // Gère le cas où la requête pour récupérer une commande par l'ID de la table est réussie.
     .addCase(fetchOrderByTableIdThunk.fulfilled, (state, action) => {
@@ -77,7 +77,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
     // Gère le cas où la requête pour récupérer une commande par l'ID de la table échoue.
     .addCase(fetchOrderByTableIdThunk.rejected, () => {
       // Affiche un message d'erreur dans la console.
-      console.log("rejected");
+      // console.log("rejected");
     })
     // Gère le cas où la requête pour ajouter un article à la commande actuelle est réussie.
     .addCase(addItemToCurrentOrderThunk.fulfilled, (state, action) => {
@@ -87,7 +87,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
     // Gère le cas où la requête pour ajouter un article à la commande actuelle échoue.
     .addCase(addItemToCurrentOrderThunk.rejected, () => {
       // Affiche un message d'erreur dans la console.
-      console.log("rejected");
+      // console.log("rejected");
     })
     // Gère le cas où la requête pour augmenter la quantité d'un article dans la commande actuelle est réussie.
     .addCase(plusItemToCurrentOrderThunk.fulfilled, (state, action) => {
@@ -97,7 +97,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
     // Gère le cas où la requête pour augmenter la quantité d'un article dans la commande actuelle échoue.
     .addCase(plusItemToCurrentOrderThunk.rejected, () => {
       // Affiche un message d'erreur dans la console.
-      console.log("rejected");
+      // console.log("rejected");
     })
     // Gère le cas où la requête pour diminuer la quantité d'un article dans la commande actuelle est réussie.
     .addCase(minusItemToCurrentOrderThunk.fulfilled, (state, action) => {
@@ -107,7 +107,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
     // Gère le cas où la requête pour diminuer la quantité d'un article dans la commande actuelle échoue.
     .addCase(minusItemToCurrentOrderThunk.rejected, () => {
       // Affiche un message d'erreur dans la console.
-      console.log("rejected");
+      // console.log("rejected");
     })
     // Gère le cas où la requête pour éditer le commentaire d'un article dans la commande actuelle est réussie.
     .addCase(editCommOrderThunk.fulfilled, (state, action) => {
@@ -117,7 +117,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
     // Gère le cas où la requête pour éditer le commentaire d'un article dans la commande actuelle échoue.
     .addCase(editCommOrderThunk.rejected, () => {
       // Affiche un message d'erreur dans la console.
-      console.log("rejected");
+      // console.log("rejected");
     })
     // Gère le cas où la requête pour supprimer la commande actuelle est réussie.
     .addCase(deleteOrderThunk.fulfilled, (state, action) => {
@@ -127,7 +127,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
     // Gère le cas où la requête pour supprimer la commande actuelle échoue.
     .addCase(deleteOrderThunk.rejected, () => {
       // Affiche un message d'erreur dans la console.
-      console.log("rejected");
+      // console.log("rejected");
     })
     // Gère le cas où une action pour mettre à jour une commande spécifique est dispatchée.
     .addCase(updateSpecificOrder, (state, action) => {

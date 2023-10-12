@@ -38,6 +38,7 @@ function Login() {
         token,
         data: { id, name, roles },
       } = response;
+      console.log(response);
 
       // Envoi d'une action pour gérer la connexion.
       dispatch(getActionLogin({ token, id, name, roles }));
