@@ -41,11 +41,12 @@ function Login() {
 
       // Envoi d'une action pour gérer la connexion.
       dispatch(getActionLogin({ token, id }));
-      if (response.data.roles.includes("ROLE_KITCHEN")) {
-        navigate("/kitchen");
-      } else {
-        navigate("/");
-      }
+      // if (response.data.roles.includes("ROLE_KITCHEN")) {
+      //   navigate("/kitchen");
+      // } else {
+      //   navigate("/");
+      // }
+      navigate("/");
       // Redirection vers la page d'accueil.
 
       // (Commentaire de débogage) Affichage des données de la réponse.

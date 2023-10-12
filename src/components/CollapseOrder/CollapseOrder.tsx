@@ -141,6 +141,7 @@ function CollapseOrder() {
   const handleCheckoutClick = () => {
     if (currentOrder) {
       // setLocalItems([]);
+      handleStatusClick(currentOrder.id);
       dispatch(deleteOrderThunk(currentOrder.id));
       toggleVisibility();
       navigate("/");
