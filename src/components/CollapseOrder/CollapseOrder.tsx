@@ -60,7 +60,7 @@ function CollapseOrder() {
       console.log(updatedOrder);
 
       dispatch(updateSpecificOrder(updatedOrder));
-      if (updatedOrder.status !== 0) dispatch(fetchOrderThunk(updatedOrder.id));
+      dispatch(fetchOrderThunk(updatedOrder.id));
     };
     return () => {
       es?.close();
