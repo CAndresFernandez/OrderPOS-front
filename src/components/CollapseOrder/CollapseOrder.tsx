@@ -47,9 +47,10 @@ function CollapseOrder() {
   // const hasSomeItems = currentOrder?.orderItems?.some((orderItem) => orderItem);
   // Le hook useEffect est utilisé pour exécuter du code après le rendu du composant.
   useEffect(() => {
-    const url = new URL("http://localhost:3000/.well-known/mercure");
+    const url = new URL("http://45.147.98.243:2020/.well-known/mercure");
+    url.searchParams.append("authorization", import.meta.env.VITE_MERCURE_JWT);
     url.searchParams.append("topic", `orders`);
-    const es = new EventSource(url);
+    const es = new EventSource(url, { withCredentials: true });
     console.log(es);
     // Cette fonction est appelée chaque fois qu'un message est reçu du serveur Mercure.
     es.onmessage = (event) => {

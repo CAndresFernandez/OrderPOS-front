@@ -29,11 +29,10 @@ function Kitchen() {
     // Cette ligne envoie une action pour récupérer toutes les commandes destinées à la cuisine dès que le composant est monté.
     dispatch(fetchOrdersKitchenThunk());
 
-    const url = new URL("http://localhost:3000/.well-known/mercure");
+    const url = new URL("http://45.147.98.243:2020/.well-known/mercure");
+    url.searchParams.append("authorization", import.meta.env.VITE_MERCURE_JWT);
     url.searchParams.append("topic", `orders`);
-
-    // Ici, vous créez une nouvelle instance de EventSource pour établir une connexion avec le serveur Mercure.
-    const es = new EventSource(url);
+    const es = new EventSource(url, { withCredentials: true });
     console.log(es);
 
     // Cette fonction est appelée chaque fois qu'un message est reçu du serveur Mercure.

@@ -17,10 +17,11 @@ function Tables() {
     dispatch(fetchTablesThunk());
   }, [dispatch]);
   useEffect(() => {
-    const url = new URL("http://localhost:3000/.well-known/mercure");
+    const url = new URL("http://45.147.98.243:2020/.well-known/mercure");
+    url.searchParams.append("authorization", import.meta.env.VITE_MERCURE_JWT);
     url.searchParams.append("topic", `tables`);
-    const eventSource = new EventSource(url);
-    eventSource.onmessage = (event) => {
+    const es = new EventSource(url, { withCredentials: true });
+    es.onmessage = (event) => {
       console.log("ouiii ça a marché !", event);
       const updatedTable = JSON.parse(event.data);
       console.log(updatedTable);
@@ -29,7 +30,7 @@ function Tables() {
       dispatch(updateTablesAction(updatedTable));
     };
     return () => {
-      eventSource.close();
+      es.close();
     };
   }, [dispatch]);
 
