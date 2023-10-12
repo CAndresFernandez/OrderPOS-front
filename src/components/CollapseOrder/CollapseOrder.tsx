@@ -9,6 +9,7 @@ import {
   deleteOrderThunk,
   editCommOrderThunk,
   fetchOrderThunk,
+  fetchOrdersThunk,
   minusItemToCurrentOrderThunk,
   plusItemToCurrentOrderThunk,
 } from "../../store/middlewares/orders";
@@ -16,6 +17,7 @@ import {
 import "./CollapseOrder.scss";
 // import { IUser } from "../../@types/user";
 import { updateSpecificOrder } from "../../store/reducers/ordersReducer";
+import { IUser } from "../../@types/user";
 
 function CollapseOrder() {
   const navigate = useNavigate();
@@ -24,8 +26,8 @@ function CollapseOrder() {
 
   const [isVisible, setIsVisible] = useState(false);
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
-  console.log(currentOrder);
-  // const currentUser: IUser = useAppSelector((state) => state.user);
+  // console.log(currentOrder);
+  const currentUser: IUser = useAppSelector((state) => state.user);
   // console.log(currentUser);
   const orderItems: IOrderItem[] | undefined = useAppSelector(
     (state) => state.orders.currentOrder?.orderItems
@@ -41,10 +43,7 @@ function CollapseOrder() {
   const hasSomeUnsentItems =
     Array.isArray(currentOrder?.orderItems) &&
     currentOrder?.orderItems?.some((orderItem) => !orderItem.sent);
-  // const hasSomeSentItems = currentOrder?.orderItems?.some(
-  //   (orderItem) => orderItem.sent
-  // );
-  // const hasSomeItems = currentOrder?.orderItems?.some((orderItem) => orderItem);
+
   // Le hook useEffect est utilisé pour exécuter du code après le rendu du composant.
   useEffect(() => {
     const url = new URL("http://45.147.98.243:2020/.well-known/mercure");
@@ -57,10 +56,9 @@ function CollapseOrder() {
       // console.log("ouiii ça a marché !", event);
       // Vous parsez le message reçu pour le convertir en objet JavaScript.
       const updatedOrder = JSON.parse(event.data);
-      console.log(updatedOrder);
+      console.log(event.data);
 
       dispatch(updateSpecificOrder(updatedOrder));
-      dispatch(fetchOrderThunk(updatedOrder.id));
     };
     return () => {
       es?.close();
@@ -167,13 +165,15 @@ function CollapseOrder() {
           <div className={`collapse ${isVisible ? "visible" : ""}`}>
             <h5>Order {currentOrder.id}</h5>
             <h5>Table {currentOrder.relatedTable?.number}</h5>
-            <button
-              type="button"
-              className="btn"
-              onClick={() => navigate(`/orders/${currentOrder.id}`)}
-            >
-              View Order Details
-            </button>
+            {!isOnCurrentOrderPage && (
+              <button
+                type="button"
+                className="btn"
+                onClick={() => navigate(`/orders/${currentOrder.id}`)}
+              >
+                View Order Details
+              </button>
+            )}
             <ul className="list">
               <li className="list-titles">
                 <h4>Name</h4>

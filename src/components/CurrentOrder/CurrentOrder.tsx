@@ -44,7 +44,7 @@ function CurrentOrder() {
 
     // (Commentaire pour ESLint) Désactivation de la règle exhaustive-deps pour ce hook.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [orderId]);
+  }, []);
 
   // Définition de la fonction handleClick qui sera appelée lors du clic sur un article.
   const handleClick = (itemId: number) => {
@@ -62,7 +62,7 @@ function CurrentOrder() {
     <>
       <header>
         <LoggedAs />
-        <h5>Order n {currentOrder.id}</h5>
+        <h5>Order n {currentOrder?.id}</h5>
         <h5>Table {currentOrder?.relatedTable?.number}</h5>
         <NavCategories />
         <button

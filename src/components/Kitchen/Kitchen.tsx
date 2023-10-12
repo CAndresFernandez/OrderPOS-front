@@ -22,11 +22,14 @@ function Kitchen() {
   // console.log(orders);
 
   // const hasSomeItems = currentOrder?.orderItems?.some((orderItem) => orderItem);
-
-  // Le hook useEffect est utilisé pour exécuter du code après le rendu du composant.
   useEffect(() => {
     // Cette ligne envoie une action pour récupérer toutes les commandes destinées à la cuisine dès que le composant est monté.
     dispatch(fetchOrdersKitchenThunk());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // Le hook useEffect est utilisé pour exécuter du code après le rendu du composant.
+  useEffect(() => {
+    // Cette ligne envoie une action pour récupérer toutes les commandes destinées à la cuisine dès que le composant est monté.
 
     const url = new URL("http://45.147.98.243:2020/.well-known/mercure");
     url.searchParams.append("authorization", import.meta.env.VITE_MERCURE_JWT);
