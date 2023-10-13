@@ -16,7 +16,7 @@ import {
 function CurrentOrder() {
   // Utilisation du sélecteur Redux pour obtenir la liste des articles.
   const items: IItem[] = useAppSelector((state) => state.items.list);
-
+  const categories = useAppSelector((state) => state.categories.list);
   // Utilisation du hook navigate pour la navigation.
   const navigate = useNavigate();
   // Utilisation du hook dispatch pour envoyer des actions à Redux.
