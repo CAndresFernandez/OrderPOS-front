@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
 import "./LoggedAs.scss";
-import { useAppSelector } from "../../hooks/redux";
+import { getFromLocalStorage } from "../../localStorage/localStorage";
 
 function LoggedAs() {
-  const currentUser = useAppSelector((state) => state.user);
-  // console.log(currentUser);
+  const storeUser = getFromLocalStorage("auth");
+  // console.log(storeUser);
 
   return (
     <Link to="/logout">
       <p className="logged-as">
-        Logged as: <span>{currentUser?.id}</span>
+        Logged as: <span>{storeUser?.name}</span>
       </p>
     </Link>
   );

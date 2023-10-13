@@ -1,10 +1,9 @@
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import {
   changeStatusOrderThunk,
   fetchOrdersKitchenThunk,
-  minusItemToCurrentOrderThunk,
 } from "../../store/middlewares/orders";
 
 import LoggedAs from "../LoggedAs/LoggedAs";
@@ -20,25 +19,27 @@ function Kitchen() {
   const dispatch = useAppDispatch();
   // Utilisation du sélecteur Redux pour obtenir la liste des commandes.
   const orders = useAppSelector((state) => state.orders.list);
-  console.log(orders);
+  // console.log(orders);
 
   // const hasSomeItems = currentOrder?.orderItems?.some((orderItem) => orderItem);
-
-  // Le hook useEffect est utilisé pour exécuter du code après le rendu du composant.
   useEffect(() => {
     // Cette ligne envoie une action pour récupérer toutes les commandes destinées à la cuisine dès que le composant est monté.
     dispatch(fetchOrdersKitchenThunk());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // Le hook useEffect est utilisé pour exécuter du code après le rendu du composant.
+  useEffect(() => {
+    // Cette ligne envoie une action pour récupérer toutes les commandes destinées à la cuisine dès que le composant est monté.
 
-    const url = new URL("http://localhost:3000/.well-known/mercure");
+    const url = new URL("http://45.147.98.243:2020/.well-known/mercure");
+    url.searchParams.append("authorization", import.meta.env.VITE_MERCURE_JWT);
     url.searchParams.append("topic", `orders`);
-
-    // Ici, vous créez une nouvelle instance de EventSource pour établir une connexion avec le serveur Mercure.
-    const es = new EventSource(url);
-    console.log(es);
+    const es = new EventSource(url, { withCredentials: true });
+    // console.log(es);
 
     // Cette fonction est appelée chaque fois qu'un message est reçu du serveur Mercure.
     es.onmessage = (event) => {
-      console.log("ouiii ça a marché !", event);
+      // console.log("ouiii ça a marché !", event);
       // Vous parsez le message reçu pour le convertir en objet JavaScript.
       const updatedOrder = JSON.parse(event.data);
       dispatch(updateSpecificOrder(updatedOrder));
@@ -63,10 +64,11 @@ function Kitchen() {
         orderId,
         orderStatus,
       })
-    ).then(() => {
-      // Récupération des commandes après la mise à jour du statut.
-      dispatch(fetchOrdersKitchenThunk());
-    });
+      // ).then(() => {
+      //   // Récupération des commandes après la mise à jour du statut.
+      //   dispatch(fetchOrdersKitchenThunk());
+      //
+    );
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { IOrderItem } from "../../@types/order";
@@ -13,6 +13,8 @@ import {
 } from "../../store/middlewares/orders";
 
 import "./CollapseOrder.scss";
+// import { IUser } from "../../@types/user";
+import { updateSpecificOrder } from "../../store/reducers/ordersReducer";
 
 function CollapseOrder() {
   const navigate = useNavigate();
@@ -21,66 +23,53 @@ function CollapseOrder() {
 
   const [isVisible, setIsVisible] = useState(false);
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
+  // console.log(currentOrder);
+
+  // console.log(currentUser);
+  const orderItems: IOrderItem[] | undefined = useAppSelector(
+    (state) => state.orders.currentOrder?.orderItems
+  );
+  // console.log(orderItems);
+
   const isOnCurrentOrderPage =
     location.pathname === `/orders/${currentOrder?.id}`;
   const [comment, setComment] = useState("");
   const [modalItemId, setModalItemId] = useState<number | null>(null);
-  const currentOrderItems = useAppSelector(
-    (state) => state.orders.currentOrder?.orderItems
-  );
-  const [localItems, setLocalItems] = useState<IOrderItem[]>([]);
+  // const [localItems, setLocalItems] = useState<IOrderItem[]>([]);
   const emoji = "\ud83d\udd89";
   const hasSomeUnsentItems =
     Array.isArray(currentOrder?.orderItems) &&
     currentOrder?.orderItems?.some((orderItem) => !orderItem.sent);
-  // const hasSomeSentItems = currentOrder?.orderItems?.some(
-  //   (orderItem) => orderItem.sent
-  // );
-  // const hasSomeItems = currentOrder?.orderItems?.some((orderItem) => orderItem);
 
+  // Le hook useEffect est utilisé pour exécuter du code après le rendu du composant.
+  useEffect(() => {
+    const url = new URL("http://45.147.98.243:2020/.well-known/mercure");
+    url.searchParams.append("authorization", import.meta.env.VITE_MERCURE_JWT);
+    url.searchParams.append("topic", `orders`);
+    const es = new EventSource(url, { withCredentials: true });
+    // console.log(es);
+    // Cette fonction est appelée chaque fois qu'un message est reçu du serveur Mercure.
+    es.onmessage = (event) => {
+      // console.log("ouiii ça a marché !", event);
+      // Vous parsez le message reçu pour le convertir en objet JavaScript.
+      const updatedOrder = JSON.parse(event.data);
+      console.log(updatedOrder, event.data);
+
+      dispatch(updateSpecificOrder(updatedOrder));
+    };
+    return () => {
+      es?.close();
+    };
+    // La dépendance [dispatch] signifie que le code à l'intérieur de useEffect sera exécuté chaque fois que la fonction dispatch change.
+    // En pratique, avec Redux, dispatch ne change jamais, donc useEffect ne s'exécutera qu'une fois, similaire à componentDidMount.
+  }, [dispatch]);
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
 
-  useEffect(() => {
-    if (currentOrder?.orderItems) {
-      setLocalItems(currentOrder.orderItems);
-    }
-  }, [currentOrder?.orderItems, currentOrder?.status]);
-
-  const handleMinusClick = useCallback(
-    (itemId: number) => {
-      if (currentOrder) {
-        dispatch(
-          minusItemToCurrentOrderThunk({ orderId: currentOrder.id, itemId })
-        );
-      }
-    },
-    [currentOrder, dispatch]
-  );
-
-  const handlePlusClick = useCallback(
-    (itemId: number) => {
-      if (currentOrder) {
-        dispatch(
-          plusItemToCurrentOrderThunk({ orderId: currentOrder.id, itemId })
-        );
-      }
-    },
-    [currentOrder, dispatch]
-  );
-
-  const handleStatusClick = (orderId: number) => {
-    if (currentOrder) {
-      dispatch(changeStatusOrderThunk({ orderId }));
-      toggleVisibility();
-      navigate("/");
-    }
-  };
-
   const handleOpenModal = (itemId: number) => {
     const itemComment =
-      localItems.find((item) => item.id === itemId)?.comment || "";
+      orderItems?.find((item) => item.id === itemId)?.comment || "";
     setComment(itemComment);
     setModalItemId(itemId);
   };
@@ -89,6 +78,51 @@ function CollapseOrder() {
     setModalItemId(null);
   };
 
+  // Utilisation de `useCallback` pour mémoriser la fonction et éviter des re-rendus inutiles.
+  // Cette fonction est appelée lorsque l'utilisateur clique sur le bouton "moins" pour un article.
+  const handleMinusClick = useCallback(
+    (itemId: number) => {
+      // Vérifie si une commande actuelle existe.
+      if (currentOrder) {
+        // Si oui, déclenche l'action pour soustraire un article de la commande actuelle.
+        // L'action prend l'ID de la commande actuelle et l'ID de l'article comme arguments.
+        dispatch(
+          minusItemToCurrentOrderThunk({ orderId: currentOrder.id, itemId })
+        );
+      }
+    },
+    // Les dépendances de `useCallback` sont `currentOrder` et `dispatch`.
+    // Cela signifie que la fonction sera mémorisée tant que `currentOrder` et `dispatch` ne changent pas.
+    [currentOrder, dispatch]
+  );
+
+  // Utilisation de `useCallback` pour mémoriser la fonction et éviter des re-rendus inutiles.
+  // Cette fonction est appelée lorsque l'utilisateur clique sur le bouton "plus" pour un article.
+
+  const handlePlusClick = useCallback(
+    (itemId: number) => {
+      // Vérifie si une commande actuelle existe.
+      if (currentOrder) {
+        // Si oui, déclenche l'action pour ajouter un article à la commande actuelle.
+        // L'action prend l'ID de la commande actuelle et l'ID de l'article comme arguments.
+        dispatch(
+          plusItemToCurrentOrderThunk({ orderId: currentOrder.id, itemId })
+        );
+      }
+    },
+    // Les dépendances de `useCallback` sont `currentOrder` et `dispatch`.
+    // Cela signifie que la fonction sera mémorisée tant que `currentOrder` et `dispatch` ne changent pas.
+    [currentOrder, dispatch]
+  );
+  // Fonction pour gérer le changement de statut de la commande.
+  const handleStatusClick = (orderId: number, orderStatus: number) => {
+    if (currentOrder) {
+      dispatch(changeStatusOrderThunk({ orderId, orderStatus }));
+      toggleVisibility();
+      navigate("/");
+    }
+  };
+  // Fonction pour soumettre le commentaire d'un article.
   const handleSubmit = () => {
     if (currentOrder && modalItemId !== null) {
       dispatch(
@@ -101,17 +135,20 @@ function CollapseOrder() {
       handleCloseModal();
     }
   };
-
+  // Fonction pour gérer le clic sur le bouton de paiement.
   const handleCheckoutClick = () => {
     if (currentOrder) {
-      setLocalItems([]);
+      // setLocalItems([]);
+      handleStatusClick(currentOrder.id, currentOrder.status);
       dispatch(deleteOrderThunk(currentOrder.id));
       toggleVisibility();
       navigate("/");
     }
   };
-
-  const adjustTextareaHeight = (event) => {
+  // Fonction pour ajuster la hauteur du textarea en fonction de son contenu.
+  const adjustTextareaHeight = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const textarea = event.target;
     textarea.style.height = "auto";
     textarea.style.height = `${textarea.scrollHeight}px`;
@@ -125,21 +162,24 @@ function CollapseOrder() {
           <div className={`collapse ${isVisible ? "visible" : ""}`}>
             <h5>Order {currentOrder.id}</h5>
             <h5>Table {currentOrder.relatedTable?.number}</h5>
-            <button
-              type="button"
-              className="btn"
-              onClick={() => navigate(`/orders/${currentOrder.id}`)}
-            >
-              View Order Details
-            </button>
+            {!isOnCurrentOrderPage && (
+              <button
+                type="button"
+                className="btn"
+                onClick={() => navigate(`/orders/${currentOrder.id}`)}
+              >
+                View Order Details
+              </button>
+            )}
             <ul className="list">
               <li className="list-titles">
                 <h4>Name</h4>
                 <h4>Quantity</h4>
                 <h4>Comment</h4>
               </li>
-              {localItems &&
-                localItems.map((item) => (
+
+              {orderItems &&
+                orderItems.map((item) => (
                   <li className="list-li" key={item.id}>
                     <div
                       className={`list-li-div ${item.sent ? "item-sent" : ""}`}
@@ -211,26 +251,31 @@ function CollapseOrder() {
                     )}
                   </li>
                 ))}
-              {currentOrder.status !== 1 && hasSomeUnsentItems && (
+              {currentOrder.status !== 1 && hasSomeUnsentItems ? (
                 <button
                   type="button"
                   className="btn"
-                  onClick={() => handleStatusClick(currentOrder.id)}
+                  onClick={() =>
+                    handleStatusClick(currentOrder.id, currentOrder.status)
+                  }
                 >
                   {currentOrder.status === 0 && "send"}
                   {currentOrder.status === 2 && "edit"}
                 </button>
-              )}
-              {currentOrder.status === 2 && (
-                <button
-                  type="button"
-                  className={`btn ${hasSomeUnsentItems ? "notclickable" : ""}`}
-                  onClick={
-                    !hasSomeUnsentItems ? handleCheckoutClick : undefined
-                  }
-                >
-                  checkout
-                </button>
+              ) : (
+                currentOrder.status === 2 && (
+                  <button
+                    type="button"
+                    className={`btn ${
+                      hasSomeUnsentItems ? "notclickable" : ""
+                    }`}
+                    onClick={
+                      !hasSomeUnsentItems ? handleCheckoutClick : undefined
+                    }
+                  >
+                    checkout
+                  </button>
+                )
               )}
             </ul>
           </div>

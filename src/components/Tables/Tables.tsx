@@ -6,14 +6,33 @@ import { fetchTablesThunk } from "../../store/middlewares/tables";
 import LoggedAs from "../LoggedAs/LoggedAs";
 import Table from "../Table/Table";
 import "./Tables.scss";
+import { updateTablesAction } from "../../store/reducers/tablesReducer";
 
 function Tables() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const tables: ITable[] = useAppSelector((state) => state.tables.list);
+
   useEffect(() => {
     dispatch(fetchTablesThunk());
-  }, []);
+  }, [dispatch]);
+  useEffect(() => {
+    const url = new URL("http://45.147.98.243:2020/.well-known/mercure");
+    url.searchParams.append("authorization", import.meta.env.VITE_MERCURE_JWT);
+    url.searchParams.append("topic", `tables`);
+    const es = new EventSource(url, { withCredentials: true });
+    es.onmessage = (event) => {
+      // console.log("ouiii ça a marché !", event);
+      const updatedTable = JSON.parse(event.data);
+      // console.log(updatedTable);
+
+      // Dispatchez une action pour mettre à jour la liste des tables
+      dispatch(updateTablesAction(updatedTable));
+    };
+    return () => {
+      es.close();
+    };
+  }, [dispatch]);
 
   return (
     <>
@@ -37,7 +56,7 @@ function Tables() {
       </header>
       <ul className="tables-list">
         {tables.map((table) => (
-          <li key={table.id}>
+          <li key={`table-${table.id}`}>
             <Table table={table} />
           </li>
         ))}
