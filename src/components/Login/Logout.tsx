@@ -1,21 +1,27 @@
-import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { getActionDisconnect } from "../../store/reducers/userReducer"; // Ajustez le chemin d'importation en fonction de votre structure de projet
 import "./Login.scss"; // Assurez-vous que le chemin vers le fichier SCSS est correct
 import { useAppDispatch } from "../../hooks/redux";
-import { Link, Navigate, useNavigate } from "react-router-dom";
 
 function Logout() {
+  // Utilisation du hook dispatch pour envoyer des actions à Redux.
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const loggedMessage = "You are logged in!";
 
+  // Utilisation du hook navigate pour la navigation.
+  const navigate = useNavigate();
+
+  // Message indiquant que l'utilisateur est connecté.
+  const loggedMessage = "Vous êtes connecté !";
+
+  // Définition de la fonction handleDisconnect qui sera appelée lors de la déconnexion.
   const handleDisconnect = () => {
-    // Supprimez le token du localStorage
+    // Suppression du token du localStorage.
     localStorage.removeItem("token");
-    // Mettez à jour le state Redux
+
+    // Envoi d'une action pour gérer la déconnexion.
     dispatch(getActionDisconnect());
-    // Redirigez l'utilisateur vers la page de connexion ou une autre page appropriée
-    // Si vous utilisez react-router-dom, vous pouvez utiliser useHistory pour cela
+
+    // Redirection de l'utilisateur vers la page de connexion.
     navigate("/login");
   };
 

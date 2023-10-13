@@ -27,7 +27,7 @@ export interface ICategory {
 
 export interface IOrder {
   id: int;
-  relatedTable_id?: int;
+  relatedTable: ITable;
   user?: IUser;
   status?: int;
   orderItems?: IOrderItem[];
@@ -36,7 +36,7 @@ export interface IOrderItem {
   id: number;
   item: IItem;
   name: string;
-  relatedTable?: ITable;
+  relatedOrder: IOrder;
   sent: boolean;
   quantity: number;
   comment?: string | null;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./NavCategories.scss";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
@@ -23,7 +23,7 @@ function NavCategories() {
       {categories.map((category) => (
         <NavLink
           className="NavLink"
-          // to={`/categories/${category.id}`}
+          to={`/categories/${category.id}/items`}
           key={category.id}
         >
           {category.name}

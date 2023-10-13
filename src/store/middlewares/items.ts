@@ -22,7 +22,7 @@ export const fetchItemsByCategoryIdThunk = createAsyncThunk(
   // nom de l'action :
   "items/GET_ITEMS_BY_CATEGORY",
   // fonction asynchrone : c'est ici qu'on va faire l'appel AJAX
-  async ($id) => {
+  async (id) => {
     // ---- 7/ ecriture de la requete API dans le thunk
     // console.log("result");
     const result = await myAxiosInstance.get(`categories/${id}/items`);

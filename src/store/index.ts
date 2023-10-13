@@ -12,6 +12,7 @@ const store = configureStore({
     orders: ordersReducer,
     user: userReducer,
     categories: categoriesReducer,
+    // chat: chatSlice.reducer,
   },
 });
 
