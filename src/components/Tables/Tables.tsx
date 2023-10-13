@@ -12,10 +12,10 @@ function Tables() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const tables: ITable[] = useAppSelector((state) => state.tables.list);
-
+  const currentOrder = useAppSelector((state) => state.orders.currentOrder);
   useEffect(() => {
     dispatch(fetchTablesThunk());
-  }, [dispatch]);
+  }, [currentOrder?.status]);
   useEffect(() => {
     const url = new URL("http://45.147.98.243:2020/.well-known/mercure");
     url.searchParams.append("authorization", import.meta.env.VITE_MERCURE_JWT);
