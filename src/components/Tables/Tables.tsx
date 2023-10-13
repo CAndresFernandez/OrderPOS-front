@@ -15,7 +15,7 @@ function Tables() {
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
   useEffect(() => {
     dispatch(fetchTablesThunk());
-  }, [dispatch, currentOrder?.status]);
+  }, [currentOrder?.status]);
   useEffect(() => {
     const url = new URL("http://45.147.98.243:2020/.well-known/mercure");
     url.searchParams.append("authorization", import.meta.env.VITE_MERCURE_JWT);
