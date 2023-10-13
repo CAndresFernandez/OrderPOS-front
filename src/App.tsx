@@ -43,8 +43,8 @@ function App() {
         navigate("/login");
       }
     }
-
     // console.log(userId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [logged]);
 
   return (
