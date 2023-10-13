@@ -1,4 +1,4 @@
-import { createReducer } from "@reduxjs/toolkit";
+import { createAction, createReducer } from "@reduxjs/toolkit";
 import {
   fetchItemsByCategoryIdThunk,
   fetchItemsThunk,

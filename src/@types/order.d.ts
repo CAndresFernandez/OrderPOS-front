@@ -9,7 +9,6 @@ export interface ITable {
 }
 export interface IItem {
   id: int;
-  category_id: int;
   name: string;
   price: number;
   description?: string;

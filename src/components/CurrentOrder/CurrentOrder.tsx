@@ -1,12 +1,15 @@
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useMemo } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Dish from "../Dish/Dish";
 import LoggedAs from "../LoggedAs/LoggedAs";
 import NavCategories from "../NavCategories/NavCategories";
 import { IItem } from "../../@types/order";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import "./CurrentOrder.scss";
-import { fetchItemsThunk } from "../../store/middlewares/items";
+import {
+  fetchItemsByCategoryIdThunk,
+  fetchItemsThunk,
+} from "../../store/middlewares/items";
 import {
   addItemToCurrentOrderThunk,
   fetchOrderThunk,
@@ -16,7 +19,6 @@ import {
 function CurrentOrder() {
   // Utilisation du sélecteur Redux pour obtenir la liste des articles.
   const items: IItem[] = useAppSelector((state) => state.items.list);
-
   // Utilisation du hook navigate pour la navigation.
   const navigate = useNavigate();
   // Utilisation du hook dispatch pour envoyer des actions à Redux.
@@ -27,10 +29,15 @@ function CurrentOrder() {
   // Utilisation du sélecteur Redux pour obtenir la commande actuelle.
   // const orderId = useAppSelector((state) => state.orders.currentOrder?.id);
   const { orderId } = useParams();
+  const [searchParams] = useSearchParams();
+  const categoryId = useMemo(
+    () => searchParams.get("category"),
+    [searchParams]
+  );
+
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
-  // const filteredItems = items.filter(
-  //   (item) => item.categoryId === parseInt(categoryId, 10)
-  // );
+  console.log(currentOrder?.id, orderId);
+
   // (Commentaire de débogage) Affichage des articles et de la commande actuelle.
   // console.log(items, currentOrder);
 
@@ -38,15 +45,18 @@ function CurrentOrder() {
   useEffect(() => {
     // Après le premier chargement de l'application, on veut récupérer les tables.
     // L'application va envoyer une action au middleware thunk qui gère l'appel API.
-
-    dispatch(fetchItemsThunk());
+    if (categoryId) {
+      dispatch(fetchItemsByCategoryIdThunk(categoryId));
+    } else {
+      dispatch(fetchItemsThunk());
+    }
 
     // Si un ID de commande est présent, on récupère la commande correspondante.
     if (orderId) dispatch(fetchOrderThunk(parseInt(orderId || "", 10)));
 
     // (Commentaire pour ESLint) Désactivation de la règle exhaustive-deps pour ce hook.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [categoryId]);
 
   // Définition de la fonction handleClick qui sera appelée lors du clic sur un article.
   const handleClick = (itemId: number) => {
