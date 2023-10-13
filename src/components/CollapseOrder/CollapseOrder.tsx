@@ -53,7 +53,7 @@ function CollapseOrder() {
       // console.log("ouiii ça a marché !", event);
       // Vous parsez le message reçu pour le convertir en objet JavaScript.
       const updatedOrder = JSON.parse(event.data);
-      console.log(updatedOrder, event.data);
+      // console.log(updatedOrder, event.data);
 
       dispatch(updateSpecificOrder(updatedOrder));
     };
