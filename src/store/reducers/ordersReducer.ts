@@ -146,7 +146,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
         }
         return updatedOrder;
       });
-      // Ajoutez cette vérification pour mettre à jour `currentOrder`
+      // update currentOrder
       if (state.currentOrder && state.currentOrder.id === updatedOrder.id) {
         state.currentOrder = updatedOrder;
       }
