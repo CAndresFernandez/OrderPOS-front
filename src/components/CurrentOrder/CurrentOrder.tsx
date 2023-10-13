@@ -28,7 +28,9 @@ function CurrentOrder() {
   // const orderId = useAppSelector((state) => state.orders.currentOrder?.id);
   const { orderId } = useParams();
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
-
+  // const filteredItems = items.filter(
+  //   (item) => item.categoryId === parseInt(categoryId, 10)
+  // );
   // (Commentaire de débogage) Affichage des articles et de la commande actuelle.
   // console.log(items, currentOrder);
 
