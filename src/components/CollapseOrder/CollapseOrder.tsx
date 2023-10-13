@@ -15,7 +15,6 @@ import {
 import "./CollapseOrder.scss";
 // import { IUser } from "../../@types/user";
 import { updateSpecificOrder } from "../../store/reducers/ordersReducer";
-import { IUser } from "../../@types/user";
 
 function CollapseOrder() {
   const navigate = useNavigate();
@@ -25,7 +24,7 @@ function CollapseOrder() {
   const [isVisible, setIsVisible] = useState(false);
   const currentOrder = useAppSelector((state) => state.orders.currentOrder);
   // console.log(currentOrder);
-  const currentUser: IUser = useAppSelector((state) => state.user);
+
   // console.log(currentUser);
   const orderItems: IOrderItem[] | undefined = useAppSelector(
     (state) => state.orders.currentOrder?.orderItems
